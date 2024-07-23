@@ -1,5 +1,8 @@
 set(ComponentName NBezierTest)
 
+# find and assert external libs (google test)
+find_package(GTest REQUIRED)
+
 file(GLOB_RECURSE Header ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
 file(GLOB_RECURSE Sources ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 

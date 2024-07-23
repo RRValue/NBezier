@@ -10,8 +10,5 @@ project(${ProjectName})
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# find and assert external libs (google test)
-find_package(GTest REQUIRED)
-
 add_subdirectory(src/NBezier)
 add_subdirectory(test)
