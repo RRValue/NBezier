@@ -1,12 +1,12 @@
-//#include "NBezier/vector.h"
+#include <NBezier/vector.h>
 
 #include <gtest/gtest.h>
 
-// Demonstrate some basic assertions.
-TEST(HelloTest, BasicAssertions)
+TEST(Vector, Init)
 {
-    // Expect two strings not to be equal.
-    EXPECT_STRNE("hello", "world");
-    // Expect equality.
-    EXPECT_EQ(7 * 6, 42);
+    const Vector3 v = {1.0f, 2.0f, 3.0f};
+
+    EXPECT_EQ(v.a[0], 1.0f);
+    EXPECT_EQ(v.a[1], 2.0f);
+    EXPECT_EQ(v.a[2], 3.0f);
 }

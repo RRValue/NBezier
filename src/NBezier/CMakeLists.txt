@@ -14,8 +14,9 @@ target_sources(${ComponentName}
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX src FILES ${Header} ${Sources})
 
-# add boost include directories
-target_include_directories(${ComponentName} PRIVATE ${Boost_INCLUDE_DIRS})
+# external libs (boost)
+target_link_libraries(${ComponentName}
+    PUBLIC Boost::qvm)
 
 # properties
 if(MSVC)
