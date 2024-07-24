@@ -17,10 +17,17 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX test FILES ${Header} ${Sour
 # include google test
 target_include_directories(${ComponentName} PRIVATE ${GTEST_INCLUDE_DIR})
 
-# external libs (google test)
+# external interface NBezier
 target_link_libraries(${ComponentName}
-    PRIVATE GTest::GTest
-    PUBLIC NBezier)
+    INTERFACE NBezier)
+
+# external libs (google test) and MBezier
+target_link_libraries(${ComponentName}
+    PRIVATE
+      debug ${GTEST_MAIN_LIBRARY_DEBUG} ${GTEST_LIBRARY_DEBUG}
+      optimized ${GTEST_MAIN_LIBRARY} ${GTEST_LIBRARY})
+
+gtest_discover_tests(${ComponentName})
 
 # properties
 if(MSVC)
