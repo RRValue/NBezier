@@ -19,13 +19,15 @@ target_include_directories(${ComponentName} PRIVATE ${GTEST_INCLUDE_DIR})
 
 # external interface NBezier
 target_link_libraries(${ComponentName}
-    INTERFACE NBezier)
+    PRIVATE NBezier)
 
 # external libs (google test) and MBezier
 target_link_libraries(${ComponentName}
     PRIVATE
-      debug ${GTEST_MAIN_LIBRARY_DEBUG} ${GTEST_LIBRARY_DEBUG}
-      optimized ${GTEST_MAIN_LIBRARY} ${GTEST_LIBRARY})
+      debug ${GTEST_MAIN_LIBRARY_DEBUG}
+      debug ${GTEST_LIBRARY_DEBUG}
+      optimized ${GTEST_MAIN_LIBRARY}
+      optimized ${GTEST_LIBRARY})
 
 gtest_discover_tests(${ComponentName})
 
