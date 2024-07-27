@@ -3,13 +3,14 @@
 #include <boost/qvm/vec.hpp>
 #include <boost/qvm/vec_operations.hpp>
 
+#include <algorithm>
 #include <concepts>
 
 namespace NBezier
 {
     using namespace boost::qvm;
 
-    template<typename ScalarType, int Dimension>
+    template<typename ScalarType, int Dimension, size_t Degree>
         requires std::floating_point<ScalarType>
     class BezierPoints
     {
@@ -19,21 +20,20 @@ namespace NBezier
     public:
         BezierPoints() : m_points{}
         {
-            set_zero(m_points[0]);
-            set_zero(m_points[1]);
+            std::for_each(std::begin(m_points), std::end(m_points),  //
+                          [](Point& point) { set_zero(point); });
         }
-        BezierPoints(const BezierPoints& other) :m_points{other.m_points}
+        BezierPoints(const BezierPoints& other) : m_points{other.m_points}
         {
-
         }
-        BezierPoints(BezierPoints&& other) :m_points{std::move(other.m_points)}
+        BezierPoints(BezierPoints&& other) : m_points{std::move(other.m_points)}
         {
         }
 
         bool operator==(const BezierPoints& other) const
         {
-            return m_points[0] == other.m_points[0] &&  //
-                   m_points[1] == other.m_points[1];
+            std::equal(std::cbegin(m_points), std::cend(m_points),  //
+                       std::cbegin(other.m_points), std::cend(other.m_points));
         }
 
         inline bool operator!=(const BezierPoints& other) const
@@ -62,6 +62,6 @@ namespace NBezier
         }
 
     private:
-        Point m_points[2];
+        Point m_points[Degree];
     };
 }  // namespace NBezier
