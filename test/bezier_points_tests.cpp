@@ -1,4 +1,4 @@
-#include "NBezier/linear_bezier.h"
+#include "NBezier/bezier_points.h"
 
 #include <gtest/gtest.h>
 
@@ -27,7 +27,7 @@ TYPED_TEST_P(LinearBezierTest, Requirements)
     typedef TypeParam::first_type Scalar;
     static const int Dimension = TypeParam::second_type::Value;
 
-    typedef LinearBezier<Scalar, Dimension> LinearBezierType;
+    typedef BezierPoints<Scalar, Dimension> LinearBezierType;
 
     ASSERT_TRUE((std::default_initializable<LinearBezierType>));
     ASSERT_TRUE((std::copy_constructible<LinearBezierType>));
