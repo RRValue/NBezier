@@ -11,43 +11,43 @@ namespace NBezier
 
     template<typename ScalarType, int Dimension>
         requires std::floating_point<ScalarType>
-    class LinearBezier
+    class BezierPoints
     {
     private:
         typedef vec<ScalarType, Dimension> Point;
 
     public:
-        LinearBezier() :
+        BezierPoints() :
             m_start{},  //
             m_end{}
         {
             set_zero(m_start);
             set_zero(m_end);
         }
-        LinearBezier(const LinearBezier& other) :
+        BezierPoints(const BezierPoints& other) :
             m_start{other.m_start},  //
             m_end{other.m_end}
         {
 
         }
-        LinearBezier(LinearBezier&& other) :
+        BezierPoints(BezierPoints&& other) :
             m_start{std::move(other.m_start)},  //
             m_end{std::move(other.m_end)}
         {
         }
 
-        bool operator==(const LinearBezier& other) const
+        bool operator==(const BezierPoints& other) const
         {
             return m_start == other.m_start &&  //
                    m_end == other.m_end;
         }
 
-        inline bool operator!=(const LinearBezier& other) const
+        inline bool operator!=(const BezierPoints& other) const
         {
             return !(*this == other);
         }
 
-        LinearBezier& operator=(const LinearBezier& other)
+        BezierPoints& operator=(const BezierPoints& other)
         {
             if(this == &other)
                 return *this;
@@ -58,7 +58,7 @@ namespace NBezier
             return *this;
         }
 
-        LinearBezier& operator=(LinearBezier&& other)
+        BezierPoints& operator=(BezierPoints&& other)
         {
             if(this == &other)
                 return *this;
