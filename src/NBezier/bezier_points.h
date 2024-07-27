@@ -17,29 +17,23 @@ namespace NBezier
         typedef vec<ScalarType, Dimension> Point;
 
     public:
-        BezierPoints() :
-            m_start{},  //
-            m_end{}
+        BezierPoints() : m_points{}
         {
-            set_zero(m_start);
-            set_zero(m_end);
+            set_zero(m_points[0]);
+            set_zero(m_points[1]);
         }
-        BezierPoints(const BezierPoints& other) :
-            m_start{other.m_start},  //
-            m_end{other.m_end}
+        BezierPoints(const BezierPoints& other) :m_points{other.m_points}
         {
 
         }
-        BezierPoints(BezierPoints&& other) :
-            m_start{std::move(other.m_start)},  //
-            m_end{std::move(other.m_end)}
+        BezierPoints(BezierPoints&& other) :m_points{std::move(other.m_points)}
         {
         }
 
         bool operator==(const BezierPoints& other) const
         {
-            return m_start == other.m_start &&  //
-                   m_end == other.m_end;
+            return m_points[0] == other.m_points[0] &&  //
+                   m_points[1] == other.m_points[1];
         }
 
         inline bool operator!=(const BezierPoints& other) const
@@ -52,8 +46,7 @@ namespace NBezier
             if(this == &other)
                 return *this;
 
-            m_start = other.m_start;
-            m_end = other.m_end;
+            m_points = other.m_points;
 
             return *this;
         }
@@ -63,14 +56,12 @@ namespace NBezier
             if(this == &other)
                 return *this;
 
-            m_start = std::move(other.m_start);
-            m_end = std::move(other.m_end);
+            m_points = std::move(other.m_points);
 
             return *this;
         }
 
     private:
-        Point m_start;
-        Point m_end;
+        Point m_points[2];
     };
 }  // namespace NBezier
