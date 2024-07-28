@@ -12,5 +12,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 enable_testing()
 
+# properties
+if(MSVC)
+    # update __cplusplus macro 
+    add_compile_options(/Zc:__cplusplus)
+
+    # treat warnings as errors
+    add_compile_options(/WX)
+endif(MSVC)
+
 add_subdirectory(src/NBezier)
 add_subdirectory(test)
