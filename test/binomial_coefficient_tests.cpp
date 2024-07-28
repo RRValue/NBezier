@@ -1,7 +1,5 @@
 #include "NBezier/binomial_coefficient.h"
 
-#include "bezier_test_types.h"
-
 #include <gtest/gtest.h>
 
 using namespace NBezier;
