@@ -6,10 +6,12 @@
 #include <tuple>
 
 // clang-format off
-struct One{static const int Value = 1;};
-struct Two{static const int Value = 2;};
-struct Three{static const int Value = 3;};
-struct Four{static const int Value = 4;};
+struct One{static constexpr int Value = 1;};
+struct Two{static constexpr int Value = 2;};
+struct Three{static constexpr int Value = 3;};
+struct Four{static constexpr int Value = 4;};
+struct Five{static constexpr int Value = 5;};
+struct Six{static constexpr int Value = 6;};
 // clang-format on
 
 using BezierTestTypes = ::testing::Types<std::tuple<float, One, One>,            //
@@ -49,3 +51,27 @@ using BezierTestTypes = ::testing::Types<std::tuple<float, One, One>,           
                                          std::tuple<long double, Three, Two>,    //
                                          std::tuple<long double, Three, Three>,  //
                                          std::tuple<long double, Three, Four>>;
+
+using ScalarDegreeCombinations = ::testing::Types<std::tuple<float, One>,          //
+                                                  std::tuple<float, Two>,          //
+                                                  std::tuple<float, Three>,        //
+                                                  std::tuple<float, Four>,         //
+                                                  std::tuple<float, Five>,         //
+                                                  std::tuple<float, Six>,          //
+                                                  std::tuple<double, One>,         //
+                                                  std::tuple<double, Two>,         //
+                                                  std::tuple<double, Three>,       //
+                                                  std::tuple<double, Four>,        //
+                                                  std::tuple<double, Five>,        //
+                                                  std::tuple<double, Six>,         //
+                                                  std::tuple<long double, One>,    //
+                                                  std::tuple<long double, Two>,    //
+                                                  std::tuple<long double, Three>,  //
+                                                  std::tuple<long double, Four>,   //
+                                                  std::tuple<long double, Five>,   //
+                                                  std::tuple<long double, Six>>;
+
+using Scalars = ::testing::Types<float,        //
+                                 double,       //
+                                 long double,  //
+                                 int>;

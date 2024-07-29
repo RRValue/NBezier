@@ -1,8 +1,5 @@
 set(ComponentName NBezier)
 
-# find and assert external libs (boost)
-find_package(Boost 1.85 REQUIRED COMPONENTS qvm)
-
 file(GLOB_RECURSE Header ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
 file(GLOB_RECURSE Sources ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 

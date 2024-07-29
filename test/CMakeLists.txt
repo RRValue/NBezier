@@ -21,6 +21,10 @@ target_include_directories(${ComponentName} PRIVATE ${GTEST_INCLUDE_DIR})
 target_link_libraries(${ComponentName}
     PRIVATE NBezier)
 
+# external libs (boost)
+target_link_libraries(${ComponentName}
+    PUBLIC Boost::qvm)
+
 # external libs (google test)
 target_link_libraries(${ComponentName}
     PRIVATE
