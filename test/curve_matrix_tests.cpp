@@ -4,6 +4,8 @@
 
 #include <gtest/gtest.h>
 
+#include <boost/qvm/mat_access.hpp>
+
 #include <concepts>
 #include <tuple>
 
@@ -33,9 +35,7 @@ TYPED_TEST_P(CurveMatrixTypeTest, Requirements)
 
 REGISTER_TYPED_TEST_SUITE_P(CurveMatrixTypeTest, Requirements);
 
-INSTANTIATE_TYPED_TEST_SUITE_P(CurveMatrixRequirements, CurveMatrixTypeTest, ScalarDegreeCombinations);
-
-#include <boost/qvm/mat_access.hpp>
+INSTANTIATE_TYPED_TEST_SUITE_P(CurveMatrixRequirements, CurveMatrixTypeTest, CurveMatrixScalarDegreeCombinations);
 
 template<typename T>
 class CurveMatrixGenerationTest : public testing::Test
@@ -128,4 +128,4 @@ TYPED_TEST_P(CurveMatrixGenerationTest, Generation)
 
 REGISTER_TYPED_TEST_SUITE_P(CurveMatrixGenerationTest, Generation);
 
-INSTANTIATE_TYPED_TEST_SUITE_P(CurveMatrixGeneration, CurveMatrixGenerationTest, Scalars);
+INSTANTIATE_TYPED_TEST_SUITE_P(CurveMatrixGeneration, CurveMatrixGenerationTest, CurveMatrixScalars);

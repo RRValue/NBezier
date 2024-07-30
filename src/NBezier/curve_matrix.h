@@ -40,20 +40,19 @@ namespace NBezier
         }
 
         template<std::size_t... Indices>
-        static constexpr Matrix generateMatrix(std::index_sequence<Indices...>)
+        static constexpr void generateMatrix(Matrix& m, std::index_sequence<Indices...>)
         {
-            Matrix m = {};
-
             (fillCell<Indices>(m), ...);
-
-            return m;
         }
 
     public:
         static constexpr Matrix get() noexcept
         {
-            constexpr auto sequence = std::make_index_sequence<Degree * Degree>{};
-            return generateMatrix(sequence);
+            Matrix m = {};
+
+            generateMatrix(m, std::make_index_sequence<Degree * Degree>{});
+
+            return m;
         }
 
         bool operator==(const CurveMatrix&) const noexcept = default;
