@@ -5,6 +5,9 @@
 #include <boost/qvm/vec.hpp>
 #include <boost/qvm/vec_access.hpp>
 
+#include <boost/qvm/mat.hpp>
+#include <boost/qvm/mat_access.hpp>
+
 #include <concepts>
 
 namespace NBezier
@@ -30,6 +33,7 @@ namespace NBezier
 
     public:
         typedef boost::qvm::vec<ScalarType, NCoefficients> Coefficients;
+        typedef boost::qvm::mat<ScalarType, NCoefficients, NCoefficients> CoefficientsMatrix;
 
     private:
         template<size_t Index>
@@ -79,6 +83,31 @@ namespace NBezier
             generateCoefficients(c, std::make_index_sequence<Derivative>{});
 
             return c;
+        }
+
+        template<size_t Index>
+        static constexpr void assignDiagonalCell(CoefficientsMatrix& m, Coefficients& c)
+        {
+            boost::qvm::A<Index, Index>(m) = boost::qvm::A<Index>(c);
+        }
+
+        template<size_t... Indices>
+        static constexpr void assignDiagonalMatrix(CoefficientsMatrix& m, Coefficients& c, std::index_sequence<Indices...>)
+        {
+            (assignDiagonalCell<Indices>(m, c), ...);
+        }
+
+        template<size_t Derivative>
+            requires PolynomialDerivativeRequirement<Derivative, Degree>
+        static constexpr CoefficientsMatrix getDiagonal() noexcept
+        {
+            auto c = get<Derivative>();
+
+            CoefficientsMatrix m = {};
+
+            assignDiagonalMatrix(m, c, std::make_index_sequence<NCoefficients>{});
+
+            return m;
         }
 
         bool operator==(const PolynomialCoefficients&) const noexcept = default;
