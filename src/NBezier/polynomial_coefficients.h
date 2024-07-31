@@ -23,9 +23,10 @@ namespace NBezier
     concept PolynomialDerivativeRequirement = //
         0 <= Derivative && Derivative <= Degree;
 
-    template<typename ScalarType, size_t Degree>
-        requires PolynomialCoefficientType<ScalarType> &&  //
-                 PolynomialCoefficientRequirement<Degree>
+    template<typename ScalarType, size_t Degree, size_t Derivative>
+        requires PolynomialCoefficientType<ScalarType> &&     //
+                 PolynomialCoefficientRequirement<Degree> &&  //
+                 PolynomialDerivativeRequirement<Derivative, Degree>
     struct PolynomialCoefficients
     {
     private:
@@ -73,8 +74,6 @@ namespace NBezier
         }
 
     public:
-        template<size_t Derivative>
-            requires PolynomialDerivativeRequirement<Derivative, Degree>
         static constexpr Coefficients get() noexcept
         {
             Coefficients c = {};
@@ -97,11 +96,9 @@ namespace NBezier
             (assignDiagonalCell<Indices>(m, c), ...);
         }
 
-        template<size_t Derivative>
-            requires PolynomialDerivativeRequirement<Derivative, Degree>
         static constexpr CoefficientsMatrix getDiagonal() noexcept
         {
-            auto c = get<Derivative>();
+            auto c = get();
 
             CoefficientsMatrix m = {};
 

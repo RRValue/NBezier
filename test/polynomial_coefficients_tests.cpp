@@ -2,9 +2,9 @@
 
 #include "bezier_test_types.h"
 
+#include <boost/qvm/map_mat_vec.hpp>
 #include <boost/qvm/vec.hpp>
 #include <boost/qvm/vec_operations.hpp>
-#include <boost/qvm/map_mat_vec.hpp>
 
 #include <gtest/gtest.h>
 
@@ -19,9 +19,10 @@ class PolynomialCoefficientsTypeTest : public testing::Test
 public:
     typedef std::tuple_element_t<0, T> Scalar;
     static const int Degree = std::tuple_element_t<1, T>::Value;
+    static const int Derivative = std::tuple_element_t<2, T>::Value;
 
-    typedef PolynomialCoefficients<Scalar, Degree> PolynomialCoefficientsType;
-    typedef PolynomialCoefficients<Scalar, Degree>& PolynomialCoefficientsTypeRef;
+    typedef PolynomialCoefficients<Scalar, Degree, Derivative> PolynomialCoefficientsType;
+    typedef PolynomialCoefficients<Scalar, Degree, Derivative>& PolynomialCoefficientsTypeRef;
 };
 
 TYPED_TEST_SUITE_P(PolynomialCoefficientsTypeTest);
@@ -39,35 +40,64 @@ REGISTER_TYPED_TEST_SUITE_P(PolynomialCoefficientsTypeTest, Requirements);
 
 INSTANTIATE_TYPED_TEST_SUITE_P(PolynomialCoefficientsRequirements, PolynomialCoefficientsTypeTest, PolynomialCoefficientsScalarDegree);
 
-TEST(PolynomialCoefficientsGeneration, GetVector)
+template<typename T>
+class PolynomialCoefficientsGetTest : public testing::Test
 {
-    {
-        constexpr auto c0 = PolynomialCoefficients<float, 0>::get<0>();
+public:
+    typedef T Scalar;
 
-        constexpr auto ex_c0 = boost::qvm::vec<float, 1>{1};
+    template<size_t Derivative>
+    using PolynomialCoefficients0 = PolynomialCoefficients<Scalar, 0, Derivative>;
+
+    template<size_t Derivative>
+    using PolynomialCoefficients1 = PolynomialCoefficients<Scalar, 1, Derivative>;
+
+    template<size_t Derivative>
+    using PolynomialCoefficients2 = PolynomialCoefficients<Scalar, 2, Derivative>;
+
+    template<size_t Derivative>
+    using PolynomialCoefficients3 = PolynomialCoefficients<Scalar, 3, Derivative>;
+
+    template<size_t Derivative>
+    using PolynomialCoefficients4 = PolynomialCoefficients<Scalar, 4, Derivative>;
+
+    template<size_t Derivative>
+    using PolynomialCoefficients5 = PolynomialCoefficients<Scalar, 5, Derivative>;
+};
+
+TYPED_TEST_SUITE_P(PolynomialCoefficientsGetTest);
+
+TYPED_TEST_P(PolynomialCoefficientsGetTest, GetVector)
+{
+    typedef TestFixture::Scalar Scalar;
+
+    {
+        constexpr auto c0 = TestFixture::PolynomialCoefficients0<0>::get();
+
+        constexpr auto ex_c0 = boost::qvm::vec<Scalar, 1>{1};
 
         EXPECT_EQ(c0, ex_c0);
     }
 
     {
-        constexpr auto c0 = PolynomialCoefficients<float, 1>::get<0>();
-        constexpr auto c1 = PolynomialCoefficients<float, 1>::get<1>();
+        constexpr auto c0 = TestFixture::PolynomialCoefficients1<0>::get();
+        constexpr auto c1 = TestFixture::PolynomialCoefficients1<1>::get();
 
-        constexpr auto ex_c0 = boost::qvm::vec<float, 2>{1, 1};
-        constexpr auto ex_c1 = boost::qvm::vec<float, 2>{1, 0};
+        constexpr auto ex_c0 = boost::qvm::vec<Scalar, 2>{1, 1};
+        constexpr auto ex_c1 = boost::qvm::vec<Scalar, 2>{1, 0};
 
         EXPECT_EQ(c0, ex_c0);
         EXPECT_EQ(c1, ex_c1);
     }
 
     {
-        constexpr auto c0 = PolynomialCoefficients<float, 2>::get<0>();
-        constexpr auto c1 = PolynomialCoefficients<float, 2>::get<1>();
-        constexpr auto c2 = PolynomialCoefficients<float, 2>::get<2>();
+        constexpr auto c0 = TestFixture::PolynomialCoefficients2<0> ::get();
+        constexpr auto c1 = TestFixture::PolynomialCoefficients2<1>::get();
+        constexpr auto c2 = TestFixture::PolynomialCoefficients2<2>::get();
 
-        constexpr auto ex_c0 = boost::qvm::vec<float, 3>{1, 1, 1};
-        constexpr auto ex_c1 = boost::qvm::vec<float, 3>{2, 1, 0};
-        constexpr auto ex_c2 = boost::qvm::vec<float, 3>{2, 0, 0};
+        constexpr auto ex_c0 = boost::qvm::vec<Scalar, 3>{1, 1, 1};
+        constexpr auto ex_c1 = boost::qvm::vec<Scalar, 3>{2, 1, 0};
+        constexpr auto ex_c2 = boost::qvm::vec<Scalar, 3>{2, 0, 0};
 
         EXPECT_EQ(c0, ex_c0);
         EXPECT_EQ(c1, ex_c1);
@@ -75,15 +105,15 @@ TEST(PolynomialCoefficientsGeneration, GetVector)
     }
 
     {
-        constexpr auto c0 = PolynomialCoefficients<float, 3>::get<0>();
-        constexpr auto c1 = PolynomialCoefficients<float, 3>::get<1>();
-        constexpr auto c2 = PolynomialCoefficients<float, 3>::get<2>();
-        constexpr auto c3 = PolynomialCoefficients<float, 3>::get<3>();
+        constexpr auto c0 = TestFixture::PolynomialCoefficients3<0>::get();
+        constexpr auto c1 = TestFixture::PolynomialCoefficients3<1>::get();
+        constexpr auto c2 = TestFixture::PolynomialCoefficients3<2>::get();
+        constexpr auto c3 = TestFixture::PolynomialCoefficients3<3>::get();
 
-        constexpr auto ex_c0 = boost::qvm::vec<float, 4>{1, 1, 1, 1};
-        constexpr auto ex_c1 = boost::qvm::vec<float, 4>{3, 2, 1, 0};
-        constexpr auto ex_c2 = boost::qvm::vec<float, 4>{6, 2, 0, 0};
-        constexpr auto ex_c3 = boost::qvm::vec<float, 4>{6, 0, 0, 0};
+        constexpr auto ex_c0 = boost::qvm::vec<Scalar, 4>{1, 1, 1, 1};
+        constexpr auto ex_c1 = boost::qvm::vec<Scalar, 4>{3, 2, 1, 0};
+        constexpr auto ex_c2 = boost::qvm::vec<Scalar, 4>{6, 2, 0, 0};
+        constexpr auto ex_c3 = boost::qvm::vec<Scalar, 4>{6, 0, 0, 0};
 
         EXPECT_EQ(c0, ex_c0);
         EXPECT_EQ(c1, ex_c1);
@@ -92,17 +122,17 @@ TEST(PolynomialCoefficientsGeneration, GetVector)
     }
 
     {
-        constexpr auto c0 = PolynomialCoefficients<float, 4>::get<0>();
-        constexpr auto c1 = PolynomialCoefficients<float, 4>::get<1>();
-        constexpr auto c2 = PolynomialCoefficients<float, 4>::get<2>();
-        constexpr auto c3 = PolynomialCoefficients<float, 4>::get<3>();
-        constexpr auto c4 = PolynomialCoefficients<float, 4>::get<4>();
+        constexpr auto c0 = TestFixture::PolynomialCoefficients4<0>::get();
+        constexpr auto c1 = TestFixture::PolynomialCoefficients4<1>::get();
+        constexpr auto c2 = TestFixture::PolynomialCoefficients4<2>::get();
+        constexpr auto c3 = TestFixture::PolynomialCoefficients4<3>::get();
+        constexpr auto c4 = TestFixture::PolynomialCoefficients4<4>::get();
 
-        constexpr auto ex_c0 = boost::qvm::vec<float, 5>{1, 1, 1, 1, 1};
-        constexpr auto ex_c1 = boost::qvm::vec<float, 5>{4, 3, 2, 1, 0};
-        constexpr auto ex_c2 = boost::qvm::vec<float, 5>{12, 6, 2, 0, 0};
-        constexpr auto ex_c3 = boost::qvm::vec<float, 5>{24, 6, 0, 0, 0};
-        constexpr auto ex_c4 = boost::qvm::vec<float, 5>{24, 0, 0, 0, 0};
+        constexpr auto ex_c0 = boost::qvm::vec<Scalar, 5>{1, 1, 1, 1, 1};
+        constexpr auto ex_c1 = boost::qvm::vec<Scalar, 5>{4, 3, 2, 1, 0};
+        constexpr auto ex_c2 = boost::qvm::vec<Scalar, 5>{12, 6, 2, 0, 0};
+        constexpr auto ex_c3 = boost::qvm::vec<Scalar, 5>{24, 6, 0, 0, 0};
+        constexpr auto ex_c4 = boost::qvm::vec<Scalar, 5>{24, 0, 0, 0, 0};
 
         EXPECT_EQ(c0, ex_c0);
         EXPECT_EQ(c1, ex_c1);
@@ -112,19 +142,19 @@ TEST(PolynomialCoefficientsGeneration, GetVector)
     }
 
     {
-        constexpr auto c0 = PolynomialCoefficients<float, 5>::get<0>();
-        constexpr auto c1 = PolynomialCoefficients<float, 5>::get<1>();
-        constexpr auto c2 = PolynomialCoefficients<float, 5>::get<2>();
-        constexpr auto c3 = PolynomialCoefficients<float, 5>::get<3>();
-        constexpr auto c4 = PolynomialCoefficients<float, 5>::get<4>();
-        constexpr auto c5 = PolynomialCoefficients<float, 5>::get<5>();
+        constexpr auto c0 = TestFixture::PolynomialCoefficients5<0>::get();
+        constexpr auto c1 = TestFixture::PolynomialCoefficients5<1>::get();
+        constexpr auto c2 = TestFixture::PolynomialCoefficients5<2>::get();
+        constexpr auto c3 = TestFixture::PolynomialCoefficients5<3>::get();
+        constexpr auto c4 = TestFixture::PolynomialCoefficients5<4>::get();
+        constexpr auto c5 = TestFixture::PolynomialCoefficients5<5>::get();
 
-        constexpr auto ex_c0 = boost::qvm::vec<float, 6>{1, 1, 1, 1, 1, 1};
-        constexpr auto ex_c1 = boost::qvm::vec<float, 6>{5, 4, 3, 2, 1, 0};
-        constexpr auto ex_c2 = boost::qvm::vec<float, 6>{20, 12, 6, 2, 0, 0};
-        constexpr auto ex_c3 = boost::qvm::vec<float, 6>{60, 24, 6, 0, 0, 0};
-        constexpr auto ex_c4 = boost::qvm::vec<float, 6>{120, 24, 0, 0, 0, 0};
-        constexpr auto ex_c5 = boost::qvm::vec<float, 6>{120, 0, 0, 0, 0, 0};
+        constexpr auto ex_c0 = boost::qvm::vec<Scalar, 6>{1, 1, 1, 1, 1, 1};
+        constexpr auto ex_c1 = boost::qvm::vec<Scalar, 6>{5, 4, 3, 2, 1, 0};
+        constexpr auto ex_c2 = boost::qvm::vec<Scalar, 6>{20, 12, 6, 2, 0, 0};
+        constexpr auto ex_c3 = boost::qvm::vec<Scalar, 6>{60, 24, 6, 0, 0, 0};
+        constexpr auto ex_c4 = boost::qvm::vec<Scalar, 6>{120, 24, 0, 0, 0, 0};
+        constexpr auto ex_c5 = boost::qvm::vec<Scalar, 6>{120, 0, 0, 0, 0, 0};
 
         EXPECT_EQ(c0, ex_c0);
         EXPECT_EQ(c1, ex_c1);
@@ -135,35 +165,37 @@ TEST(PolynomialCoefficientsGeneration, GetVector)
     }
 }
 
-TEST(PolynomialCoefficientsGeneration, GetDiagonal)
+TYPED_TEST_P(PolynomialCoefficientsGetTest, GetDiagonal)
 {
-    {
-        constexpr auto m0 = PolynomialCoefficients<float, 0>::getDiagonal<0>();
+    typedef TestFixture::Scalar Scalar;
 
-        constexpr auto ex_c0 = boost::qvm::vec<float, 1>{1};
+    {
+        constexpr auto m0 = TestFixture::PolynomialCoefficients0<0>::getDiagonal();
+
+        constexpr auto ex_c0 = boost::qvm::vec<Scalar, 1>{1};
 
         EXPECT_EQ(boost::qvm::diag(m0), ex_c0);
     }
 
     {
-        constexpr auto m0 = PolynomialCoefficients<float, 1>::getDiagonal<0>();
-        constexpr auto m1 = PolynomialCoefficients<float, 1>::getDiagonal<1>();
+        constexpr auto m0 = TestFixture::PolynomialCoefficients1<0>::getDiagonal();
+        constexpr auto m1 = TestFixture::PolynomialCoefficients1<1>::getDiagonal();
 
-        constexpr auto ex_c0 = boost::qvm::vec<float, 2>{1, 1};
-        constexpr auto ex_c1 = boost::qvm::vec<float, 2>{1, 0};
+        constexpr auto ex_c0 = boost::qvm::vec<Scalar, 2>{1, 1};
+        constexpr auto ex_c1 = boost::qvm::vec<Scalar, 2>{1, 0};
 
         EXPECT_EQ(boost::qvm::diag(m0), ex_c0);
         EXPECT_EQ(boost::qvm::diag(m1), ex_c1);
     }
 
     {
-        constexpr auto m0 = PolynomialCoefficients<float, 2>::getDiagonal<0>();
-        constexpr auto m1 = PolynomialCoefficients<float, 2>::getDiagonal<1>();
-        constexpr auto m2 = PolynomialCoefficients<float, 2>::getDiagonal<2>();
+        constexpr auto m0 = TestFixture::PolynomialCoefficients2<0>::getDiagonal();
+        constexpr auto m1 = TestFixture::PolynomialCoefficients2<1>::getDiagonal();
+        constexpr auto m2 = TestFixture::PolynomialCoefficients2<2>::getDiagonal();
 
-        constexpr auto ex_c0 = boost::qvm::vec<float, 3>{1, 1, 1};
-        constexpr auto ex_c1 = boost::qvm::vec<float, 3>{2, 1, 0};
-        constexpr auto ex_c2 = boost::qvm::vec<float, 3>{2, 0, 0};
+        constexpr auto ex_c0 = boost::qvm::vec<Scalar, 3>{1, 1, 1};
+        constexpr auto ex_c1 = boost::qvm::vec<Scalar, 3>{2, 1, 0};
+        constexpr auto ex_c2 = boost::qvm::vec<Scalar, 3>{2, 0, 0};
 
         EXPECT_EQ(boost::qvm::diag(m0), ex_c0);
         EXPECT_EQ(boost::qvm::diag(m1), ex_c1);
@@ -171,15 +203,15 @@ TEST(PolynomialCoefficientsGeneration, GetDiagonal)
     }
 
     {
-        constexpr auto m0 = PolynomialCoefficients<float, 3>::getDiagonal<0>();
-        constexpr auto m1 = PolynomialCoefficients<float, 3>::getDiagonal<1>();
-        constexpr auto m2 = PolynomialCoefficients<float, 3>::getDiagonal<2>();
-        constexpr auto m3 = PolynomialCoefficients<float, 3>::getDiagonal<3>();
+        constexpr auto m0 = TestFixture::PolynomialCoefficients3<0>::getDiagonal();
+        constexpr auto m1 = TestFixture::PolynomialCoefficients3<1>::getDiagonal();
+        constexpr auto m2 = TestFixture::PolynomialCoefficients3<2>::getDiagonal();
+        constexpr auto m3 = TestFixture::PolynomialCoefficients3<3>::getDiagonal();
 
-        constexpr auto ex_c0 = boost::qvm::vec<float, 4>{1, 1, 1, 1};
-        constexpr auto ex_c1 = boost::qvm::vec<float, 4>{3, 2, 1, 0};
-        constexpr auto ex_c2 = boost::qvm::vec<float, 4>{6, 2, 0, 0};
-        constexpr auto ex_c3 = boost::qvm::vec<float, 4>{6, 0, 0, 0};
+        constexpr auto ex_c0 = boost::qvm::vec<Scalar, 4>{1, 1, 1, 1};
+        constexpr auto ex_c1 = boost::qvm::vec<Scalar, 4>{3, 2, 1, 0};
+        constexpr auto ex_c2 = boost::qvm::vec<Scalar, 4>{6, 2, 0, 0};
+        constexpr auto ex_c3 = boost::qvm::vec<Scalar, 4>{6, 0, 0, 0};
 
         EXPECT_EQ(boost::qvm::diag(m0), ex_c0);
         EXPECT_EQ(boost::qvm::diag(m1), ex_c1);
@@ -188,17 +220,17 @@ TEST(PolynomialCoefficientsGeneration, GetDiagonal)
     }
 
     {
-        constexpr auto m0 = PolynomialCoefficients<float, 4>::getDiagonal<0>();
-        constexpr auto m1 = PolynomialCoefficients<float, 4>::getDiagonal<1>();
-        constexpr auto m2 = PolynomialCoefficients<float, 4>::getDiagonal<2>();
-        constexpr auto m3 = PolynomialCoefficients<float, 4>::getDiagonal<3>();
-        constexpr auto m4 = PolynomialCoefficients<float, 4>::getDiagonal<4>();
+        constexpr auto m0 = TestFixture::PolynomialCoefficients4<0>::getDiagonal();
+        constexpr auto m1 = TestFixture::PolynomialCoefficients4<1>::getDiagonal();
+        constexpr auto m2 = TestFixture::PolynomialCoefficients4<2>::getDiagonal();
+        constexpr auto m3 = TestFixture::PolynomialCoefficients4<3>::getDiagonal();
+        constexpr auto m4 = TestFixture::PolynomialCoefficients4<4>::getDiagonal();
 
-        constexpr auto ex_c0 = boost::qvm::vec<float, 5>{1, 1, 1, 1, 1};
-        constexpr auto ex_c1 = boost::qvm::vec<float, 5>{4, 3, 2, 1, 0};
-        constexpr auto ex_c2 = boost::qvm::vec<float, 5>{12, 6, 2, 0, 0};
-        constexpr auto ex_c3 = boost::qvm::vec<float, 5>{24, 6, 0, 0, 0};
-        constexpr auto ex_c4 = boost::qvm::vec<float, 5>{24, 0, 0, 0, 0};
+        constexpr auto ex_c0 = boost::qvm::vec<Scalar, 5>{1, 1, 1, 1, 1};
+        constexpr auto ex_c1 = boost::qvm::vec<Scalar, 5>{4, 3, 2, 1, 0};
+        constexpr auto ex_c2 = boost::qvm::vec<Scalar, 5>{12, 6, 2, 0, 0};
+        constexpr auto ex_c3 = boost::qvm::vec<Scalar, 5>{24, 6, 0, 0, 0};
+        constexpr auto ex_c4 = boost::qvm::vec<Scalar, 5>{24, 0, 0, 0, 0};
 
         EXPECT_EQ(boost::qvm::diag(m0), ex_c0);
         EXPECT_EQ(boost::qvm::diag(m1), ex_c1);
@@ -208,19 +240,19 @@ TEST(PolynomialCoefficientsGeneration, GetDiagonal)
     }
 
     {
-        constexpr auto m0 = PolynomialCoefficients<float, 5>::getDiagonal<0>();
-        constexpr auto m1 = PolynomialCoefficients<float, 5>::getDiagonal<1>();
-        constexpr auto m2 = PolynomialCoefficients<float, 5>::getDiagonal<2>();
-        constexpr auto m3 = PolynomialCoefficients<float, 5>::getDiagonal<3>();
-        constexpr auto m4 = PolynomialCoefficients<float, 5>::getDiagonal<4>();
-        constexpr auto m5 = PolynomialCoefficients<float, 5>::getDiagonal<5>();
+        constexpr auto m0 = TestFixture::PolynomialCoefficients5<0>::getDiagonal();
+        constexpr auto m1 = TestFixture::PolynomialCoefficients5<1>::getDiagonal();
+        constexpr auto m2 = TestFixture::PolynomialCoefficients5<2>::getDiagonal();
+        constexpr auto m3 = TestFixture::PolynomialCoefficients5<3>::getDiagonal();
+        constexpr auto m4 = TestFixture::PolynomialCoefficients5<4>::getDiagonal();
+        constexpr auto m5 = TestFixture::PolynomialCoefficients5<5>::getDiagonal();
 
-        constexpr auto ex_c0 = boost::qvm::vec<float, 6>{1, 1, 1, 1, 1, 1};
-        constexpr auto ex_c1 = boost::qvm::vec<float, 6>{5, 4, 3, 2, 1, 0};
-        constexpr auto ex_c2 = boost::qvm::vec<float, 6>{20, 12, 6, 2, 0, 0};
-        constexpr auto ex_c3 = boost::qvm::vec<float, 6>{60, 24, 6, 0, 0, 0};
-        constexpr auto ex_c4 = boost::qvm::vec<float, 6>{120, 24, 0, 0, 0, 0};
-        constexpr auto ex_c5 = boost::qvm::vec<float, 6>{120, 0, 0, 0, 0, 0};
+        constexpr auto ex_c0 = boost::qvm::vec<Scalar, 6>{1, 1, 1, 1, 1, 1};
+        constexpr auto ex_c1 = boost::qvm::vec<Scalar, 6>{5, 4, 3, 2, 1, 0};
+        constexpr auto ex_c2 = boost::qvm::vec<Scalar, 6>{20, 12, 6, 2, 0, 0};
+        constexpr auto ex_c3 = boost::qvm::vec<Scalar, 6>{60, 24, 6, 0, 0, 0};
+        constexpr auto ex_c4 = boost::qvm::vec<Scalar, 6>{120, 24, 0, 0, 0, 0};
+        constexpr auto ex_c5 = boost::qvm::vec<Scalar, 6>{120, 0, 0, 0, 0, 0};
 
         EXPECT_EQ(boost::qvm::diag(m0), ex_c0);
         EXPECT_EQ(boost::qvm::diag(m1), ex_c1);
@@ -230,3 +262,9 @@ TEST(PolynomialCoefficientsGeneration, GetDiagonal)
         EXPECT_EQ(boost::qvm::diag(m5), ex_c5);
     }
 }
+
+REGISTER_TYPED_TEST_SUITE_P(PolynomialCoefficientsGetTest,  //
+                            GetVector,                      //
+                            GetDiagonal);
+
+INSTANTIATE_TYPED_TEST_SUITE_P(PolynomialCoefficientsGeneration, PolynomialCoefficientsGetTest, PolynomialCoefficientsScalars);

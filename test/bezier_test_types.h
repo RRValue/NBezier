@@ -77,26 +77,36 @@ using CurveMatrixScalars = ::testing::Types<float,        //
                                             long double,  //
                                             int>;
 
-using PolynomialCoefficientsScalarDegree = ::testing::Types<std::tuple<float, Zero>,         //
-                                                            std::tuple<float, One>,          //
-                                                            std::tuple<float, Two>,          //
-                                                            std::tuple<float, Three>,        //
-                                                            std::tuple<double, Zero>,        //
-                                                            std::tuple<double, One>,         //
-                                                            std::tuple<double, Two>,         //
-                                                            std::tuple<double, Three>,       //
-                                                            std::tuple<long double, Zero>,   //
-                                                            std::tuple<long double, One>,    //
-                                                            std::tuple<long double, Two>,    //
-                                                            std::tuple<long double, Three>,  //
-                                                            std::tuple<int, Zero>,           //
-                                                            std::tuple<int, One>,            //
-                                                            std::tuple<int, Two>,            //
-                                                            std::tuple<int, Three>,          //
-                                                            std::tuple<unsigned int, Zero>,  //
-                                                            std::tuple<unsigned int, One>,   //
-                                                            std::tuple<unsigned int, Two>,   //
-                                                            std::tuple<unsigned int, Three>>;
+using PolynomialCoefficientsScalarDegree = ::testing::Types<std::tuple<float, Zero, Zero>,         //
+                                                            std::tuple<float, One, Zero>,          //
+                                                            std::tuple<float, One, One>,           //
+                                                            std::tuple<float, Two, Zero>,          //
+                                                            std::tuple<float, Two, One>,           //
+                                                            std::tuple<float, Two, Two>,           //
+                                                            std::tuple<double, Zero, Zero>,        //
+                                                            std::tuple<double, One, Zero>,         //
+                                                            std::tuple<double, One, One>,          //
+                                                            std::tuple<double, Two, Zero>,         //
+                                                            std::tuple<double, Two, One>,          //
+                                                            std::tuple<double, Two, Two>,          //
+                                                            std::tuple<long double, Zero, Zero>,   //
+                                                            std::tuple<long double, One, Zero>,    //
+                                                            std::tuple<long double, One, One>,     //
+                                                            std::tuple<long double, Two, Zero>,    //
+                                                            std::tuple<long double, Two, One>,     //
+                                                            std::tuple<long double, Two, Two>,     //
+                                                            std::tuple<int, Zero, Zero>,           //
+                                                            std::tuple<int, One, Zero>,            //
+                                                            std::tuple<int, One, One>,             //
+                                                            std::tuple<int, Two, Zero>,            //
+                                                            std::tuple<int, Two, One>,             //
+                                                            std::tuple<int, Two, Two>,             //
+                                                            std::tuple<unsigned int, Zero, Zero>,  //
+                                                            std::tuple<unsigned int, One, Zero>,   //
+                                                            std::tuple<unsigned int, One, One>,    //
+                                                            std::tuple<unsigned int, Two, Zero>,   //
+                                                            std::tuple<unsigned int, Two, One>,    //
+                                                            std::tuple<unsigned int, Two, Two>>;
 
 using PolynomialCoefficientsScalars = ::testing::Types<float,        //
                                                        double,       //
