@@ -22,16 +22,48 @@ namespace NBezier
 
     struct PolynomialEvaluation
     {
+        template<typename Scalar, size_t Index>
+        static constexpr auto mult(Scalar& e, Scalar a)
+        {
+            e *= a;
+        }
+
+        template<typename Scalar, size_t... Indices>
+        static constexpr auto generateExponent(Scalar a, std::index_sequence<Indices...>)
+        {
+            auto e = Scalar(1);
+
+            (mult<Scalar, Indices>(e, a), ...);
+
+            return e;
+        }
+
+        template<typename Scalar, size_t NParameter, size_t Index>
+        static constexpr void setExponent(auto& c, Scalar a)
+        {
+            A<Index>(c) = generateExponent<Scalar>(a, std::make_index_sequence<NParameter - 1 - Index>{});
+        }
+
+        template<typename Scalar, size_t NParameter, size_t... Indices>
+        static constexpr void setExponents(auto& c, Scalar a, std::index_sequence<Indices...>)
+        {
+            (setExponent<Scalar, NParameter, Indices>(c, a), ...);
+        }
+
         template<size_t Derivative, typename Scalar, size_t NParameter>
         static constexpr auto getExponents(Scalar a)
         {
-            return boost::qvm::vec<Scalar, NParameter>{};
+            auto e = boost::qvm::vec<Scalar, NParameter>{};
+
+            setExponents<Scalar, NParameter>(e, a, std::make_index_sequence<NParameter>{});
+
+            return e;
         }
 
         template<size_t Derivative, typename Scalar, size_t NParameter, size_t Dimension>
             requires PolynomialEvaluationType<Scalar> &&  //
                      PolynomialEvaluationRequirement<NParameter, Dimension>
-        static constexpr boost::qvm::vec<Scalar, Dimension> eval(boost::qvm::mat<Scalar, NParameter, Dimension> p, Scalar a)
+        static constexpr boost::qvm::vec<Scalar, Dimension> eval(boost::qvm::mat<Scalar, Dimension, NParameter> p, Scalar a)
         {
             const auto c = PolynomialCoefficients<Scalar, NParameter - 1, Derivative>::getDiagonal();
             const auto e = getExponents<Derivative, Scalar, NParameter>(a);
