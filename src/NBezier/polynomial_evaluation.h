@@ -26,7 +26,7 @@ namespace NBezier
         template<size_t Derivative, typename Scalar, size_t NParameter, size_t Dimension>
             requires PolynomialEvaluationType<Scalar> &&  //
                      PolynomialEvaluationRequirement<NParameter, Dimension>
-        static constexpr boost::qvm::vec<Scalar, Dimension> eval(boost::qvm::mat<Scalar, Dimension, NParameter> p, Scalar a)
+        static constexpr auto eval(boost::qvm::mat<Scalar, Dimension, NParameter> p, Scalar a)
         {
             const auto c = PolynomialCoefficients<Scalar, NParameter - 1, Derivative>::getDiagonal();
             const auto v = PolynomialVariable<Scalar, NParameter - 1>::variableVector<Derivative>(a);
