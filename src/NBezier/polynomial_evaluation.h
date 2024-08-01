@@ -29,9 +29,9 @@ namespace NBezier
         static constexpr boost::qvm::vec<Scalar, Dimension> eval(boost::qvm::mat<Scalar, Dimension, NParameter> p, Scalar a)
         {
             const auto c = PolynomialCoefficients<Scalar, NParameter - 1, Derivative>::getDiagonal();
-            const auto e = PolynomialVariable<Scalar, NParameter - 1>::variableVector<Derivative>(a);
+            const auto v = PolynomialVariable<Scalar, NParameter - 1>::variableVector<Derivative>(a);
 
-            return p * c * e;
+            return p * c * v;
         }
     };
 }  // namespace NBezier
