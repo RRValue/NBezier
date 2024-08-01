@@ -113,3 +113,25 @@ using PolynomialCoefficientsScalars = ::testing::Types<float,        //
                                                        long double,  //
                                                        int,          //
                                                        unsigned int>;
+
+using PolynomialVariableScalarDegree = ::testing::Types<std::tuple<float, Zero>,         //
+                                                        std::tuple<float, One>,          //
+                                                        std::tuple<float, Two>,          //
+                                                        std::tuple<double, Zero>,        //
+                                                        std::tuple<double, One>,         //
+                                                        std::tuple<double, Two>,         //
+                                                        std::tuple<long double, Zero>,   //
+                                                        std::tuple<long double, One>,    //
+                                                        std::tuple<long double, Two>,    //
+                                                        std::tuple<int, Zero>,           //
+                                                        std::tuple<int, One>,            //
+                                                        std::tuple<int, Two>,            //
+                                                        std::tuple<unsigned int, Zero>,  //
+                                                        std::tuple<unsigned int, One>,   //
+                                                        std::tuple<unsigned int, Two>>;
+
+using PolynomialVariableScalars = ::testing::Types<float,        //
+                                                   double,       //
+                                                   long double,  //
+                                                   int,          //
+                                                   unsigned int>;
