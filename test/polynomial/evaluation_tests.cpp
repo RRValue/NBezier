@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-using namespace NBezier::Polynomial;
+UseNameSpace(NBezier::Polynomial);
 
 TEST(Bla, Bla)
 {

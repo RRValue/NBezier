@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-using namespace NBezier::Binomial;
+UseNameSpace(NBezier::Binomial);
 
 template<typename T>
 class CoefficientTest : public testing::Test
@@ -195,25 +195,25 @@ TYPED_TEST_P(CoefficientTest, TenthRow)
 }
 
 REGISTER_TYPED_TEST_SUITE_P(CoefficientTest,  //
-                            FirstRow,                 //
-                            SecondRow,                //
-                            ThirdRow,                 //
-                            FourthRow,                //
-                            FifthRow,                 //
-                            SixthRow,                 //
-                            SeventhRow,               //
-                            EighthRow,                //
-                            NinethRow,                //
+                            FirstRow,         //
+                            SecondRow,        //
+                            ThirdRow,         //
+                            FourthRow,        //
+                            FifthRow,         //
+                            SixthRow,         //
+                            SeventhRow,       //
+                            EighthRow,        //
+                            NinethRow,        //
                             TenthRow);
 
 using CoefficientTypes = ::testing::Types<unsigned int,        //
-                                                  int,                 //
-                                                  size_t,              //
-                                                  unsigned long long,  //
-                                                  long long,           //
-                                                  char,                //
-                                                  unsigned char,       //
-                                                  float,               //
-                                                  double>;
+                                          int,                 //
+                                          size_t,              //
+                                          unsigned long long,  //
+                                          long long,           //
+                                          char,                //
+                                          unsigned char,       //
+                                          float,               //
+                                          double>;
 
 INSTANTIATE_TYPED_TEST_SUITE_P(CoefficientTests, CoefficientTest, CoefficientTypes);

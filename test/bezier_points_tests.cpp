@@ -7,7 +7,7 @@
 #include <concepts>
 #include <tuple>
 
-using namespace NBezier;
+UseNameSpace(NBezier);
 
 template<typename T>
 class BezierTest : public testing::Test

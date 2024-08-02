@@ -9,7 +9,7 @@
 #include <concepts>
 #include <tuple>
 
-using namespace NBezier;
+UseNameSpace(NBezier);
 
 template<typename T>
 class CurveMatrixTypeTest : public testing::Test

@@ -11,7 +11,7 @@
 #include <concepts>
 #include <tuple>
 
-using namespace NBezier::Polynomial;
+UseNameSpace(NBezier::Polynomial);
 
 template<typename T>
 class DerivativeFactorsTypeTest : public testing::Test
@@ -264,7 +264,7 @@ TYPED_TEST_P(DerivativeFactorsGetTest, GetDiagonal)
 }
 
 REGISTER_TYPED_TEST_SUITE_P(DerivativeFactorsGetTest,  //
-                            GetVector,                           //
+                            GetVector,                 //
                             GetDiagonal);
 
 INSTANTIATE_TYPED_TEST_SUITE_P(DerivativeFactorsGeneration, DerivativeFactorsGetTest, DerivativeFactorsScalars);

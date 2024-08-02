@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 
-using namespace NBezier::Polynomial;
+UseNameSpace(NBezier::Polynomial);
 
 template<typename T>
 class VariableTypeTest : public testing::Test
@@ -53,7 +53,7 @@ TYPED_TEST_P(VariableGetTest, GetVector)
     typedef TestFixture::Scalar Scalar;
 
     const auto fill_exp_variable = [](auto& vec, const size_t& degree, const size_t& derivative, const auto& variable) {
-        for (size_t i = 0; i < degree + 1; i++)
+        for(size_t i = 0; i < degree + 1; i++)
             if(derivative + i <= degree)
                 boost::qvm::write_vec_element_idx(i, vec, std::pow(variable, degree - derivative - i));
     };
@@ -72,7 +72,7 @@ TYPED_TEST_P(VariableGetTest, GetVector)
     {
         constexpr auto v0 = TestFixture::Variable1::variableVector<0>(variable);
         constexpr auto v1 = TestFixture::Variable1::variableVector<1>(variable);
-        
+
         auto ex_v0 = boost::qvm::vec<Scalar, 2>{};
         auto ex_v1 = boost::qvm::vec<Scalar, 2>{};
 

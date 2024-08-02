@@ -1,5 +1,7 @@
 #pragma once
 
+#include "NBezier/defines.h"
+
 #include <boost/qvm/vec.hpp>
 #include <boost/qvm/vec_access.hpp>
 
@@ -8,95 +10,95 @@
 
 #include <concepts>
 
-namespace NBezier
+OpenNameSpace(NBezier);
+OpenNameSpace(Polynomial);
+
+template<typename Scalar>
+concept DerivativeFactorsType = (std::integral<Scalar> || std::floating_point<Scalar>)&&  //
+    !std::is_same<Scalar, bool>::value;
+
+template<size_t Derivative, size_t Degree>
+concept DerivativeRequirement =  //
+    0 <= Derivative && Derivative <= Degree;
+
+template<typename Scalar, size_t Degree, size_t Derivative>
+    requires DerivativeFactorsType<Scalar> &&  //
+             DerivativeRequirement<Derivative, Degree>
+struct DerivativeFactors
 {
-    namespace Polynomial
+private:
+    template<size_t Index>
+    static constexpr void initCoefficients(auto& c)
     {
-        template<typename Scalar>
-        concept DerivativeFactorsType = (std::integral<Scalar> || std::floating_point<Scalar>)&&  //
-            !std::is_same<Scalar, bool>::value;
+        A<Index>(c) = Scalar(1);
+    }
 
-        template<size_t Derivative, size_t Degree>
-        concept DerivativeRequirement =  //
-            0 <= Derivative && Derivative <= Degree;
+    template<size_t... Indices>
+    static constexpr void initCoefficients(auto& c, std::index_sequence<Indices...>)
+    {
+        (initCoefficients<Indices>(c), ...);
+    }
 
-        template<typename Scalar, size_t Degree, size_t Derivative>
-            requires DerivativeFactorsType<Scalar> &&  //
-                     DerivativeRequirement<Derivative, Degree>
-        struct DerivativeFactors
-        {
-        private:
-            template<size_t Index>
-            static constexpr void initCoefficients(auto& c)
-            {
-                A<Index>(c) = Scalar(1);
-            }
+    template<size_t Derivative, size_t Index>
+    static constexpr void multCoefficient(auto& c)
+    {
+        A<Index>(c) *= (Degree - Index - Derivative);
+    }
 
-            template<size_t... Indices>
-            static constexpr void initCoefficients(auto& c, std::index_sequence<Indices...>)
-            {
-                (initCoefficients<Indices>(c), ...);
-            }
+    template<size_t Derivative, size_t... Indices>
+    static constexpr void derive(auto& c, std::index_sequence<Indices...>)
+    {
+        (multCoefficient<Derivative, Indices>(c), ...);
+    }
 
-            template<size_t Derivative, size_t Index>
-            static constexpr void multCoefficient(auto& c)
-            {
-                A<Index>(c) *= (Degree - Index - Derivative);
-            }
+    template<size_t Derivative>
+    static constexpr void deriveCoefficients(auto& c)
+    {
+        derive<Derivative>(c, std::make_index_sequence<Degree + 1>{});
+    }
 
-            template<size_t Derivative, size_t... Indices>
-            static constexpr void derive(auto& c, std::index_sequence<Indices...>)
-            {
-                (multCoefficient<Derivative, Indices>(c), ...);
-            }
+    template<size_t... Derivatives>
+    static constexpr void generateCoefficients(auto& c, std::index_sequence<Derivatives...>)
+    {
+        (deriveCoefficients<Derivatives>(c), ...);
+    }
 
-            template<size_t Derivative>
-            static constexpr void deriveCoefficients(auto& c)
-            {
-                derive<Derivative>(c, std::make_index_sequence<Degree + 1>{});
-            }
+    template<size_t Index>
+    static constexpr void assignDiagonalCell(auto& m, auto& c)
+    {
+        boost::qvm::A<Index, Index>(m) = boost::qvm::A<Index>(c);
+    }
 
-            template<size_t... Derivatives>
-            static constexpr void generateCoefficients(auto& c, std::index_sequence<Derivatives...>)
-            {
-                (deriveCoefficients<Derivatives>(c), ...);
-            }
+    template<size_t... Indices>
+    static constexpr void assignDiagonalMatrix(auto& m, auto& c, std::index_sequence<Indices...>)
+    {
+        (assignDiagonalCell<Indices>(m, c), ...);
+    }
 
-            template<size_t Index>
-            static constexpr void assignDiagonalCell(auto& m, auto& c)
-            {
-                boost::qvm::A<Index, Index>(m) = boost::qvm::A<Index>(c);
-            }
+public:
+    static constexpr auto get() noexcept
+    {
+        boost::qvm::vec<Scalar, Degree + 1> c = {};
 
-            template<size_t... Indices>
-            static constexpr void assignDiagonalMatrix(auto& m, auto& c, std::index_sequence<Indices...>)
-            {
-                (assignDiagonalCell<Indices>(m, c), ...);
-            }
+        initCoefficients(c, std::make_index_sequence<Degree + 1>{});
+        generateCoefficients(c, std::make_index_sequence<Derivative>{});
 
-        public:
-            static constexpr auto get() noexcept
-            {
-                boost::qvm::vec<Scalar, Degree + 1> c = {};
+        return c;
+    }
 
-                initCoefficients(c, std::make_index_sequence<Degree + 1>{});
-                generateCoefficients(c, std::make_index_sequence<Derivative>{});
+    static constexpr auto getDiagonal() noexcept
+    {
+        auto c = get();
 
-                return c;
-            }
+        boost::qvm::mat<Scalar, Degree + 1, Degree + 1> m = {};
 
-            static constexpr auto getDiagonal() noexcept
-            {
-                auto c = get();
+        assignDiagonalMatrix(m, c, std::make_index_sequence<Degree + 1>{});
 
-                boost::qvm::mat<Scalar, Degree + 1, Degree + 1> m = {};
+        return m;
+    }
 
-                assignDiagonalMatrix(m, c, std::make_index_sequence<Degree + 1>{});
+    bool operator==(const DerivativeFactors&) const noexcept = default;
+};
 
-                return m;
-            }
-
-            bool operator==(const DerivativeFactors&) const noexcept = default;
-        };
-    }  // namespace Polynomial
-}  // namespace NBezier
+CloseNameSpace(Polynomial);
+CloseNameSpace(NBezier);
