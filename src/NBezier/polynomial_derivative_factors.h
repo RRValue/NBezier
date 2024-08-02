@@ -1,7 +1,5 @@
 #pragma once
 
-#include "binomial_coefficient.h"
-
 #include <boost/qvm/vec.hpp>
 #include <boost/qvm/vec_access.hpp>
 
@@ -13,17 +11,17 @@
 namespace NBezier
 {
     template<typename Scalar>
-    concept PolynomialCoefficientType = (std::integral<Scalar> || std::floating_point<Scalar>)&&  //
+    concept PolynomialDerivativeFactorsType = (std::integral<Scalar> || std::floating_point<Scalar>)&&  //
         !std::is_same<Scalar, bool>::value;
 
     template<size_t Derivative, size_t Degree>
-    concept PolynomialDerivativeRequirement = //
+    concept PolynomialDerivativeRequirement =  //
         0 <= Derivative && Derivative <= Degree;
 
     template<typename Scalar, size_t Degree, size_t Derivative>
-        requires PolynomialCoefficientType<Scalar> &&  //
+        requires PolynomialDerivativeFactorsType<Scalar> &&  //
                  PolynomialDerivativeRequirement<Derivative, Degree>
-    struct PolynomialCoefficients
+    struct PolynomialDerivativeFactors
     {
     private:
         template<size_t Index>
@@ -96,6 +94,6 @@ namespace NBezier
             return m;
         }
 
-        bool operator==(const PolynomialCoefficients&) const noexcept = default;
+        bool operator==(const PolynomialDerivativeFactors&) const noexcept = default;
     };
 }  // namespace NBezier

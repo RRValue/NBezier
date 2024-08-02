@@ -1,4 +1,4 @@
-#include "NBezier/polynomial_coefficients.h"
+#include "NBezier/polynomial_derivative_factors.h"
 
 #include "bezier_test_types.h"
 
@@ -14,65 +14,65 @@
 using namespace NBezier;
 
 template<typename T>
-class PolynomialCoefficientsTypeTest : public testing::Test
+class PolynomialDerivativeFactorsTypeTest : public testing::Test
 {
 public:
     typedef std::tuple_element_t<0, T> Scalar;
     static const int Degree = std::tuple_element_t<1, T>::Value;
     static const int Derivative = std::tuple_element_t<2, T>::Value;
 
-    typedef PolynomialCoefficients<Scalar, Degree, Derivative> PolynomialCoefficientsType;
-    typedef PolynomialCoefficients<Scalar, Degree, Derivative>& PolynomialCoefficientsTypeRef;
+    typedef PolynomialDerivativeFactors<Scalar, Degree, Derivative> PolynomialDerivativeFactorsType;
+    typedef PolynomialDerivativeFactors<Scalar, Degree, Derivative>& PolynomialDerivativeFactorsTypeRef;
 };
 
-TYPED_TEST_SUITE_P(PolynomialCoefficientsTypeTest);
+TYPED_TEST_SUITE_P(PolynomialDerivativeFactorsTypeTest);
 
-TYPED_TEST_P(PolynomialCoefficientsTypeTest, Requirements)
+TYPED_TEST_P(PolynomialDerivativeFactorsTypeTest, Requirements)
 {
-    ASSERT_TRUE(std::default_initializable<TestFixture::PolynomialCoefficientsType>);
-    ASSERT_TRUE(std::copy_constructible<TestFixture::PolynomialCoefficientsType>);
-    ASSERT_TRUE(std::move_constructible<TestFixture::PolynomialCoefficientsType>);
-    ASSERT_TRUE((std::assignable_from<TestFixture::PolynomialCoefficientsTypeRef, TestFixture::PolynomialCoefficientsType>));
-    ASSERT_TRUE(std::equality_comparable<TestFixture::PolynomialCoefficientsType>);
+    ASSERT_TRUE(std::default_initializable<TestFixture::PolynomialDerivativeFactorsType>);
+    ASSERT_TRUE(std::copy_constructible<TestFixture::PolynomialDerivativeFactorsType>);
+    ASSERT_TRUE(std::move_constructible<TestFixture::PolynomialDerivativeFactorsType>);
+    ASSERT_TRUE((std::assignable_from<TestFixture::PolynomialDerivativeFactorsTypeRef, TestFixture::PolynomialDerivativeFactorsType>));
+    ASSERT_TRUE(std::equality_comparable<TestFixture::PolynomialDerivativeFactorsType>);
 }
 
-REGISTER_TYPED_TEST_SUITE_P(PolynomialCoefficientsTypeTest, Requirements);
+REGISTER_TYPED_TEST_SUITE_P(PolynomialDerivativeFactorsTypeTest, Requirements);
 
-INSTANTIATE_TYPED_TEST_SUITE_P(PolynomialCoefficientsRequirements, PolynomialCoefficientsTypeTest, PolynomialCoefficientsScalarDegree);
+INSTANTIATE_TYPED_TEST_SUITE_P(PolynomialDerivativeFactorsRequirements, PolynomialDerivativeFactorsTypeTest, PolynomialDerivativeFactorsScalarDegree);
 
 template<typename T>
-class PolynomialCoefficientsGetTest : public testing::Test
+class PolynomialDerivativeFactorsGetTest : public testing::Test
 {
 public:
     typedef T Scalar;
 
     template<size_t Derivative>
-    using PolynomialCoefficients0 = PolynomialCoefficients<Scalar, 0, Derivative>;
+    using PolynomialDerivativeFactors0 = PolynomialDerivativeFactors<Scalar, 0, Derivative>;
 
     template<size_t Derivative>
-    using PolynomialCoefficients1 = PolynomialCoefficients<Scalar, 1, Derivative>;
+    using PolynomialDerivativeFactors1 = PolynomialDerivativeFactors<Scalar, 1, Derivative>;
 
     template<size_t Derivative>
-    using PolynomialCoefficients2 = PolynomialCoefficients<Scalar, 2, Derivative>;
+    using PolynomialDerivativeFactors2 = PolynomialDerivativeFactors<Scalar, 2, Derivative>;
 
     template<size_t Derivative>
-    using PolynomialCoefficients3 = PolynomialCoefficients<Scalar, 3, Derivative>;
+    using PolynomialDerivativeFactors3 = PolynomialDerivativeFactors<Scalar, 3, Derivative>;
 
     template<size_t Derivative>
-    using PolynomialCoefficients4 = PolynomialCoefficients<Scalar, 4, Derivative>;
+    using PolynomialDerivativeFactors4 = PolynomialDerivativeFactors<Scalar, 4, Derivative>;
 
     template<size_t Derivative>
-    using PolynomialCoefficients5 = PolynomialCoefficients<Scalar, 5, Derivative>;
+    using PolynomialDerivativeFactors5 = PolynomialDerivativeFactors<Scalar, 5, Derivative>;
 };
 
-TYPED_TEST_SUITE_P(PolynomialCoefficientsGetTest);
+TYPED_TEST_SUITE_P(PolynomialDerivativeFactorsGetTest);
 
-TYPED_TEST_P(PolynomialCoefficientsGetTest, GetVector)
+TYPED_TEST_P(PolynomialDerivativeFactorsGetTest, GetVector)
 {
     typedef TestFixture::Scalar Scalar;
 
     {
-        constexpr auto c0 = TestFixture::PolynomialCoefficients0<0>::get();
+        constexpr auto c0 = TestFixture::PolynomialDerivativeFactors0<0>::get();
 
         constexpr auto ex_c0 = boost::qvm::vec<Scalar, 1>{1};
 
@@ -80,8 +80,8 @@ TYPED_TEST_P(PolynomialCoefficientsGetTest, GetVector)
     }
 
     {
-        constexpr auto c0 = TestFixture::PolynomialCoefficients1<0>::get();
-        constexpr auto c1 = TestFixture::PolynomialCoefficients1<1>::get();
+        constexpr auto c0 = TestFixture::PolynomialDerivativeFactors1<0>::get();
+        constexpr auto c1 = TestFixture::PolynomialDerivativeFactors1<1>::get();
 
         constexpr auto ex_c0 = boost::qvm::vec<Scalar, 2>{1, 1};
         constexpr auto ex_c1 = boost::qvm::vec<Scalar, 2>{1, 0};
@@ -91,9 +91,9 @@ TYPED_TEST_P(PolynomialCoefficientsGetTest, GetVector)
     }
 
     {
-        constexpr auto c0 = TestFixture::PolynomialCoefficients2<0> ::get();
-        constexpr auto c1 = TestFixture::PolynomialCoefficients2<1>::get();
-        constexpr auto c2 = TestFixture::PolynomialCoefficients2<2>::get();
+        constexpr auto c0 = TestFixture::PolynomialDerivativeFactors2<0>::get();
+        constexpr auto c1 = TestFixture::PolynomialDerivativeFactors2<1>::get();
+        constexpr auto c2 = TestFixture::PolynomialDerivativeFactors2<2>::get();
 
         constexpr auto ex_c0 = boost::qvm::vec<Scalar, 3>{1, 1, 1};
         constexpr auto ex_c1 = boost::qvm::vec<Scalar, 3>{2, 1, 0};
@@ -105,10 +105,10 @@ TYPED_TEST_P(PolynomialCoefficientsGetTest, GetVector)
     }
 
     {
-        constexpr auto c0 = TestFixture::PolynomialCoefficients3<0>::get();
-        constexpr auto c1 = TestFixture::PolynomialCoefficients3<1>::get();
-        constexpr auto c2 = TestFixture::PolynomialCoefficients3<2>::get();
-        constexpr auto c3 = TestFixture::PolynomialCoefficients3<3>::get();
+        constexpr auto c0 = TestFixture::PolynomialDerivativeFactors3<0>::get();
+        constexpr auto c1 = TestFixture::PolynomialDerivativeFactors3<1>::get();
+        constexpr auto c2 = TestFixture::PolynomialDerivativeFactors3<2>::get();
+        constexpr auto c3 = TestFixture::PolynomialDerivativeFactors3<3>::get();
 
         constexpr auto ex_c0 = boost::qvm::vec<Scalar, 4>{1, 1, 1, 1};
         constexpr auto ex_c1 = boost::qvm::vec<Scalar, 4>{3, 2, 1, 0};
@@ -122,11 +122,11 @@ TYPED_TEST_P(PolynomialCoefficientsGetTest, GetVector)
     }
 
     {
-        constexpr auto c0 = TestFixture::PolynomialCoefficients4<0>::get();
-        constexpr auto c1 = TestFixture::PolynomialCoefficients4<1>::get();
-        constexpr auto c2 = TestFixture::PolynomialCoefficients4<2>::get();
-        constexpr auto c3 = TestFixture::PolynomialCoefficients4<3>::get();
-        constexpr auto c4 = TestFixture::PolynomialCoefficients4<4>::get();
+        constexpr auto c0 = TestFixture::PolynomialDerivativeFactors4<0>::get();
+        constexpr auto c1 = TestFixture::PolynomialDerivativeFactors4<1>::get();
+        constexpr auto c2 = TestFixture::PolynomialDerivativeFactors4<2>::get();
+        constexpr auto c3 = TestFixture::PolynomialDerivativeFactors4<3>::get();
+        constexpr auto c4 = TestFixture::PolynomialDerivativeFactors4<4>::get();
 
         constexpr auto ex_c0 = boost::qvm::vec<Scalar, 5>{1, 1, 1, 1, 1};
         constexpr auto ex_c1 = boost::qvm::vec<Scalar, 5>{4, 3, 2, 1, 0};
@@ -142,12 +142,12 @@ TYPED_TEST_P(PolynomialCoefficientsGetTest, GetVector)
     }
 
     {
-        constexpr auto c0 = TestFixture::PolynomialCoefficients5<0>::get();
-        constexpr auto c1 = TestFixture::PolynomialCoefficients5<1>::get();
-        constexpr auto c2 = TestFixture::PolynomialCoefficients5<2>::get();
-        constexpr auto c3 = TestFixture::PolynomialCoefficients5<3>::get();
-        constexpr auto c4 = TestFixture::PolynomialCoefficients5<4>::get();
-        constexpr auto c5 = TestFixture::PolynomialCoefficients5<5>::get();
+        constexpr auto c0 = TestFixture::PolynomialDerivativeFactors5<0>::get();
+        constexpr auto c1 = TestFixture::PolynomialDerivativeFactors5<1>::get();
+        constexpr auto c2 = TestFixture::PolynomialDerivativeFactors5<2>::get();
+        constexpr auto c3 = TestFixture::PolynomialDerivativeFactors5<3>::get();
+        constexpr auto c4 = TestFixture::PolynomialDerivativeFactors5<4>::get();
+        constexpr auto c5 = TestFixture::PolynomialDerivativeFactors5<5>::get();
 
         constexpr auto ex_c0 = boost::qvm::vec<Scalar, 6>{1, 1, 1, 1, 1, 1};
         constexpr auto ex_c1 = boost::qvm::vec<Scalar, 6>{5, 4, 3, 2, 1, 0};
@@ -165,12 +165,12 @@ TYPED_TEST_P(PolynomialCoefficientsGetTest, GetVector)
     }
 }
 
-TYPED_TEST_P(PolynomialCoefficientsGetTest, GetDiagonal)
+TYPED_TEST_P(PolynomialDerivativeFactorsGetTest, GetDiagonal)
 {
     typedef TestFixture::Scalar Scalar;
 
     {
-        constexpr auto m0 = TestFixture::PolynomialCoefficients0<0>::getDiagonal();
+        constexpr auto m0 = TestFixture::PolynomialDerivativeFactors0<0>::getDiagonal();
 
         constexpr auto ex_c0 = boost::qvm::vec<Scalar, 1>{1};
 
@@ -178,8 +178,8 @@ TYPED_TEST_P(PolynomialCoefficientsGetTest, GetDiagonal)
     }
 
     {
-        constexpr auto m0 = TestFixture::PolynomialCoefficients1<0>::getDiagonal();
-        constexpr auto m1 = TestFixture::PolynomialCoefficients1<1>::getDiagonal();
+        constexpr auto m0 = TestFixture::PolynomialDerivativeFactors1<0>::getDiagonal();
+        constexpr auto m1 = TestFixture::PolynomialDerivativeFactors1<1>::getDiagonal();
 
         constexpr auto ex_c0 = boost::qvm::vec<Scalar, 2>{1, 1};
         constexpr auto ex_c1 = boost::qvm::vec<Scalar, 2>{1, 0};
@@ -189,9 +189,9 @@ TYPED_TEST_P(PolynomialCoefficientsGetTest, GetDiagonal)
     }
 
     {
-        constexpr auto m0 = TestFixture::PolynomialCoefficients2<0>::getDiagonal();
-        constexpr auto m1 = TestFixture::PolynomialCoefficients2<1>::getDiagonal();
-        constexpr auto m2 = TestFixture::PolynomialCoefficients2<2>::getDiagonal();
+        constexpr auto m0 = TestFixture::PolynomialDerivativeFactors2<0>::getDiagonal();
+        constexpr auto m1 = TestFixture::PolynomialDerivativeFactors2<1>::getDiagonal();
+        constexpr auto m2 = TestFixture::PolynomialDerivativeFactors2<2>::getDiagonal();
 
         constexpr auto ex_c0 = boost::qvm::vec<Scalar, 3>{1, 1, 1};
         constexpr auto ex_c1 = boost::qvm::vec<Scalar, 3>{2, 1, 0};
@@ -203,10 +203,10 @@ TYPED_TEST_P(PolynomialCoefficientsGetTest, GetDiagonal)
     }
 
     {
-        constexpr auto m0 = TestFixture::PolynomialCoefficients3<0>::getDiagonal();
-        constexpr auto m1 = TestFixture::PolynomialCoefficients3<1>::getDiagonal();
-        constexpr auto m2 = TestFixture::PolynomialCoefficients3<2>::getDiagonal();
-        constexpr auto m3 = TestFixture::PolynomialCoefficients3<3>::getDiagonal();
+        constexpr auto m0 = TestFixture::PolynomialDerivativeFactors3<0>::getDiagonal();
+        constexpr auto m1 = TestFixture::PolynomialDerivativeFactors3<1>::getDiagonal();
+        constexpr auto m2 = TestFixture::PolynomialDerivativeFactors3<2>::getDiagonal();
+        constexpr auto m3 = TestFixture::PolynomialDerivativeFactors3<3>::getDiagonal();
 
         constexpr auto ex_c0 = boost::qvm::vec<Scalar, 4>{1, 1, 1, 1};
         constexpr auto ex_c1 = boost::qvm::vec<Scalar, 4>{3, 2, 1, 0};
@@ -220,11 +220,11 @@ TYPED_TEST_P(PolynomialCoefficientsGetTest, GetDiagonal)
     }
 
     {
-        constexpr auto m0 = TestFixture::PolynomialCoefficients4<0>::getDiagonal();
-        constexpr auto m1 = TestFixture::PolynomialCoefficients4<1>::getDiagonal();
-        constexpr auto m2 = TestFixture::PolynomialCoefficients4<2>::getDiagonal();
-        constexpr auto m3 = TestFixture::PolynomialCoefficients4<3>::getDiagonal();
-        constexpr auto m4 = TestFixture::PolynomialCoefficients4<4>::getDiagonal();
+        constexpr auto m0 = TestFixture::PolynomialDerivativeFactors4<0>::getDiagonal();
+        constexpr auto m1 = TestFixture::PolynomialDerivativeFactors4<1>::getDiagonal();
+        constexpr auto m2 = TestFixture::PolynomialDerivativeFactors4<2>::getDiagonal();
+        constexpr auto m3 = TestFixture::PolynomialDerivativeFactors4<3>::getDiagonal();
+        constexpr auto m4 = TestFixture::PolynomialDerivativeFactors4<4>::getDiagonal();
 
         constexpr auto ex_c0 = boost::qvm::vec<Scalar, 5>{1, 1, 1, 1, 1};
         constexpr auto ex_c1 = boost::qvm::vec<Scalar, 5>{4, 3, 2, 1, 0};
@@ -240,12 +240,12 @@ TYPED_TEST_P(PolynomialCoefficientsGetTest, GetDiagonal)
     }
 
     {
-        constexpr auto m0 = TestFixture::PolynomialCoefficients5<0>::getDiagonal();
-        constexpr auto m1 = TestFixture::PolynomialCoefficients5<1>::getDiagonal();
-        constexpr auto m2 = TestFixture::PolynomialCoefficients5<2>::getDiagonal();
-        constexpr auto m3 = TestFixture::PolynomialCoefficients5<3>::getDiagonal();
-        constexpr auto m4 = TestFixture::PolynomialCoefficients5<4>::getDiagonal();
-        constexpr auto m5 = TestFixture::PolynomialCoefficients5<5>::getDiagonal();
+        constexpr auto m0 = TestFixture::PolynomialDerivativeFactors5<0>::getDiagonal();
+        constexpr auto m1 = TestFixture::PolynomialDerivativeFactors5<1>::getDiagonal();
+        constexpr auto m2 = TestFixture::PolynomialDerivativeFactors5<2>::getDiagonal();
+        constexpr auto m3 = TestFixture::PolynomialDerivativeFactors5<3>::getDiagonal();
+        constexpr auto m4 = TestFixture::PolynomialDerivativeFactors5<4>::getDiagonal();
+        constexpr auto m5 = TestFixture::PolynomialDerivativeFactors5<5>::getDiagonal();
 
         constexpr auto ex_c0 = boost::qvm::vec<Scalar, 6>{1, 1, 1, 1, 1, 1};
         constexpr auto ex_c1 = boost::qvm::vec<Scalar, 6>{5, 4, 3, 2, 1, 0};
@@ -263,8 +263,8 @@ TYPED_TEST_P(PolynomialCoefficientsGetTest, GetDiagonal)
     }
 }
 
-REGISTER_TYPED_TEST_SUITE_P(PolynomialCoefficientsGetTest,  //
-                            GetVector,                      //
+REGISTER_TYPED_TEST_SUITE_P(PolynomialDerivativeFactorsGetTest,  //
+                            GetVector,                           //
                             GetDiagonal);
 
-INSTANTIATE_TYPED_TEST_SUITE_P(PolynomialCoefficientsGeneration, PolynomialCoefficientsGetTest, PolynomialCoefficientsScalars);
+INSTANTIATE_TYPED_TEST_SUITE_P(PolynomialDerivativeFactorsGeneration, PolynomialDerivativeFactorsGetTest, PolynomialDerivativeFactorsScalars);

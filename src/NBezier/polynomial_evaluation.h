@@ -1,6 +1,6 @@
 #pragma once
 
-#include "polynomial_coefficients.h"
+#include "polynomial_derivative_factors.h"
 #include "polynomial_variable.h"
 
 #include <boost/qvm/mat.hpp>
@@ -28,7 +28,7 @@ namespace NBezier
                      PolynomialEvaluationRequirement<NParameter, Dimension>
         static constexpr auto eval(boost::qvm::mat<Scalar, Dimension, NParameter> p, Scalar a)
         {
-            const auto c = PolynomialCoefficients<Scalar, NParameter - 1, Derivative>::getDiagonal();
+            const auto c = PolynomialDerivativeFactors<Scalar, NParameter - 1, Derivative>::getDiagonal();
             const auto v = PolynomialVariable<Scalar, NParameter - 1>::variableVector<Derivative>(a);
 
             return p * c * v;
