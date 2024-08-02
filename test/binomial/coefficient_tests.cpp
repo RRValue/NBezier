@@ -1,20 +1,20 @@
-#include "NBezier/binomial_coefficient.h"
+#include "NBezier/binomial/coefficient.h"
 
 #include <gtest/gtest.h>
 
-using namespace NBezier;
+using namespace NBezier::Binomial;
 
 template<typename T>
-class BinomialCoefficientTest : public testing::Test
+class CoefficientTest : public testing::Test
 {
 public:
-    typedef BinomialCoefficient<T> TestType;
+    typedef Coefficient<T> TestType;
     typedef T Type;
 };
 
-TYPED_TEST_SUITE_P(BinomialCoefficientTest);
+TYPED_TEST_SUITE_P(CoefficientTest);
 
-TYPED_TEST_P(BinomialCoefficientTest, FirstRow)
+TYPED_TEST_P(CoefficientTest, FirstRow)
 {
     constexpr auto _0_choose_0 = TestFixture::TestType::get(0, 0);
     constexpr auto _0_choose_1 = TestFixture::TestType::get(0, 1);
@@ -23,7 +23,7 @@ TYPED_TEST_P(BinomialCoefficientTest, FirstRow)
     EXPECT_EQ(_0_choose_1, TestFixture::Type(0));
 }
 
-TYPED_TEST_P(BinomialCoefficientTest, SecondRow)
+TYPED_TEST_P(CoefficientTest, SecondRow)
 {
     constexpr auto _1_choose_0 = TestFixture::TestType::get(1, 0);
     constexpr auto _1_choose_1 = TestFixture::TestType::get(1, 1);
@@ -34,7 +34,7 @@ TYPED_TEST_P(BinomialCoefficientTest, SecondRow)
     EXPECT_EQ(_1_choose_2, TestFixture::Type(0));
 }
 
-TYPED_TEST_P(BinomialCoefficientTest, ThirdRow)
+TYPED_TEST_P(CoefficientTest, ThirdRow)
 {
     constexpr auto _2_choose_0 = TestFixture::TestType::get(2, 0);
     constexpr auto _2_choose_1 = TestFixture::TestType::get(2, 1);
@@ -47,7 +47,7 @@ TYPED_TEST_P(BinomialCoefficientTest, ThirdRow)
     EXPECT_EQ(_2_choose_3, TestFixture::Type(0));
 }
 
-TYPED_TEST_P(BinomialCoefficientTest, FourthRow)
+TYPED_TEST_P(CoefficientTest, FourthRow)
 {
     constexpr auto _3_choose_0 = TestFixture::TestType::get(3, 0);
     constexpr auto _3_choose_1 = TestFixture::TestType::get(3, 1);
@@ -62,7 +62,7 @@ TYPED_TEST_P(BinomialCoefficientTest, FourthRow)
     EXPECT_EQ(_3_choose_4, TestFixture::Type(0));
 }
 
-TYPED_TEST_P(BinomialCoefficientTest, FifthRow)
+TYPED_TEST_P(CoefficientTest, FifthRow)
 {
     constexpr auto _4_choose_0 = TestFixture::TestType::get(4, 0);
     constexpr auto _4_choose_1 = TestFixture::TestType::get(4, 1);
@@ -79,7 +79,7 @@ TYPED_TEST_P(BinomialCoefficientTest, FifthRow)
     EXPECT_EQ(_4_choose_5, TestFixture::Type(0));
 }
 
-TYPED_TEST_P(BinomialCoefficientTest, SixthRow)
+TYPED_TEST_P(CoefficientTest, SixthRow)
 {
     constexpr auto _5_choose_0 = TestFixture::TestType::get(5, 0);
     constexpr auto _5_choose_1 = TestFixture::TestType::get(5, 1);
@@ -98,7 +98,7 @@ TYPED_TEST_P(BinomialCoefficientTest, SixthRow)
     EXPECT_EQ(_5_choose_6, TestFixture::Type(0));
 }
 
-TYPED_TEST_P(BinomialCoefficientTest, SeventhRow)
+TYPED_TEST_P(CoefficientTest, SeventhRow)
 {
     constexpr auto _6_choose_0 = TestFixture::TestType::get(6, 0);
     constexpr auto _6_choose_1 = TestFixture::TestType::get(6, 1);
@@ -119,7 +119,7 @@ TYPED_TEST_P(BinomialCoefficientTest, SeventhRow)
     EXPECT_EQ(_6_choose_7, TestFixture::Type(0));
 }
 
-TYPED_TEST_P(BinomialCoefficientTest, EighthRow)
+TYPED_TEST_P(CoefficientTest, EighthRow)
 {
     constexpr auto _7_choose_0 = TestFixture::TestType::get(7, 0);
     constexpr auto _7_choose_1 = TestFixture::TestType::get(7, 1);
@@ -142,7 +142,7 @@ TYPED_TEST_P(BinomialCoefficientTest, EighthRow)
     EXPECT_EQ(_7_choose_8, TestFixture::Type(0));
 }
 
-TYPED_TEST_P(BinomialCoefficientTest, NinethRow)
+TYPED_TEST_P(CoefficientTest, NinethRow)
 {
     constexpr auto _8_choose_0 = TestFixture::TestType::get(8, 0);
     constexpr auto _8_choose_1 = TestFixture::TestType::get(8, 1);
@@ -167,7 +167,7 @@ TYPED_TEST_P(BinomialCoefficientTest, NinethRow)
     EXPECT_EQ(_8_choose_9, TestFixture::Type(0));
 }
 
-TYPED_TEST_P(BinomialCoefficientTest, TenthRow)
+TYPED_TEST_P(CoefficientTest, TenthRow)
 {
     constexpr auto _9_choose_0 = TestFixture::TestType::get(9, 0);
     constexpr auto _9_choose_1 = TestFixture::TestType::get(9, 1);
@@ -194,7 +194,7 @@ TYPED_TEST_P(BinomialCoefficientTest, TenthRow)
     EXPECT_EQ(_9_choose_10, TestFixture::Type(0));
 }
 
-REGISTER_TYPED_TEST_SUITE_P(BinomialCoefficientTest,  //
+REGISTER_TYPED_TEST_SUITE_P(CoefficientTest,  //
                             FirstRow,                 //
                             SecondRow,                //
                             ThirdRow,                 //
@@ -206,7 +206,7 @@ REGISTER_TYPED_TEST_SUITE_P(BinomialCoefficientTest,  //
                             NinethRow,                //
                             TenthRow);
 
-using BinomialCoefficientTypes = ::testing::Types<unsigned int,        //
+using CoefficientTypes = ::testing::Types<unsigned int,        //
                                                   int,                 //
                                                   size_t,              //
                                                   unsigned long long,  //
@@ -216,4 +216,4 @@ using BinomialCoefficientTypes = ::testing::Types<unsigned int,        //
                                                   float,               //
                                                   double>;
 
-INSTANTIATE_TYPED_TEST_SUITE_P(BinomialCoefficientTests, BinomialCoefficientTest, BinomialCoefficientTypes);
+INSTANTIATE_TYPED_TEST_SUITE_P(CoefficientTests, CoefficientTest, CoefficientTypes);
