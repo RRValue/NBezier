@@ -1,6 +1,6 @@
 #pragma once
 
-#include "binomial_coefficient.h"
+#include "binomial/coefficient.h"
 
 #include <boost/qvm/mat.hpp>
 #include <boost/qvm/mat_access.hpp>
@@ -32,8 +32,8 @@ namespace NBezier
 
             constexpr auto signbit = (Degree - 1 + row + col) % 2 ? false : true;
             constexpr auto sign = signbit ? int(1) : int(-1);
-            constexpr auto row_factor = BinomialCoefficient<int>::get(Degree - 1, row);
-            constexpr auto col_factor = BinomialCoefficient<int>::get(Degree - 1 - row, col);
+            constexpr auto row_factor = Binomial::Coefficient<int>::get(Degree - 1, row);
+            constexpr auto col_factor = Binomial::Coefficient<int>::get(Degree - 1 - row, col);
             constexpr auto value = sign * row_factor * col_factor;
 
             boost::qvm::write_mat_element_idx(row, col, m, value);
