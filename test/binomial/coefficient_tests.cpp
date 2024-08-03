@@ -1,5 +1,7 @@
 #include "NBezier/binomial/coefficient.h"
 
+#include "binomial_test_types.h"
+
 #include <gtest/gtest.h>
 
 UseNameSpace(NBezier::Binomial);
@@ -205,15 +207,5 @@ REGISTER_TYPED_TEST_SUITE_P(CoefficientTest,  //
                             EighthRow,        //
                             NinethRow,        //
                             TenthRow);
-
-using CoefficientTypes = ::testing::Types<unsigned int,        //
-                                          int,                 //
-                                          size_t,              //
-                                          unsigned long long,  //
-                                          long long,           //
-                                          char,                //
-                                          unsigned char,       //
-                                          float,               //
-                                          double>;
 
 INSTANTIATE_TYPED_TEST_SUITE_P(CoefficientTests, CoefficientTest, CoefficientTypes);

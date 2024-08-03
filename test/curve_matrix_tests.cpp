@@ -12,32 +12,6 @@
 UseNameSpace(NBezier);
 
 template<typename T>
-class CurveMatrixTypeTest : public testing::Test
-{
-public:
-    typedef std::tuple_element_t<0, T> Scalar;
-    static const int Degree = std::tuple_element_t<1, T>::Value;
-
-    typedef CurveMatrix<Scalar, Degree> CurveMatrixType;
-    typedef CurveMatrix<Scalar, Degree>& CurveMatrixTypeRef;
-};
-
-TYPED_TEST_SUITE_P(CurveMatrixTypeTest);
-
-TYPED_TEST_P(CurveMatrixTypeTest, Requirements)
-{
-    ASSERT_TRUE(std::default_initializable<TestFixture::CurveMatrixType>);
-    ASSERT_TRUE(std::copy_constructible<TestFixture::CurveMatrixType>);
-    ASSERT_TRUE(std::move_constructible<TestFixture::CurveMatrixType>);
-    ASSERT_TRUE((std::assignable_from<TestFixture::CurveMatrixTypeRef, TestFixture::CurveMatrixType>));
-    ASSERT_TRUE(std::equality_comparable<TestFixture::CurveMatrixType>);
-}
-
-REGISTER_TYPED_TEST_SUITE_P(CurveMatrixTypeTest, Requirements);
-
-INSTANTIATE_TYPED_TEST_SUITE_P(CurveMatrixRequirements, CurveMatrixTypeTest, CurveMatrixScalarDegreeCombinations);
-
-template<typename T>
 class CurveMatrixGenerationTest : public testing::Test
 {
 public:

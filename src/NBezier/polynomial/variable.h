@@ -23,6 +23,8 @@ template<typename Scalar, size_t Degree>
     requires VariableType<Scalar>
 struct Variable
 {
+    StaticClass(Variable);
+
 private:
     template<size_t Index>
     static constexpr auto mult(Scalar& value, const Scalar& variable)

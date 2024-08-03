@@ -1,36 +1,10 @@
 #include "NBezier/polynomial/variable.h"
 
-#include "../bezier_test_types.h"
+#include "polynomial_test_types.h"
 
 #include <gtest/gtest.h>
 
 UseNameSpace(NBezier::Polynomial);
-
-template<typename T>
-class VariableTypeTest : public testing::Test
-{
-public:
-    typedef std::tuple_element_t<0, T> Scalar;
-    static const int Degree = std::tuple_element_t<1, T>::Value;
-
-    typedef Variable<Scalar, Degree> VariableType;
-    typedef Variable<Scalar, Degree>& VariableTypeRef;
-};
-
-TYPED_TEST_SUITE_P(VariableTypeTest);
-
-TYPED_TEST_P(VariableTypeTest, Requirements)
-{
-    ASSERT_TRUE(std::default_initializable<TestFixture::VariableType>);
-    ASSERT_TRUE(std::copy_constructible<TestFixture::VariableType>);
-    ASSERT_TRUE(std::move_constructible<TestFixture::VariableType>);
-    ASSERT_TRUE((std::assignable_from<TestFixture::VariableTypeRef, TestFixture::VariableType>));
-    ASSERT_TRUE(std::equality_comparable<TestFixture::VariableType>);
-}
-
-REGISTER_TYPED_TEST_SUITE_P(VariableTypeTest, Requirements);
-
-INSTANTIATE_TYPED_TEST_SUITE_P(VariableRequirements, VariableTypeTest, VariableScalarDegree);
 
 template<typename T>
 class VariableGetTest : public testing::Test

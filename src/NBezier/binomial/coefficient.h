@@ -15,6 +15,8 @@ template<typename T>
     requires Factorialable<T>
 struct Coefficient
 {
+    StaticClass(Coefficient);
+
     static constexpr T get(const T& n, const T& k) noexcept
     {
         if(k > n)

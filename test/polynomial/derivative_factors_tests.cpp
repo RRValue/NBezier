@@ -1,6 +1,6 @@
 #include "NBezier/polynomial/derivative_factors.h"
 
-#include "../bezier_test_types.h"
+#include "polynomial_test_types.h"
 
 #include <boost/qvm/map_mat_vec.hpp>
 #include <boost/qvm/vec.hpp>
@@ -12,33 +12,6 @@
 #include <tuple>
 
 UseNameSpace(NBezier::Polynomial);
-
-template<typename T>
-class DerivativeFactorsTypeTest : public testing::Test
-{
-public:
-    typedef std::tuple_element_t<0, T> Scalar;
-    static const int Degree = std::tuple_element_t<1, T>::Value;
-    static const int Derivative = std::tuple_element_t<2, T>::Value;
-
-    typedef DerivativeFactors<Scalar, Degree, Derivative> DerivativeFactorsType;
-    typedef DerivativeFactors<Scalar, Degree, Derivative>& DerivativeFactorsTypeRef;
-};
-
-TYPED_TEST_SUITE_P(DerivativeFactorsTypeTest);
-
-TYPED_TEST_P(DerivativeFactorsTypeTest, Requirements)
-{
-    ASSERT_TRUE(std::default_initializable<TestFixture::DerivativeFactorsType>);
-    ASSERT_TRUE(std::copy_constructible<TestFixture::DerivativeFactorsType>);
-    ASSERT_TRUE(std::move_constructible<TestFixture::DerivativeFactorsType>);
-    ASSERT_TRUE((std::assignable_from<TestFixture::DerivativeFactorsTypeRef, TestFixture::DerivativeFactorsType>));
-    ASSERT_TRUE(std::equality_comparable<TestFixture::DerivativeFactorsType>);
-}
-
-REGISTER_TYPED_TEST_SUITE_P(DerivativeFactorsTypeTest, Requirements);
-
-INSTANTIATE_TYPED_TEST_SUITE_P(DerivativeFactorsRequirements, DerivativeFactorsTypeTest, DerivativeFactorsScalarDegree);
 
 template<typename T>
 class DerivativeFactorsGetTest : public testing::Test

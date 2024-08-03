@@ -23,6 +23,8 @@ template<typename ScalarType, size_t Degree>
              CurveMatrixDegreeRequirement<Degree>
 struct CurveMatrix
 {
+    StaticClass(CurveMatrix);
+
     typedef boost::qvm::mat<ScalarType, Degree, Degree> Matrix;
 
 private:

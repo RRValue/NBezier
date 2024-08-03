@@ -26,6 +26,8 @@ concept EvaluationRequirement = NParameter > 0 && Dimension > 0;
 
 struct Evaluation
 {
+    StaticClass(Evaluation);
+
     template<size_t Derivative, typename Scalar, size_t NParameter, size_t Dimension>
         requires EvaluationType<Scalar> &&  //
                  EvaluationRequirement<NParameter, Dimension>

@@ -26,6 +26,8 @@ template<typename Scalar, size_t Degree, size_t Derivative>
              DerivativeRequirement<Derivative, Degree>
 struct DerivativeFactors
 {
+    StaticClass(DerivativeFactors);
+
 private:
     template<size_t Index>
     static constexpr void initCoefficients(auto& c)
