@@ -18,8 +18,8 @@
 OpenNameSpace(NBezier);
 OpenNameSpace(Polynomial);
 
-template<typename ScalarType>
-concept EvaluationType = std::floating_point<ScalarType>;
+template<typename Scalar>
+concept EvaluationType = std::floating_point<Scalar>;
 
 template<size_t NParameter, size_t Dimension>
 concept EvaluationRequirement = NParameter > 0 && Dimension > 0;
