@@ -4,6 +4,7 @@
 
 #include "NBezier/polynomial/derivative_factors.h"
 #include "NBezier/polynomial/variable.h"
+#include "NBezier/points.h"
 
 #include <boost/qvm/mat.hpp>
 #include <boost/qvm/mat_operations.hpp>
@@ -21,17 +22,17 @@ OpenNameSpace(Polynomial);
 template<typename Scalar>
 concept EvaluationType = std::floating_point<Scalar>;
 
-template<size_t NParameter, size_t Dimension>
+template<size_t Dimension, size_t NParameter>
 concept EvaluationRequirement = NParameter > 0 && Dimension > 0;
 
 struct Evaluation
 {
     StaticClass(Evaluation);
 
-    template<size_t Derivative, typename Scalar, size_t NParameter, size_t Dimension>
+    template<size_t Derivative, typename Scalar, size_t Dimension, size_t NParameter>
         requires EvaluationType<Scalar> &&  //
-                 EvaluationRequirement<NParameter, Dimension>
-    static constexpr auto eval(boost::qvm::mat<Scalar, Dimension, NParameter> p, Scalar a)
+                 EvaluationRequirement<Dimension, NParameter>
+    static constexpr auto eval(const Points<Scalar, Dimension, NParameter>& p, const Scalar& a)
     {
         const auto c = DerivativeFactors<Scalar, NParameter - 1, Derivative>::getDiagonal();
         const auto v = Variable<Scalar, NParameter - 1>::variableVector<Derivative>(a);

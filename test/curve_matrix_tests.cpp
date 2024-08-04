@@ -102,4 +102,4 @@ TYPED_TEST_P(CurveMatrixGenerationTest, Generation)
 
 REGISTER_TYPED_TEST_SUITE_P(CurveMatrixGenerationTest, Generation);
 
-INSTANTIATE_TYPED_TEST_SUITE_P(CurveMatrixGeneration, CurveMatrixGenerationTest, CurveMatrixScalars);
+INSTANTIATE_TYPED_TEST_SUITE_P(CurveMatrixGeneration, CurveMatrixGenerationTest, BezierScalars);

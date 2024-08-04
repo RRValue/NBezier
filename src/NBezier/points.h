@@ -14,9 +14,9 @@ concept PointType = std::floating_point<Scalar>;
 template<size_t Dimentsion>
 concept DimentsionRequirement = Dimentsion > 0;
 
-template<typename Scalar, int Dimension, size_t Degree>
+template<typename Scalar, int Dimension, size_t Count>
     requires PointType<Scalar> &&  //
                  DimentsionRequirement<Dimension>
-using Points = boost::qvm::mat<Scalar, Dimension, Degree + 1>;
+using Points = boost::qvm::mat<Scalar, Dimension, Count>;
 
 CloseNameSpace(NBezier);
