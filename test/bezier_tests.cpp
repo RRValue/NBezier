@@ -9,11 +9,17 @@ UseNameSpace(NBezier);
 
 TEST(So, what)
 {
-    Bezier<float, 2, 1> b;
-    b.setPoint<0>(boost::qvm::vec<float, 2>{0, 1});
-    b.setPoint<1>(boost::qvm::vec<float, 2>{1, 2});
+    constexpr auto p0 = boost::qvm::vec<float, 2>{0, 1};
+    constexpr auto p1 = boost::qvm::vec<float, 2>{1, 2};
 
-    constexpr auto p0 = b.getPoint<0>();
+    Bezier<float, 2, 1> b{};
+    b.setPoint<0>(p0);
+    b.setPoint<1>(p1);
+    b.getPoint<0>();
+
+    constexpr Bezier<float, 2, 1> constexpr_b{p0, p1};
+    constexpr auto pout = constexpr_b.getPoint<0>();
+    constexpr auto pp = constexpr_b.point(0.5f);
 
     const auto p = b.point(0.5f);
 }
