@@ -26,3 +26,4 @@ endif(MSVC)
 
 add_subdirectory(src/NBezier)
 add_subdirectory(test)
+add_subdirectory(benchmark)
