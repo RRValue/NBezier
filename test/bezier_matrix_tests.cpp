@@ -1,4 +1,4 @@
-#include "NBezier/curve_matrix.h"
+#include "NBezier/bezier_matrix.h"
 
 #include "bezier_test_types.h"
 
@@ -12,25 +12,25 @@
 UseNameSpace(NBezier);
 
 template<typename T>
-class CurveMatrixGenerationTest : public testing::Test
+class BezierMatrixGenerationTest : public testing::Test
 {
 public:
     typedef T Scalar;
 };
 
-TYPED_TEST_SUITE_P(CurveMatrixGenerationTest);
+TYPED_TEST_SUITE_P(BezierMatrixGenerationTest);
 
-TYPED_TEST_P(CurveMatrixGenerationTest, Generation)
+TYPED_TEST_P(BezierMatrixGenerationTest, Generation)
 {
     using S = TestFixture::Scalar;
 
     {
-        constexpr auto m = CurveMatrix<S, 1>::get();
+        constexpr auto m = BezierMatrix<S, 1>::get();
         EXPECT_EQ(A00(m), S(1));
     }
 
     {
-        constexpr auto m = CurveMatrix<S, 2>::get();
+        constexpr auto m = BezierMatrix<S, 2>::get();
         EXPECT_EQ(A00(m), S(-1));
         EXPECT_EQ(A01(m), S(1));
         EXPECT_EQ(A10(m), S(1));
@@ -38,7 +38,7 @@ TYPED_TEST_P(CurveMatrixGenerationTest, Generation)
     }
 
     {
-        constexpr auto m = CurveMatrix<S, 3>::get();
+        constexpr auto m = BezierMatrix<S, 3>::get();
         EXPECT_EQ(A00(m), S(1));
         EXPECT_EQ(A01(m), S(-2));
         EXPECT_EQ(A02(m), S(1));
@@ -51,7 +51,7 @@ TYPED_TEST_P(CurveMatrixGenerationTest, Generation)
     }
 
     {
-        constexpr auto m = CurveMatrix<S, 4>::get();
+        constexpr auto m = BezierMatrix<S, 4>::get();
         EXPECT_EQ(A00(m), S(-1));
         EXPECT_EQ(A01(m), S(3));
         EXPECT_EQ(A02(m), S(-3));
@@ -71,7 +71,7 @@ TYPED_TEST_P(CurveMatrixGenerationTest, Generation)
     }
 
     {
-        constexpr auto m = CurveMatrix<S, 5>::get();
+        constexpr auto m = BezierMatrix<S, 5>::get();
         EXPECT_EQ(A00(m), S(1));
         EXPECT_EQ(A01(m), S(-4));
         EXPECT_EQ(A02(m), S(6));
@@ -100,6 +100,6 @@ TYPED_TEST_P(CurveMatrixGenerationTest, Generation)
     }
 }
 
-REGISTER_TYPED_TEST_SUITE_P(CurveMatrixGenerationTest, Generation);
+REGISTER_TYPED_TEST_SUITE_P(BezierMatrixGenerationTest, Generation);
 
-INSTANTIATE_TYPED_TEST_SUITE_P(CurveMatrixGeneration, CurveMatrixGenerationTest, BezierScalars);
+INSTANTIATE_TYPED_TEST_SUITE_P(BezierMatrixGeneration, BezierMatrixGenerationTest, BezierScalars);

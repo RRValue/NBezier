@@ -11,21 +11,21 @@
 
 OpenNameSpace(NBezier);
 
-template<typename ScalarType>
-concept CurveMatrixCellType = (std::signed_integral<ScalarType> || std::floating_point<ScalarType>)&&  //
-    !std::is_same<ScalarType, bool>::value;
+template<typename Scalar>
+concept BezierMatrixCellType = (std::signed_integral<Scalar> || std::floating_point<Scalar>)&&  //
+    !std::is_same<Scalar, bool>::value;
 
 template<size_t Degree>
-concept CurveMatrixDegreeRequirement = Degree > 0;
+concept BezierMatrixDegreeRequirement = Degree > 0;
 
-template<typename ScalarType, size_t Degree>
-    requires CurveMatrixCellType<ScalarType> &&  //
-             CurveMatrixDegreeRequirement<Degree>
-struct CurveMatrix
+template<typename Scalar, size_t Degree>
+    requires BezierMatrixCellType<Scalar> &&  //
+             BezierMatrixDegreeRequirement<Degree>
+struct BezierMatrix
 {
-    StaticClass(CurveMatrix);
+    StaticClass(BezierMatrix);
 
-    typedef boost::qvm::mat<ScalarType, Degree, Degree> Matrix;
+    typedef boost::qvm::mat<Scalar, Degree, Degree> Matrix;
 
 private:
     template<std::size_t Index>
@@ -59,7 +59,7 @@ public:
         return m;
     }
 
-    bool operator==(const CurveMatrix&) const noexcept = default;
+    bool operator==(const BezierMatrix&) const noexcept = default;
 };
 
 CloseNameSpace(NBezier);

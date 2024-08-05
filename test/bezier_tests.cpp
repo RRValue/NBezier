@@ -1,5 +1,4 @@
 #include "NBezier/bezier.h"
-#include "NBezier/curve_matrix.h"
 
 #include "bezier_test_types.h"
 
@@ -7,19 +6,14 @@
 
 UseNameSpace(NBezier);
 
-TEST(So, what)
+TEST(So, what2)
 {
-    constexpr auto p0 = boost::qvm::vec<float, 2>{0, 1};
-    constexpr auto p1 = boost::qvm::vec<float, 2>{1, 2};
+    constexpr auto p0 = boost::qvm::vec<float, 3>{-1, 1, 0};
+    constexpr auto p1 = boost::qvm::vec<float, 3>{0, 0, 0};
+    constexpr auto p2 = boost::qvm::vec<float, 3>{1, 1, 0};
+    constexpr BezierPoints<float, 3, 2> b{p0, p1, p2};
 
-    Bezier<float, 2, 1> b{};
-    b.setPoint<0>(p0);
-    b.setPoint<1>(p1);
-    b.getPoint<0>();
-
-    constexpr Bezier<float, 2, 1> constexpr_b{p0, p1};
-    constexpr auto pout = constexpr_b.getPoint<0>();
-    constexpr auto pp = constexpr_b.point(0.5f);
-
-    const auto p = b.point(0.5f);
+    constexpr auto position = Bezier::point(b, 0.5f);
+    auto tangent = Bezier::tangent(b, 0.5f);
+    auto normal = Bezier::normal(b, 0.5f);
 }
