@@ -21,12 +21,17 @@ static void BM_CoefficientGetRuntime(benchmark::State& state)
 {
     using CoefficientF = Coefficient<float>;
 
+    float _2_choose_0 = 0;
+    float _2_choose_1 = 0;
+    float _2_choose_2 = 0;
+    float _2_choose_3 = 0;
+
     for(auto _ : state)
     {
-        auto _2_choose_0 = CoefficientF::get(2, 0);
-        auto _2_choose_1 = CoefficientF::get(2, 1);
-        auto _2_choose_2 = CoefficientF::get(2, 2);
-        auto _2_choose_3 = CoefficientF::get(2, 3);
+        benchmark::DoNotOptimize(_2_choose_0 = CoefficientF::get(2, 0));
+        benchmark::DoNotOptimize(_2_choose_1 = CoefficientF::get(2, 1));
+        benchmark::DoNotOptimize(_2_choose_2 = CoefficientF::get(2, 2));
+        benchmark::DoNotOptimize(_2_choose_3 = CoefficientF::get(2, 3));
     }
 }
 
