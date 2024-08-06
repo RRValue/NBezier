@@ -2,6 +2,8 @@
 
 #include "NBezier/defines.h"
 
+#include "NBezier/bezier_matrix.h"
+
 #include "boost/qvm/mat.hpp"
 #include "boost/qvm/mat_access.hpp"
 #include "boost/qvm/vec.hpp"
@@ -48,7 +50,7 @@ private:
     }
 
 public:
-    constexpr BezierPoints() : m_points{}
+    constexpr BezierPoints() : m_points{}, m_derived_points{}
     {
     }
 
@@ -57,6 +59,8 @@ public:
     constexpr BezierPoints(PointsArgs... args) : BezierPoints()
     {
         construct<0>(args...);
+
+        updateDerivedPoints();
     }
 
     template<size_t Index>
@@ -71,11 +75,18 @@ public:
     constexpr void setPoint(const Point& p)
     {
         boost::qvm::col<Index>(m_points) = p;
+
+        updateDerivedPoints();
     }
 
     constexpr const Points& getPoints() const
     {
         return m_points;
+    }
+
+    constexpr const Points& getDerivedPoints() const
+    {
+        return m_derived_points;
     }
 
 private:
@@ -107,8 +118,14 @@ private:
         (setPoint<Index, Dimensions>(p), ...);
     }
 
+    constexpr void updateDerivedPoints()
+    {
+        m_derived_points = m_points * BezierMatrix<Scalar, Degree + 1>::get();
+    }
+
 private:
     Points m_points = {};
+    Points m_derived_points = {};
 };
 
 CloseNameSpace(NBezier);

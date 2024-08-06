@@ -2,10 +2,10 @@
 
 #include "NBezier/defines.h"
 
-#include "NBezier/bezier_matrix.h"
 #include "NBezier/bezier_points.h"
 #include "NBezier/polynomial/evaluation.h"
 
+#include <boost/math/ccmath/sqrt.hpp>
 #include <boost/qvm/mat_operations.hpp>
 #include <boost/qvm/vec_operations.hpp>
 
@@ -28,7 +28,7 @@ struct Bezier
                  BezierDimensionRequirement<Dimension>
     static constexpr auto point(const BezierPoints<Scalar, Dimension, Degree>& p, const Scalar& a)
     {
-        return Polynomial::Evaluation::eval<0>(p.getPoints() * BezierMatrix<Scalar, Degree + 1>::get(), a);
+        return Bezier::derivative<0>(p, a);
     }
 
     template<typename Scalar, size_t Dimension, size_t Degree>
@@ -36,11 +36,7 @@ struct Bezier
                  BezierDimensionRequirement<Dimension>
     static constexpr auto tangent(const BezierPoints<Scalar, Dimension, Degree>& p, const Scalar& a)
     {
-        auto result = Polynomial::Evaluation::eval<1>(p.getPoints() * BezierMatrix<Scalar, Degree + 1>::get(), a);
-
-        normalize(result);
-
-        return result;
+        return Bezier::derivativeNormalized<1>(p, a);
     }
 
     template<typename Scalar, size_t Dimension, size_t Degree>
@@ -48,11 +44,44 @@ struct Bezier
                  BezierDimensionRequirement<Dimension>
     static constexpr auto normal(const BezierPoints<Scalar, Dimension, Degree>& p, const Scalar& a)
     {
-        auto result = Polynomial::Evaluation::eval<2>(p.getPoints() * BezierMatrix<Scalar, Degree + 1>::get(), a);
+        return Bezier::derivativeNormalized<2>(p, a);
+    }
 
-        normalize(result);
+    template<typename Scalar, size_t Dimension, size_t Degree>
+        requires BezierType<Scalar> &&  //
+                 BezierDimensionRequirement<Dimension>
+    static constexpr auto curvature(const BezierPoints<Scalar, Dimension, Degree>& p, const Scalar& a)
+    {
+        const auto g_1 = Bezier::derivative<1>(p, a);
+        const auto g_2 = Bezier::derivative<2>(p, a);
 
-        return result; 
+        const auto g_1_mag_sqr = boost::qvm::mag_sqr(g_1);
+        const auto g_2_mag_sqr = boost::qvm::mag_sqr(g_2);
+        const auto g_1_dot_g_2 = boost::qvm::dot(g_1, g_2);
+        const auto g_1_dot_g_2_pow_2 = g_1_dot_g_2 * g_1_dot_g_2;
+        const auto g_1_mag = boost::math::ccmath::sqrt(g_1_mag_sqr);
+        const auto g_1_mag_pow_3 = g_1_mag * g_1_mag * g_1_mag;
+
+        return boost::math::ccmath::sqrt(g_1_mag_sqr * g_2_mag_sqr - g_1_dot_g_2_pow_2) / g_1_mag_pow_3;
+    }
+
+private:
+    template<size_t Derivative, typename Scalar, size_t Dimension, size_t Degree>
+        requires BezierType<Scalar> &&  //
+                 BezierDimensionRequirement<Dimension>
+    static constexpr auto derivative(const BezierPoints<Scalar, Dimension, Degree>& p, const Scalar& a)
+    {
+        return Polynomial::Evaluation::eval<Derivative>(p.getDerivedPoints(), a);
+    }
+
+    template<size_t Derivative, typename Scalar, size_t Dimension, size_t Degree>
+        requires BezierType<Scalar> &&  //
+                 BezierDimensionRequirement<Dimension>
+    static constexpr auto derivativeNormalized(const BezierPoints<Scalar, Dimension, Degree>& p, const Scalar& a)
+    {
+        const auto derived = Bezier::derivative<Derivative>(p, a);
+
+        return derived / boost::math::ccmath::sqrt(boost::qvm::dot(derived, derived));
     }
 };
 
