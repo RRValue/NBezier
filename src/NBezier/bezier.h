@@ -19,37 +19,47 @@ concept BezierType = std::floating_point<Scalar>;
 template<size_t Dimension>
 concept BezierDimensionRequirement = Dimension > 0;
 
+template<typename Scalar, size_t Dimension>
+concept BezierRequirement = BezierType<Scalar> &&  //
+                            BezierDimensionRequirement<Dimension>;
+
+template<typename Scalar, size_t Dimension, size_t Degree>
+concept CurvatureRequirement = BezierRequirement<Scalar, Dimension> &&  //
+                               Dimension >= 2 &&                        //
+                               Degree >= 2;
+
+template<typename Scalar, size_t Dimension, size_t Degree>
+concept TorsionRequirement = BezierRequirement<Scalar, Dimension> &&  //
+                             Dimension == 3 &&                        //
+                             Degree >= 3;
+
 struct Bezier
 {
     StaticClass(Bezier);
 
     template<typename Scalar, size_t Dimension, size_t Degree>
-        requires BezierType<Scalar> &&  //
-                 BezierDimensionRequirement<Dimension>
+        requires BezierRequirement<Scalar, Dimension>
     static constexpr auto point(const BezierPoints<Scalar, Dimension, Degree>& p, const Scalar& a)
     {
         return Bezier::derivative<0>(p, a);
     }
 
     template<typename Scalar, size_t Dimension, size_t Degree>
-        requires BezierType<Scalar> &&  //
-                 BezierDimensionRequirement<Dimension>
+        requires BezierRequirement<Scalar, Dimension>
     static constexpr auto tangent(const BezierPoints<Scalar, Dimension, Degree>& p, const Scalar& a)
     {
         return Bezier::derivativeNormalized<1>(p, a);
     }
 
     template<typename Scalar, size_t Dimension, size_t Degree>
-        requires BezierType<Scalar> &&  //
-                 BezierDimensionRequirement<Dimension>
+        requires BezierRequirement<Scalar, Dimension>
     static constexpr auto normal(const BezierPoints<Scalar, Dimension, Degree>& p, const Scalar& a)
     {
         return Bezier::derivativeNormalized<2>(p, a);
     }
 
     template<typename Scalar, size_t Dimension, size_t Degree>
-        requires BezierType<Scalar> &&  //
-                 BezierDimensionRequirement<Dimension>
+        requires CurvatureRequirement<Scalar, Dimension, Degree>
     static constexpr auto curvature(const BezierPoints<Scalar, Dimension, Degree>& p, const Scalar& a)
     {
         const auto g_1 = Bezier::derivative<1>(p, a);
@@ -65,18 +75,31 @@ struct Bezier
         return boost::math::ccmath::sqrt(g_1_mag_sqr * g_2_mag_sqr - g_1_dot_g_2_pow_2) / g_1_mag_pow_3;
     }
 
-private:
+    template<typename Scalar, size_t Dimension, size_t Degree>
+        requires TorsionRequirement<Scalar, Dimension, Degree>
+    static constexpr auto torsion(const BezierPoints<Scalar, Dimension, Degree>& p, const Scalar& a)
+    {
+        const auto g_1 = Bezier::derivative<1>(p, a);
+        const auto g_2 = Bezier::derivative<2>(p, a);
+        const auto g_3 = Bezier::derivative<3>(p, a);
+
+        const auto g_1_cross_g_2 = boost::qvm::cross(g_1, g_2);
+        const auto g_1_cross_g_2_dot_g3 = boost::qvm::dot(g_1_cross_g_2, g_3);
+
+        const auto g_1_cross_g_2_mag_sqr = boost::qvm::mag_sqr(g_1_cross_g_2);
+
+        return g_1_cross_g_2_dot_g3 / g_1_cross_g_2_mag_sqr;
+    }
+
     template<size_t Derivative, typename Scalar, size_t Dimension, size_t Degree>
-        requires BezierType<Scalar> &&  //
-                 BezierDimensionRequirement<Dimension>
+        requires BezierRequirement<Scalar, Dimension>
     static constexpr auto derivative(const BezierPoints<Scalar, Dimension, Degree>& p, const Scalar& a)
     {
         return Polynomial::Evaluation::eval<Derivative>(p.getDerivedPoints(), a);
     }
 
     template<size_t Derivative, typename Scalar, size_t Dimension, size_t Degree>
-        requires BezierType<Scalar> &&  //
-                 BezierDimensionRequirement<Dimension>
+        requires BezierRequirement<Scalar, Dimension>
     static constexpr auto derivativeNormalized(const BezierPoints<Scalar, Dimension, Degree>& p, const Scalar& a)
     {
         const auto derived = Bezier::derivative<Derivative>(p, a);
