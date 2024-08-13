@@ -27,13 +27,13 @@ struct Variable
 
 private:
     template<size_t Index>
-    static constexpr auto mult(Scalar& value, const Scalar& variable)
+    NBInline static constexpr auto mult(Scalar& value, const Scalar& variable)
     {
         value *= variable;
     }
 
     template<size_t... Indices>
-    static constexpr auto potentiate(const Scalar& variable, std::index_sequence<Indices...>)
+    NBInline static constexpr auto potentiate(const Scalar& variable, std::index_sequence<Indices...>)
     {
         auto value = Scalar(1);
 
@@ -43,13 +43,13 @@ private:
     }
 
     template<size_t Derivative, size_t Index>
-    static constexpr void generateNthVariable(auto& vec, const Scalar& variable)
+    NBInline static constexpr void generateNthVariable(auto& vec, const Scalar& variable)
     {
         A<Index>(vec) = potentiate(variable, std::make_index_sequence<Degree - Index - Derivative>{});
     }
 
     template<size_t Derivative, size_t... Indices>
-    static constexpr void generateVariables(auto& vec, const Scalar& variable, std::index_sequence<Indices...>)
+    NBInline static constexpr void generateVariables(auto& vec, const Scalar& variable, std::index_sequence<Indices...>)
     {
         (generateNthVariable<Derivative, Indices>(vec, variable), ...);
     }

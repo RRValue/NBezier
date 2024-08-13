@@ -4,6 +4,7 @@
 
 #include "NBezier/bezier_points.h"
 #include "NBezier/polynomial/evaluation.h"
+#include "NBezier/bezier_requirements.h"
 
 #include <boost/math/ccmath/sqrt.hpp>
 #include <boost/qvm/mat_operations.hpp>
@@ -12,12 +13,6 @@
 #include <concepts>
 
 OpenNameSpace(NBezier);
-
-template<typename Scalar>
-concept BezierType = std::floating_point<Scalar>;
-
-template<size_t Dimension>
-concept BezierDimensionRequirement = Dimension > 0;
 
 template<typename Scalar, size_t Dimension>
 concept BezierRequirement = BezierType<Scalar> &&  //

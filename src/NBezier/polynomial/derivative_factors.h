@@ -30,49 +30,49 @@ struct DerivativeFactors
 
 private:
     template<size_t Index>
-    static constexpr void initCoefficients(auto& c)
+    NBInline static constexpr void initCoefficients(auto& c)
     {
         A<Index>(c) = Scalar(1);
     }
 
     template<size_t... Indices>
-    static constexpr void initCoefficients(auto& c, std::index_sequence<Indices...>)
+    NBInline static constexpr void initCoefficients(auto& c, std::index_sequence<Indices...>)
     {
         (initCoefficients<Indices>(c), ...);
     }
 
     template<size_t Derivative, size_t Index>
-    static constexpr void multCoefficient(auto& c)
+    NBInline static constexpr void multCoefficient(auto& c)
     {
         A<Index>(c) *= (Degree - Index - Derivative);
     }
 
     template<size_t Derivative, size_t... Indices>
-    static constexpr void derive(auto& c, std::index_sequence<Indices...>)
+    NBInline static constexpr void derive(auto& c, std::index_sequence<Indices...>)
     {
         (multCoefficient<Derivative, Indices>(c), ...);
     }
 
     template<size_t Derivative>
-    static constexpr void deriveCoefficients(auto& c)
+    NBInline static constexpr void deriveCoefficients(auto& c)
     {
         derive<Derivative>(c, std::make_index_sequence<Degree + 1>{});
     }
 
     template<size_t... Derivatives>
-    static constexpr void generateCoefficients(auto& c, std::index_sequence<Derivatives...>)
+    NBInline static constexpr void generateCoefficients(auto& c, std::index_sequence<Derivatives...>)
     {
         (deriveCoefficients<Derivatives>(c), ...);
     }
 
     template<size_t Index>
-    static constexpr void assignDiagonalCell(auto& m, auto& c)
+    NBInline static constexpr void assignDiagonalCell(auto& m, auto& c)
     {
         boost::qvm::A<Index, Index>(m) = boost::qvm::A<Index>(c);
     }
 
     template<size_t... Indices>
-    static constexpr void assignDiagonalMatrix(auto& m, auto& c, std::index_sequence<Indices...>)
+    NBInline static constexpr void assignDiagonalMatrix(auto& m, auto& c, std::index_sequence<Indices...>)
     {
         (assignDiagonalCell<Indices>(m, c), ...);
     }

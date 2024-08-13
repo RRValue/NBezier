@@ -13,3 +13,10 @@
     Class(Class&&) = delete;           \
     Class& operator=(Class&) = delete; \
     Class& operator=(Class&&) = delete
+
+#define NBEnableForceInline
+#ifdef NBEnableForceInline
+#define NBInline inline
+#else  
+#define NBForceInline
+#endif  // NBezierEnableForceInline
