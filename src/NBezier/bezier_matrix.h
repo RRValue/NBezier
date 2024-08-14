@@ -29,7 +29,7 @@ struct BezierMatrix
 
 private:
     template<std::size_t Index>
-    NBInline static constexpr void fillCell(Matrix& m)
+    NBInline static constexpr void fillCell(auto& m)
     {
         constexpr auto row = Index / Degree;
         constexpr auto col = Index % Degree;
@@ -44,13 +44,13 @@ private:
     }
 
     template<std::size_t... Indices>
-    NBInline static constexpr void generateMatrix(Matrix& m, std::index_sequence<Indices...>)
+    NBInline static constexpr void generateMatrix(auto& m, std::index_sequence<Indices...>)
     {
         (fillCell<Indices>(m), ...);
     }
 
 public:
-    static constexpr Matrix get() noexcept
+    static constexpr auto get() noexcept
     {
         Matrix m = {};
 

@@ -68,14 +68,14 @@ public:
 
     template<size_t Index>
         requires PointIndexRequirement<Index, Degree + 1>
-    constexpr Point getPoint() const
+    constexpr auto getPoint() const
     {
         return getPoint<Index>(std::make_index_sequence<Dimension>{});
     }
 
     template<size_t Index>
         requires PointIndexRequirement<Index, Degree + 1>
-    constexpr void setPoint(const Point& p)
+    constexpr void setPoint(const auto& p)
     {
         boost::qvm::col<Index>(m_points) = p;
 
@@ -163,13 +163,13 @@ private:
     }
 
     template<size_t Index, size_t Dimension>
-    constexpr void getPoint(Point& p) const
+    constexpr void getPoint(auto& p) const
     {
         A<Dimension>(p) = A<Dimension, Index>(m_points);
     }
 
     template<size_t Index, size_t... Dimensions>
-    constexpr Point getPoint(std::index_sequence<Dimensions...>) const
+    constexpr auto getPoint(std::index_sequence<Dimensions...>) const
     {
         Point p = {};
 
@@ -179,13 +179,13 @@ private:
     }
 
     template<size_t Index, size_t Dimension>
-    constexpr void setPoint(const Point& p)
+    constexpr void setPoint(const auto& p)
     {
         A<Dimension, Index>(m_points) = A<Dimension>(p);
     }
 
     template<size_t Index, size_t... Dimensions>
-    constexpr void setPoint(const Point& p, std::index_sequence<Dimensions...>)
+    constexpr void setPoint(const auto& p, std::index_sequence<Dimensions...>)
     {
         (setPoint<Index, Dimensions>(p), ...);
     }
