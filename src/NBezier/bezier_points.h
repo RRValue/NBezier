@@ -3,6 +3,7 @@
 #include "NBezier/defines.h"
 
 #include "NBezier/bezier_matrix.h"
+#include "NBezier/bezier_requirements.h"
 
 #include "boost/qvm/mat.hpp"
 #include "boost/qvm/mat_access.hpp"
@@ -15,21 +16,18 @@
 
 OpenNameSpace(NBezier);
 
-template<typename Scalar>
-concept BezierPointsType = std::floating_point<Scalar>;
-
-template<size_t Dimension>
-concept BezierPointsDimensionRequirement = Dimension > 0;
-
 template<size_t Index, size_t Indices>
 concept PointIndexRequirement = Index < Indices;
 
 template<size_t Degree, typename... PointsArgs>
 concept ConstructionRequirement = sizeof...(PointsArgs) == Degree + 1;
 
+template<size_t NewDegree, size_t Degree>
+concept ReduceDegreeRequirement = NewDegree <= Degree;
+
 template<typename Scalar, size_t Dimension, size_t Degree>
-    requires BezierPointsType<Scalar> &&  //
-             BezierPointsDimensionRequirement<Dimension>
+    requires BezierType<Scalar> &&  //
+             BezierDimensionRequirement<Dimension>
 struct BezierPoints
 {
     typedef boost::qvm::mat<Scalar, Dimension, Degree + 1> Points;
@@ -52,6 +50,11 @@ private:
 public:
     constexpr BezierPoints() : m_points{}, m_derived_points{}
     {
+    }
+
+    constexpr BezierPoints(const Points& points) : m_points{points}, m_derived_points{}
+    {
+        updateDerivedPoints();
     }
 
     template<typename... PointsArgs>
@@ -89,7 +92,76 @@ public:
         return m_derived_points;
     }
 
+    template<size_t NewDegree>
+        requires ReduceDegreeRequirement<NewDegree, Degree>
+    constexpr auto reduceFromLeft() const
+    {
+        return copyFromLeft<NewDegree>(std::make_index_sequence<NewDegree + 1>{});
+    }
+
+    template<size_t NewDegree>
+        requires ReduceDegreeRequirement<NewDegree, Degree>
+    constexpr auto reduceFromRight() const
+    {
+        return copyFromRight<NewDegree>(std::make_index_sequence<NewDegree + 1>{});
+    }
+
+    constexpr bool operator==(const BezierPoints& other) const
+    {
+        return m_points == other.m_points &&  //
+               m_derived_points == other.m_derived_points;
+    }
+
+    constexpr bool operator!=(const BezierPoints& other) const
+    {
+        return !(*this == other);
+    }
+
 private:
+    template<size_t NewDegree, size_t... Indices>
+    constexpr auto copyFromLeft(std::index_sequence<Indices...>) const
+    {
+        boost::qvm::mat<Scalar, Dimension, NewDegree + 1> result = {};
+
+        (copyFromLeft<Indices>(m_points, result), ...);
+
+        return BezierPoints<Scalar, Dimension, NewDegree>{result};
+    }
+
+    template<size_t Index>
+    constexpr void copyFromLeft(const auto& src, auto& dst) const
+    {
+        copyPoint<Index, Index>(src, dst, std::make_index_sequence<Dimension>{});
+    }
+
+    template<size_t NewDegree, size_t... Indices>
+    constexpr auto copyFromRight(std::index_sequence<Indices...>) const
+    {
+        boost::qvm::mat<Scalar, Dimension, NewDegree + 1> result = {};
+
+        (copyFromRight<NewDegree, Indices>(m_points, result), ...);
+
+        return BezierPoints<Scalar, Dimension, NewDegree>{result};
+    }
+
+    template<size_t NewDegree, size_t Index>
+    constexpr void copyFromRight(const auto& src, auto& dst) const
+    {
+        copyPoint<Degree - Index, NewDegree - Index>(src, dst, std::make_index_sequence<Dimension>{});
+    }
+
+    template<size_t SrcIndex, size_t DstIndex, size_t... Dimensions>
+    constexpr void copyPoint(const auto& src, auto& dst, std::index_sequence<Dimensions...>) const
+    {
+        (copyValue<SrcIndex, DstIndex, Dimensions>(src, dst), ...);
+    }
+
+    template<size_t SrcIndex, size_t DstIndex, size_t D>
+    constexpr void copyValue(const auto& src, auto& dst) const
+    {
+        A<D, DstIndex>(dst) = A<D, SrcIndex>(src);
+    }
+
     template<size_t Index, size_t Dimension>
     constexpr void getPoint(Point& p) const
     {
@@ -102,7 +174,7 @@ private:
         Point p = {};
 
         (getPoint<Index, Dimensions>(p), ...);
-        
+
         return p;
     }
 
@@ -120,7 +192,9 @@ private:
 
     constexpr void updateDerivedPoints()
     {
-        m_derived_points = m_points * BezierMatrix<Scalar, Degree + 1>::get();
+        constexpr auto bezier_matrix = BezierMatrix<Scalar, Degree + 1>::get();
+
+        m_derived_points = m_points * bezier_matrix;
     }
 
 private:
