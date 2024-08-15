@@ -6,9 +6,9 @@ UseNameSpace(NBezier);
 
 static void BM_BezierPositionCompileTime(benchmark::State& state)
 {
-    constexpr auto p0 = boost::qvm::vec<float, 3>{-1, 1, 0};
-    constexpr auto p1 = boost::qvm::vec<float, 3>{0, 0, 0};
-    constexpr auto p2 = boost::qvm::vec<float, 3>{1, 1, 0};
+    constexpr auto p0 = Point<float, 3>{-1, 1, 0};
+    constexpr auto p1 = Point<float, 3>{0, 0, 0};
+    constexpr auto p2 = Point<float, 3>{1, 1, 0};
     constexpr BezierPoints<float, 3, 2> b{p0, p1, p2};
 
     for(auto _ : state)
@@ -19,12 +19,12 @@ static void BM_BezierPositionCompileTime(benchmark::State& state)
 
 static void BM_BezierPositionRunTime(benchmark::State& state)
 {
-    constexpr auto p0 = boost::qvm::vec<float, 3>{-1, 1, 0};
-    constexpr auto p1 = boost::qvm::vec<float, 3>{0, 0, 0};
-    constexpr auto p2 = boost::qvm::vec<float, 3>{1, 1, 0};
+    constexpr auto p0 = Point<float, 3>{-1, 1, 0};
+    constexpr auto p1 = Point<float, 3>{0, 0, 0};
+    constexpr auto p2 = Point<float, 3>{1, 1, 0};
     constexpr BezierPoints<float, 3, 2> b{p0, p1, p2};
 
-    auto result= boost::qvm::vec<float, 3>{};
+    auto result= Point<float, 3>{};
 
     for(auto _ : state)
     {
@@ -34,12 +34,12 @@ static void BM_BezierPositionRunTime(benchmark::State& state)
 
 static void BM_BezierTangentRunTime(benchmark::State& state)
 {
-    constexpr auto p0 = boost::qvm::vec<float, 3>{-1, 1, 0};
-    constexpr auto p1 = boost::qvm::vec<float, 3>{0, 0, 0};
-    constexpr auto p2 = boost::qvm::vec<float, 3>{1, 1, 0};
+    constexpr auto p0 = Point<float, 3>{-1, 1, 0};
+    constexpr auto p1 = Point<float, 3>{0, 0, 0};
+    constexpr auto p2 = Point<float, 3>{1, 1, 0};
     constexpr BezierPoints<float, 3, 2> b{p0, p1, p2};
 
-    auto result = boost::qvm::vec<float, 3>{};
+    auto result = Point<float, 3>{};
 
     for(auto _ : state)
     {
@@ -49,12 +49,12 @@ static void BM_BezierTangentRunTime(benchmark::State& state)
 
 static void BM_BezierNormalRunTime(benchmark::State& state)
 {
-    constexpr auto p0 = boost::qvm::vec<float, 3>{-1, 1, 0};
-    constexpr auto p1 = boost::qvm::vec<float, 3>{0, 0, 0};
-    constexpr auto p2 = boost::qvm::vec<float, 3>{1, 1, 0};
+    constexpr auto p0 = Point<float, 3>{-1, 1, 0};
+    constexpr auto p1 = Point<float, 3>{0, 0, 0};
+    constexpr auto p2 = Point<float, 3>{1, 1, 0};
     constexpr BezierPoints<float, 3, 2> b{p0, p1, p2};
 
-    auto result = boost::qvm::vec<float, 3>{};
+    auto result = Point<float, 3>{};
 
     for(auto _ : state)
     {
