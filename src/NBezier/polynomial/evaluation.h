@@ -34,7 +34,7 @@ struct Evaluation
                  EvaluationRequirement<Dimension, NParameter>
     static constexpr auto eval(const Points<Scalar, Dimension, NParameter>& p, const Scalar& a)
     {
-        const auto c = DerivativeFactors<Scalar, NParameter - 1, Derivative>::getDiagonal();
+        constexpr auto c = DerivativeFactors<Scalar, NParameter - 1, Derivative>::getDiagonal();
         const auto v = Variable<Scalar, NParameter - 1>::variableVector<Derivative>(a);
 
         return p * c * v;

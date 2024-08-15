@@ -77,7 +77,7 @@ public:
         requires PointIndexRequirement<Index, Degree + 1>
     constexpr void setPoint(const auto& p)
     {
-        boost::qvm::col<Index>(m_points) = p;
+        setPoint<Index>(p, std::make_index_sequence<Dimension>{});
 
         updateDerivedPoints();
     }
@@ -178,16 +178,16 @@ private:
         return p;
     }
 
-    template<size_t Index, size_t Dimension>
-    constexpr void setPoint(const auto& p)
-    {
-        A<Dimension, Index>(m_points) = A<Dimension>(p);
-    }
-
     template<size_t Index, size_t... Dimensions>
     constexpr void setPoint(const auto& p, std::index_sequence<Dimensions...>)
     {
         (setPoint<Index, Dimensions>(p), ...);
+    }
+
+    template<size_t Index, size_t Dimension>
+    constexpr void setPoint(const auto& p)
+    {
+        A<Dimension, Index>(m_points) = A<Dimension>(p);
     }
 
     constexpr void updateDerivedPoints()

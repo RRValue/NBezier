@@ -8,16 +8,19 @@ UseNameSpace(NBezier);
 
 TEST(So, what3)
 {
-    constexpr auto p0 = boost::qvm::vec<float, 3>{-1, 1, 0};
-    constexpr auto p1 = boost::qvm::vec<float, 3>{0, 0, 0};
-    constexpr auto p2 = boost::qvm::vec<float, 3>{1, 1, 0};
-    constexpr auto p3 = boost::qvm::vec<float, 3>{2, 2, 1};
-    constexpr BezierPoints<float, 3, 3> b{p0, p1, p2, p3};
+    constexpr auto p0 = boost::qvm::vec<float, 6>{-4, -4, -4, -4, -4, -4};
+    constexpr auto p1 = boost::qvm::vec<float, 6>{-3, -3, -3, -3, -3, -3};
+    constexpr auto p2 = boost::qvm::vec<float, 6>{-2, -2, -2, -2, -2, -2};
+    constexpr auto p3 = boost::qvm::vec<float, 6>{-1, -1, -1, -1, -1, -1};
+    constexpr auto p4 = boost::qvm::vec<float, 6>{0, 0, 0, 0, 0, 0};
+    constexpr auto p5 = boost::qvm::vec<float, 6>{1, 1, 1, 1, 1, 1};
+    constexpr auto p6 = boost::qvm::vec<float, 6>{2, 2, 2, 2, 2, 2};
+    constexpr auto p7 = boost::qvm::vec<float, 6>{3, 3, 3, 3, 3, 3};
+    constexpr auto p8 = boost::qvm::vec<float, 6>{4, 4, 4, 4, 4, 4};
 
-    constexpr auto left_right = BezierSplit::at(b, 0.5f);
-    constexpr auto left = left_right.m_left;
-    constexpr auto right = left_right.m_right;
+    constexpr auto bezier = BezierPoints<float, 6, 8>{p0, p1, p2, p3, p4,p5, p6, p7, p8};
 
-    int ii = 0;
-    ii++;
+    constexpr auto split = BezierSplit::at(bezier, 0.5f);
+    constexpr auto left_bezier = split.m_left;
+    constexpr auto right_bezier = split.m_right;
 }
