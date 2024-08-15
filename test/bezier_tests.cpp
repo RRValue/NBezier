@@ -8,10 +8,10 @@ UseNameSpace(NBezier);
 
 TEST(So, what2)
 {
-    constexpr auto p0 = boost::qvm::vec<float, 3>{-1, 1, 0};
-    constexpr auto p1 = boost::qvm::vec<float, 3>{0, 0, 0};
-    constexpr auto p2 = boost::qvm::vec<float, 3>{1, 1, 0};
-    constexpr auto p3 = boost::qvm::vec<float, 3>{2, 2, 1};
+    constexpr auto p0 = Point<float, 3>{-1, 1, 0};
+    constexpr auto p1 = Point<float, 3>{0, 0, 0};
+    constexpr auto p2 = Point<float, 3>{1, 1, 0};
+    constexpr auto p3 = Point<float, 3>{2, 2, 1};
     constexpr BezierPoints<float, 3, 3> b{p0, p1, p2, p3};
 
     constexpr auto position = Bezier::point(b, 0.5f);

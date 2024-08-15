@@ -30,7 +30,7 @@ TYPED_TEST_P(BezierMatrixGenerationTest, Generation)
     }
 
     {
-        constexpr auto m = BezierMatrix::get<S, 2>();
+        auto m = BezierMatrix::get<S, 2>();
         EXPECT_EQ(A00(m), S(-1));
         EXPECT_EQ(A01(m), S(1));
         EXPECT_EQ(A10(m), S(1));

@@ -1,4 +1,5 @@
 #include "NBezier/bezier_points.h"
+#include "NBezier/points.h"
 
 #include "bezier_test_types.h"
 
@@ -8,8 +9,8 @@ UseNameSpace(NBezier);
 
 TEST(BezierPoints, test)
 {
-    constexpr auto p0 = boost::qvm::vec<float, 2>{0, 1};
-    constexpr auto p1 = boost::qvm::vec<float, 2>{1, 2};
+    constexpr auto p0 = Point<float, 2>{0, 1};
+    constexpr auto p1 = Point<float, 2>{1, 2};
 
     BezierPoints<float, 2, 1> b{};
     b.setPoint<0>(p0);
@@ -22,10 +23,10 @@ TEST(BezierPoints, test)
 
 TEST(BezierPoints, reduceLeftAndRight)
 {
-    constexpr auto p0 = boost::qvm::vec<float, 2>{0, 4};
-    constexpr auto p1 = boost::qvm::vec<float, 2>{1, 5};
-    constexpr auto p2 = boost::qvm::vec<float, 2>{2, 6};
-    constexpr auto p3 = boost::qvm::vec<float, 2>{3, 7};
+    constexpr auto p0 = Point<float, 2>{0, 4};
+    constexpr auto p1 = Point<float, 2>{1, 5};
+    constexpr auto p2 = Point<float, 2>{2, 6};
+    constexpr auto p3 = Point<float, 2>{3, 7};
 
     constexpr auto bezier_points = BezierPoints<float, 2, 3>{p0, p1, p2, p3};
 

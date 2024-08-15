@@ -56,7 +56,7 @@ private:
         constexpr auto col_factor = Binomial::Coefficient<int>::get(Degree - 1 - row, col);
         constexpr auto value = sign * row_factor * col_factor;
 
-        boost::qvm::write_mat_element_idx(row, col, m, value);
+        boost::qvm::A<row, col>(m) = value;
     }
 };
 
