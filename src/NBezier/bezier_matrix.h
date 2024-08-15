@@ -18,17 +18,33 @@ concept BezierMatrixCellType = (std::signed_integral<Scalar> || std::floating_po
 template<size_t Degree>
 concept BezierMatrixDegreeRequirement = Degree > 0;
 
-template<typename Scalar, size_t Degree>
-    requires BezierMatrixCellType<Scalar> &&  //
-             BezierMatrixDegreeRequirement<Degree>
 struct BezierMatrix
 {
     StaticClass(BezierMatrix);
 
-    typedef boost::qvm::mat<Scalar, Degree, Degree> Matrix;
+public:
+    template<typename Scalar, size_t Degree>
+        requires BezierMatrixCellType<Scalar> &&  //
+                 BezierMatrixDegreeRequirement<Degree>
+    static constexpr auto get() noexcept
+    {
+        return generateMatrix<Scalar, Degree>(std::make_index_sequence<Degree * Degree>{});
+    }
+
+    bool operator==(const BezierMatrix&) const noexcept = default;
 
 private:
-    template<std::size_t Index>
+    template<typename Scalar, size_t Degree, std::size_t... Indices>
+    NBInline static constexpr auto generateMatrix(std::index_sequence<Indices...>)
+    {
+        boost::qvm::mat<Scalar, Degree, Degree> m = {};
+
+        (fillCell<Degree, Indices>(m), ...);
+
+        return m;
+    }
+
+    template<std::size_t Degree, std::size_t Index>
     NBInline static constexpr void fillCell(auto& m)
     {
         constexpr auto row = Index / Degree;
@@ -42,24 +58,6 @@ private:
 
         boost::qvm::write_mat_element_idx(row, col, m, value);
     }
-
-    template<std::size_t... Indices>
-    NBInline static constexpr void generateMatrix(auto& m, std::index_sequence<Indices...>)
-    {
-        (fillCell<Indices>(m), ...);
-    }
-
-public:
-    static constexpr auto get() noexcept
-    {
-        Matrix m = {};
-
-        generateMatrix(m, std::make_index_sequence<Degree * Degree>{});
-
-        return m;
-    }
-
-    bool operator==(const BezierMatrix&) const noexcept = default;
 };
 
 CloseNameSpace(NBezier);

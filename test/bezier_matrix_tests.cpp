@@ -25,12 +25,12 @@ TYPED_TEST_P(BezierMatrixGenerationTest, Generation)
     using S = TestFixture::Scalar;
 
     {
-        constexpr auto m = BezierMatrix<S, 1>::get();
+        constexpr auto m = BezierMatrix::get<S, 1>();
         EXPECT_EQ(A00(m), S(1));
     }
 
     {
-        constexpr auto m = BezierMatrix<S, 2>::get();
+        constexpr auto m = BezierMatrix::get<S, 2>();
         EXPECT_EQ(A00(m), S(-1));
         EXPECT_EQ(A01(m), S(1));
         EXPECT_EQ(A10(m), S(1));
@@ -38,7 +38,7 @@ TYPED_TEST_P(BezierMatrixGenerationTest, Generation)
     }
 
     {
-        constexpr auto m = BezierMatrix<S, 3>::get();
+        constexpr auto m = BezierMatrix::get<S, 3>();
         EXPECT_EQ(A00(m), S(1));
         EXPECT_EQ(A01(m), S(-2));
         EXPECT_EQ(A02(m), S(1));
@@ -51,7 +51,7 @@ TYPED_TEST_P(BezierMatrixGenerationTest, Generation)
     }
 
     {
-        constexpr auto m = BezierMatrix<S, 4>::get();
+        constexpr auto m = BezierMatrix::get<S, 4>();
         EXPECT_EQ(A00(m), S(-1));
         EXPECT_EQ(A01(m), S(3));
         EXPECT_EQ(A02(m), S(-3));
@@ -71,7 +71,7 @@ TYPED_TEST_P(BezierMatrixGenerationTest, Generation)
     }
 
     {
-        constexpr auto m = BezierMatrix<S, 5>::get();
+        constexpr auto m = BezierMatrix::get<S, 5>();
         EXPECT_EQ(A00(m), S(1));
         EXPECT_EQ(A01(m), S(-4));
         EXPECT_EQ(A02(m), S(6));

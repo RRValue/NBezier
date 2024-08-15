@@ -192,7 +192,7 @@ private:
 
     constexpr void updateDerivedPoints()
     {
-        constexpr auto bezier_matrix = BezierMatrix<Scalar, Degree + 1>::get();
+        constexpr auto bezier_matrix = BezierMatrix::get<Scalar, Degree + 1>();
 
         m_derived_points = m_points * bezier_matrix;
     }
