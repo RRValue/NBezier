@@ -49,7 +49,7 @@ private:
     }
 
     template<size_t Degree, std::size_t Index>
-    static constexpr void splitPoint(const auto& p, auto& r, const auto& at)
+    NBInline static constexpr void splitPoint(const auto& p, auto& r, const auto& at)
     {
         r.m_left.setPoint<Index>(Bezier::point(p.reduceFromLeft<Index>(), at));
         r.m_right.setPoint<Degree - Index>(Bezier::point(p.reduceFromRight<Index>(), at));

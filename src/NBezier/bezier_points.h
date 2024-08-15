@@ -119,7 +119,7 @@ public:
 
 private:
     template<size_t NewDegree, size_t... Indices>
-    constexpr auto copyFromLeft(std::index_sequence<Indices...>) const
+    NBInline constexpr auto copyFromLeft(std::index_sequence<Indices...>) const
     {
         boost::qvm::mat<Scalar, Dimension, NewDegree + 1> result = {};
 
@@ -129,13 +129,13 @@ private:
     }
 
     template<size_t Index>
-    constexpr void copyFromLeft(const auto& src, auto& dst) const
+    NBInline constexpr void copyFromLeft(const auto& src, auto& dst) const
     {
         copyPoint<Index, Index>(src, dst, std::make_index_sequence<Dimension>{});
     }
 
     template<size_t NewDegree, size_t... Indices>
-    constexpr auto copyFromRight(std::index_sequence<Indices...>) const
+    NBInline constexpr auto copyFromRight(std::index_sequence<Indices...>) const
     {
         boost::qvm::mat<Scalar, Dimension, NewDegree + 1> result = {};
 
@@ -145,31 +145,31 @@ private:
     }
 
     template<size_t NewDegree, size_t Index>
-    constexpr void copyFromRight(const auto& src, auto& dst) const
+    NBInline constexpr void copyFromRight(const auto& src, auto& dst) const
     {
         copyPoint<Degree - Index, NewDegree - Index>(src, dst, std::make_index_sequence<Dimension>{});
     }
 
     template<size_t SrcIndex, size_t DstIndex, size_t... Dimensions>
-    constexpr void copyPoint(const auto& src, auto& dst, std::index_sequence<Dimensions...>) const
+    NBInline constexpr void copyPoint(const auto& src, auto& dst, std::index_sequence<Dimensions...>) const
     {
         (copyValue<SrcIndex, DstIndex, Dimensions>(src, dst), ...);
     }
 
     template<size_t SrcIndex, size_t DstIndex, size_t D>
-    constexpr void copyValue(const auto& src, auto& dst) const
+    NBInline constexpr void copyValue(const auto& src, auto& dst) const
     {
         A<D, DstIndex>(dst) = A<D, SrcIndex>(src);
     }
 
     template<size_t Index, size_t Dimension>
-    constexpr void getPoint(auto& p) const
+    NBInline constexpr void getPoint(auto& p) const
     {
         A<Dimension>(p) = A<Dimension, Index>(m_points);
     }
 
     template<size_t Index, size_t... Dimensions>
-    constexpr auto getPoint(std::index_sequence<Dimensions...>) const
+    NBInline constexpr auto getPoint(std::index_sequence<Dimensions...>) const
     {
         Point p = {};
 
@@ -179,18 +179,18 @@ private:
     }
 
     template<size_t Index, size_t... Dimensions>
-    constexpr void setPoint(const auto& p, std::index_sequence<Dimensions...>)
+    NBInline constexpr void setPoint(const auto& p, std::index_sequence<Dimensions...>)
     {
         (setPoint<Index, Dimensions>(p), ...);
     }
 
     template<size_t Index, size_t Dimension>
-    constexpr void setPoint(const auto& p)
+    NBInline constexpr void setPoint(const auto& p)
     {
         A<Dimension, Index>(m_points) = A<Dimension>(p);
     }
 
-    constexpr void updateDerivedPoints()
+    NBInline constexpr void updateDerivedPoints()
     {
         constexpr auto bezier_matrix = BezierMatrix::get<Scalar, Degree + 1>();
 
