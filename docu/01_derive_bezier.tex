@@ -1,0 +1,160 @@
+\section{Derivation of a point on a bezier Curve}
+
+\subsection{Calculating the point}
+Suppose we have these points as input for th bezier curve.
+
+\begin{align*}
+    \text{BezierPoints}=\left\{B_0,B_1,B_2,B_3\right\}
+\end{align*}
+
+We do the first interpolation between $B_0$, ... $B_3$ with the parameter $\alpha$.
+
+\begin{align*}
+    \left(
+    \begin{array}{c}
+        Q_0 \\
+        Q_1 \\
+        Q_2 \\
+    \end{array}
+    \right)=\left(
+    \begin{array}{c}
+        (1-\alpha ) B_0+\alpha  B_1 \\
+        (1-\alpha ) B_1+\alpha  B_2 \\
+        (1-\alpha ) B_2+\alpha  B_3 \\
+    \end{array}
+    \right)
+\end{align*}
+
+We do the second interpolation between $Q_0$, ... $Q_2$ with the parameter $\alpha$.
+
+\begin{align*}
+    \left(
+    \begin{array}{c}
+        R_0 \\
+        R_1 \\
+    \end{array}
+    \right)=\left(
+    \begin{array}{c}
+        (1-\alpha ) Q_0+\alpha  Q_1 \\
+        (1-\alpha ) Q_1+\alpha  Q_2 \\
+    \end{array}
+    \right)
+\end{align*}
+
+We do the final interpolation between $R_0$, and $R_1$ with the parameter $\alpha$.
+
+\begin{align*}
+    S=(1-\alpha ) R_0+\alpha  R_1
+\end{align*}
+
+When we expand these term with respect to $B_0$ ... $B_3$, we get.
+
+\begin{align*}
+    P=\alpha ^3 \left(-B_0\right)+3 \alpha ^3 B_1-3 \alpha ^3 B_2+\alpha ^3 B_3+\\
+    3 \alpha ^2 B_0-6 \alpha ^2 B_1+3 \alpha ^2 B_2\\
+    -3 \alpha  B_0+3 \alpha  B_1+\\
+    B_0
+\end{align*}
+
+factor out the $\alpha$ terms
+
+\begin{align*}
+    P=\alpha ^3 \left(-B_0+3 B_1-3 B_2+B_3\right)\\
+    +\alpha ^2 \left(3 B_0-6 B_1+3 B_2\right)\\
+    +\alpha ^1 \left(3 B_1-3 B_0\right)\\
+    +\alpha ^0 B_0
+\end{align*}
+
+and insert missing Points with a multiple of 0.
+
+\begin{align*}
+    P=\alpha ^3 \left(-1 B_0+3 B_1-3 B_2+1 B_3\right)  \\
+    +\alpha ^2 \left( 3 B_0-6 B_1+3 B_2+0 B_3\right) \\
+    +\alpha ^1 \left(-3 B_0+3 B_1+0 B_2+0 B_3\right) \\
+    +\alpha ^0 \left( 1 B_0+0 B_1+0 B_2+0 B_3\right)
+\end{align*}
+
+From this we can decompose the equation into 3 parts.
+
+\begin{align}
+    P=\left(
+    \begin{array}{cccc}
+        B_0 & B_1 & B_2 & B_3 \\
+    \end{array}
+    \right)
+    *\\
+    \left(
+    \begin{array}{cccc}
+        -1 & 3  & -3 & 1 \\
+        3  & -6 & 3  & 0 \\
+        -3 & 3  & 0  & 0 \\
+        1  & 0  & 0  & 0 \\
+    \end{array}
+    \right)
+    *\\
+    \left(
+    \begin{array}{cccc}
+        \alpha ^3 \\
+        \alpha ^2 \\
+        \alpha ^1 \\
+        \alpha ^0 \\
+    \end{array}
+    \right)
+\end{align}
+
+(1) Is our input
+
+(2) Is the condesation of our bezier point
+
+(3) Is the parametrization for the curve.
+
+Note, that (3) is also the only part of the equation that is responsible for derivatives!
+
+With this is mind we can easily calculate derivatives by diffrentiate against $\alpha$.
+
+\begin{align}
+    Alpha_0=\left(
+    \begin{array}{cccc}
+        \alpha ^3 \\
+        \alpha ^2 \\
+        \alpha ^1 \\
+        \alpha ^0 \\
+    \end{array}
+    \right)
+\end{align}
+
+\begin{align}
+    Alpha_1=\left(
+    \begin{array}{cccc}
+        3 \alpha ^2 \\
+        2 \alpha ^1 \\
+        \alpha ^0 \\
+        0 \\
+    \end{array}
+    \right)
+\end{align}
+
+\begin{align}
+    Alpha_2=\left(
+    \begin{array}{cccc}
+        6 \alpha ^1 \\
+        2 \alpha ^0 \\
+        0 \\
+        0 \\
+    \end{array}
+    \right)
+\end{align}
+
+\begin{align}
+    Alpha_3=\left(
+    \begin{array}{cccc}
+        6 \\
+        0 \\
+        0 \\
+        0 \\
+    \end{array}
+    \right)
+\end{align}
+
+\subsection{Prepare Points for evaluation}
+
