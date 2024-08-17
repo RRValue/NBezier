@@ -1,2 +1,5 @@
 build
 bin
+/docu/.aux
+/docu/*.synctex.gz
+/docu/*.pdf
