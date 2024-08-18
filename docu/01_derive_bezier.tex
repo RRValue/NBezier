@@ -3,13 +3,13 @@
 \subsection{Calculating the point}
 Suppose we have these points as input for th bezier curve.
 
-\begin{align*}
+\begin{equation*}
     \text{BezierPoints}=\left\{B_0,B_1,B_2,B_3\right\}
-\end{align*}
-
+\end{equation*}
+\\
 We do the first interpolation between $B_0$, ... $B_3$ with the parameter $\alpha$.
 
-\begin{align*}
+\begin{equation*}
     \left(
     \begin{array}{c}
         Q_0 \\
@@ -23,11 +23,11 @@ We do the first interpolation between $B_0$, ... $B_3$ with the parameter $\alph
         (1-\alpha ) B_2+\alpha  B_3 \\
     \end{array}
     \right)
-\end{align*}
-
+\end{equation*}
+\\
 We do the second interpolation between $Q_0$, ... $Q_2$ with the parameter $\alpha$.
 
-\begin{align*}
+\begin{equation*}
     \left(
     \begin{array}{c}
         R_0 \\
@@ -39,50 +39,50 @@ We do the second interpolation between $Q_0$, ... $Q_2$ with the parameter $\alp
         (1-\alpha ) Q_1+\alpha  Q_2 \\
     \end{array}
     \right)
-\end{align*}
-
+\end{equation*}
+\\
 We do the final interpolation between $R_0$, and $R_1$ with the parameter $\alpha$.
 
-\begin{align*}
+\begin{equation*}
     S=(1-\alpha ) R_0+\alpha  R_1
-\end{align*}
-
+\end{equation*}
+\\
 When we expand these term with respect to $B_0$ ... $B_3$, we get.
 
-\begin{align*}
-    P=\alpha ^3 \left(-B_0\right)+3 \alpha ^3 B_1-3 \alpha ^3 B_2+\alpha ^3 B_3+\\
-    3 \alpha ^2 B_0-6 \alpha ^2 B_1+3 \alpha ^2 B_2\\
-    -3 \alpha  B_0+3 \alpha  B_1+\\
+\begin{equation*}
+    P=\alpha ^3 \left(-B_0\right)+3 \alpha ^3 B_1-3 \alpha ^3 B_2+\alpha ^3 B_3+ \\
+    3 \alpha ^2 B_0-6 \alpha ^2 B_1+3 \alpha ^2 B_2                              \\
+    -3 \alpha  B_0+3 \alpha  B_1+                                                \\
     B_0
-\end{align*}
-
+\end{equation*}
+\\
 factor out the $\alpha$ terms
 
-\begin{align*}
-    P=\alpha ^3 \left(-B_0+3 B_1-3 B_2+B_3\right)\\
-    +\alpha ^2 \left(3 B_0-6 B_1+3 B_2\right)\\
-    +\alpha ^1 \left(3 B_1-3 B_0\right)\\
+\begin{equation*}
+    P=\alpha ^3 \left(-B_0+3 B_1-3 B_2+B_3\right) \\
+    +\alpha ^2 \left(3 B_0-6 B_1+3 B_2\right)     \\
+    +\alpha ^1 \left(3 B_1-3 B_0\right)           \\
     +\alpha ^0 B_0
-\end{align*}
-
+\end{equation*}
+\\
 and insert missing Points with a multiple of 0.
 
-\begin{align*}
-    P=\alpha ^3 \left(-1 B_0+3 B_1-3 B_2+1 B_3\right)  \\
-    +\alpha ^2 \left( 3 B_0-6 B_1+3 B_2+0 B_3\right) \\
-    +\alpha ^1 \left(-3 B_0+3 B_1+0 B_2+0 B_3\right) \\
+\begin{equation*}
+    P=\alpha ^3 \left(-1 B_0+3 B_1-3 B_2+1 B_3\right) \\
+    +\alpha ^2 \left( 3 B_0-6 B_1+3 B_2+0 B_3\right)  \\
+    +\alpha ^1 \left(-3 B_0+3 B_1+0 B_2+0 B_3\right)  \\
     +\alpha ^0 \left( 1 B_0+0 B_1+0 B_2+0 B_3\right)
-\end{align*}
-
+\end{equation*}
+\\
 From this we can decompose the equation into 3 parts.
 
-\begin{align}
+\begin{equation*}
     P=\left(
     \begin{array}{cccc}
         B_0 & B_1 & B_2 & B_3 \\
     \end{array}
     \right)
-    *\\
+    \times \\
     \left(
     \begin{array}{cccc}
         -1 & 3  & -3 & 1 \\
@@ -91,7 +91,7 @@ From this we can decompose the equation into 3 parts.
         1  & 0  & 0  & 0 \\
     \end{array}
     \right)
-    *\\
+    \times \\
     \left(
     \begin{array}{cccc}
         \alpha ^3 \\
@@ -100,20 +100,20 @@ From this we can decompose the equation into 3 parts.
         \alpha ^0 \\
     \end{array}
     \right)
-\end{align}
-
-(1) Is our input
-
-(2) Is the condesation of our bezier point
-
-(3) Is the parametrization for the curve.
-
-Note, that (3) is also the only part of the equation that is responsible for derivatives!
-
+\end{equation*}
+\\
+The left term is our input,
+\\
+the middle the condesation of our bezier points and
+\\
+the right term is the parametrization for the curve.
+\\\\
+Note, that the right term is also the only part of the equation that is responsible for derivatives!
+\\\\
 With this is mind we can easily calculate derivatives by diffrentiate against $\alpha$.
 
-\begin{align}
-    Alpha_0=\left(
+\begin{equation}
+    Derivative_0=\left(
     \begin{array}{cccc}
         \alpha ^3 \\
         \alpha ^2 \\
@@ -121,32 +121,32 @@ With this is mind we can easily calculate derivatives by diffrentiate against $\
         \alpha ^0 \\
     \end{array}
     \right)
-\end{align}
+\end{equation}
 
-\begin{align}
-    Alpha_1=\left(
+\begin{equation}
+    Derivative_1=\left(
     \begin{array}{cccc}
         3 \alpha ^2 \\
         2 \alpha ^1 \\
-        \alpha ^0 \\
-        0 \\
+        \alpha ^0   \\
+        0           \\
     \end{array}
     \right)
-\end{align}
+\end{equation}
 
-\begin{align}
-    Alpha_2=\left(
+\begin{equation}
+    Derivative_2=\left(
     \begin{array}{cccc}
         6 \alpha ^1 \\
         2 \alpha ^0 \\
-        0 \\
-        0 \\
+        0           \\
+        0           \\
     \end{array}
     \right)
-\end{align}
+\end{equation}
 
-\begin{align}
-    Alpha_3=\left(
+\begin{equation}
+    Derivative_3=\left(
     \begin{array}{cccc}
         6 \\
         0 \\
@@ -154,7 +154,262 @@ With this is mind we can easily calculate derivatives by diffrentiate against $\
         0 \\
     \end{array}
     \right)
-\end{align}
+\end{equation}
 
-\subsection{Prepare Points for evaluation}
+\subsection{Weighted Points}
 
+The weighted points represent the Bézier points in relation to the time of evaluation and according to the degree of the Bézier curve.
+\\\\
+The Weighted points can be precalculated to have  less work when evaluation th bezier at some $\alpha$.
+
+\begin{equation*}
+    \left(
+    \begin{array}{cccc}
+        W_0 & W_1 & W_2 & W_3 \\
+    \end{array}
+    \right)
+    =
+    \left(
+    \begin{array}{cccc}
+        B_0 & B_1 & B_2 & B_3 \\
+    \end{array}
+    \right)
+    \times
+    \left(
+    \begin{array}{cccc}
+        -1 & 3  & -3 & 1 \\
+        3  & -6 & 3  & 0 \\
+        -3 & 3  & 0  & 0 \\
+        1  & 0  & 0  & 0 \\
+    \end{array}
+    \right)
+\end{equation*}
+\\
+or in general
+\\
+\begin{equation*}
+    \left(
+    \begin{array}{cccc}
+        W_0 & W_1 & W_2 & W_3 \\
+    \end{array}
+    \right)
+    =
+    \left(
+    \begin{array}{cccc}
+        B_0 & B_1 & B_2 & B_3 \\
+    \end{array}
+    \right)
+    \times
+    W
+\end{equation*}
+\\
+where $W$ is the weight matrix.
+\\\\
+With this the calculation of the bezier curve is reduced to a matrix multiplication.
+
+\begin{equation*}
+    P=\left(
+    \begin{array}{cccc}
+        W_0 & W_1 & W_2 & W_3 \\
+    \end{array}
+    \right)
+    \times
+    \left(
+    \begin{array}{cccc}
+        \alpha ^3 \\
+        \alpha ^2 \\
+        \alpha ^1 \\
+        \alpha ^0 \\
+    \end{array}
+    \right)
+\end{equation*}
+
+\subsection{Generalize weight matrix}
+
+We saw the matrix
+
+\begin{equation*}
+    \left(
+    \begin{array}{cccc}
+        -1 & 3  & -3 & 1 \\
+        3  & -6 & 3  & 0 \\
+        -3 & 3  & 0  & 0 \\
+        1  & 0  & 0  & 0 \\
+    \end{array}
+    \right)
+\end{equation*}
+\\
+This matrix condesens the bezier points into a set of points, that have been weighted according to the Degree if the bezier.
+\\
+\\
+This matrix can be generalized without further proof to
+
+\begin{equation*}
+    W=
+    \left(
+    \begin{array}{cccc}
+        W_{0,0}   & W_{1,0}   & \cdots & W_{G-1,0}   \\
+        W_{0,1}   & W_{1,1}   & \cdots & W_{G-1,1}   \\
+        \vdots    & \vdots    & \ddots & \vdots      \\
+        W_{0,G-1} & W_{1,G-1} & \cdots & W_{G-1,G-1} \\
+    \end{array}
+    \right)
+\end{equation*}
+\\
+where
+\\
+\begin{equation*}
+    W_{i,j}=\begin{cases}
+        (-1)^{i+j+1} {G-j \choose i} {G \choose j} & i + j \le G      \\
+        0 & \text{otherwise}
+    \end{cases}
+\end{equation*}
+
+\subsection{Decomposing Derivatives}
+
+\begin{equation*}
+    \left(
+    \begin{array}{cccc}
+        \alpha ^3 \\
+        \alpha ^2 \\
+        \alpha ^1 \\
+        \alpha ^0 \\
+    \end{array}
+    \right)
+\end{equation*}
+\\
+can be decomposed into this form
+
+\begin{equation*}
+    Derivative_0=
+    \left(
+    \begin{array}{cccc}
+        1 & 1 & 1 & 1 \\
+    \end{array}
+    \right)
+    \times
+    \left(
+    \begin{array}{cccc}
+        \alpha ^3 \\
+        \alpha ^2 \\
+        \alpha ^1 \\
+        \alpha ^0 \\
+    \end{array}
+    \right)
+\end{equation*}
+
+\begin{equation*}
+    Derivative_1=
+    \left(
+    \begin{array}{cccc}
+        3 & 2 & 1 & 0 \\
+    \end{array}
+    \right)
+    \times
+    \left(
+    \begin{array}{cccc}
+        \alpha ^2 \\
+        \alpha ^1 \\
+        \alpha ^0 \\
+        1         \\
+    \end{array}
+    \right)
+\end{equation*}
+
+\begin{equation*}
+    ...
+\end{equation*}
+
+\subsection{Generalize Derivatives}
+
+In general we can calculate the derivatives with the following formula
+
+\begin{equation*}
+    D=C \times V
+\end{equation*}
+\\
+where $C$ is the coefficient vector and $V$ is the variable vector.\\
+\\
+Next we derive the general form, where
+
+\begin{itemize}
+    \item $G$ is the degree of the bezier curve
+    \item $d$ is th derivative and
+    \item $i$ is the i-th factor.
+\end{itemize}
+
+\subsubsection{Coefficient vector C}
+
+\begin{equation*}
+    C_{d}=
+    \left(
+    \begin{array}{cccc}
+            C_{d,0} & C_{d,1} & ... & C_{d,G - 1} \\
+        \end{array}
+    \right)
+\end{equation*}
+\\
+where
+
+\begin{equation*}
+    C_{d,i}=
+    \begin{cases}
+        0                                            & d + i \leq G     \\
+        1                                            & d>0              \\
+        \mathlarger{\prod}_{k = i}^{d + i - 1} G - k & \text{otherwise}
+    \end{cases}
+\end{equation*}
+
+\subsubsection{Variable vector V}
+
+\begin{equation*}
+    V_{d}=
+    \left(
+    \begin{array}{cccc}
+            V_{d,0}   \\
+            V_{d,0}   \\
+            ...       \\
+            V_{d,G-1} \\
+        \end{array}
+    \right)
+\end{equation*}
+\\
+where
+
+\begin{equation*}
+    V_{d,i}=\begin{cases}
+        1                  & d + i \leq G     \\
+        \alpha^{G - d - i} & \text{otherwise}
+    \end{cases}
+\end{equation*}
+
+\subsection{Putting it together}
+
+\begin{equation*}
+    P=
+    \left(
+    \begin{array}{cccc}
+        B_0 & B_1 & B_2 & B_3 \\
+    \end{array}
+    \right)
+    \times
+    W
+    \times
+    C
+    \times
+    V
+\end{equation*}
+\\
+where
+\\
+$W$ is the weight matrix,\\
+$C$ is the coefficient vector and\\
+$V$ is the variable vector.\\
+\\
+$C$ and $V$ are responsible for the derivatives of the bezier curve.
+
+\subsection{Compile constant matrices}
+
+$W$ and\\
+$C$ \\
+are compile constant, because we know the degree and the derivative at compile time.
