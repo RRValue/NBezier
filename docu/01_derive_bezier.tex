@@ -261,7 +261,7 @@ where
 \begin{equation*}
     W_{i,j}=\begin{cases}
         (-1)^{i+j+1} {G-j \choose i} {G \choose j} & i + j \le G      \\
-        0 & \text{otherwise}
+        0                                          & \text{otherwise}
     \end{cases}
 \end{equation*}
 
@@ -413,3 +413,36 @@ $C$ and $V$ are responsible for the derivatives of the bezier curve.
 $W$ and\\
 $C$ \\
 are compile constant, because we know the degree and the derivative at compile time.
+\\\\
+$V$ on the other hand must be generated with respect to $\alpha$, which may not be knowen at compile time.
+
+\subsection{Dimension of the bezier points}
+
+Since know we only have looked at one dimensional points.\\
+We can easily generalize this to n-dimensional points, by pluging n-dimensional points into the equation.
+
+\begin{equation*}
+    \left(
+    \begin{array}{cccc}
+        P_x    \\
+        P_y    \\
+        P_z    \\
+        \vdots \\
+    \end{array}
+    \right)
+    =
+    \left(
+    \begin{array}{cccc}
+        B_{x0} & B_{x1} & B_{x2} & B_{x3} \\
+        B_{y0} & B_{y1} & B_{y2} & B_{y3} \\
+        B_{z0} & B_{z1} & B_{z2} & B_{z3} \\
+        \vdots & \vdots & \vdots & \vdots \\
+    \end{array}
+    \right)
+    \times
+    W
+    \times
+    C
+    \times
+    V
+\end{equation*}
