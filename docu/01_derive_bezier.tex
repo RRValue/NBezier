@@ -239,7 +239,7 @@ We saw the matrix
     \right)
 \end{equation*}
 \\
-This matrix condesens the bezier points into a set of points, that have been weighted according to the Degree if the bezier.
+This matrix condesens the bezier points into a set of points, that have been weighted according to the Degree of the bezier.
 \\
 \\
 This matrix can be generalized without further proof to
@@ -260,8 +260,8 @@ where
 \\
 \begin{equation*}
     W_{i,j}=\begin{cases}
-        (-1)^{i+j+1} {G-j \choose i} {G \choose j} & i + j \le G      \\
-        0                                          & \text{otherwise}
+        (-1)^{G+i+j+1} {G-j \choose i} {G \choose j} & i + j \le G      \\
+        0                                            & \text{otherwise}
     \end{cases}
 \end{equation*}
 
