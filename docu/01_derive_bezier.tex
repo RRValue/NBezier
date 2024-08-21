@@ -261,7 +261,7 @@ where
 \begin{equation*}
     W_{i,j}=\begin{cases}
         (-1)^{G-i-j} {G \choose i}{G-i \choose j} & i + j \le G      \\
-        0                                            & \text{otherwise}
+        0                                         & \text{otherwise}
     \end{cases}
 \end{equation*}
 
@@ -325,10 +325,10 @@ can be decomposed into this form
 In general we can calculate the derivatives with the following formula
 
 \begin{equation*}
-    D=C \times V
+    D=Points \times (C * V)
 \end{equation*}
 \\
-where $C$ is the coefficient vector and $V$ is the variable vector.\\
+where Points are number of points in matrix format, $C$ is the coefficient vector and $V$ is the variable vector.\\
 \\
 Next we derive the general form, where
 
@@ -344,7 +344,10 @@ Next we derive the general form, where
     C_{d}=
     \left(
     \begin{array}{cccc}
-            C_{d,0} & C_{d,1} & ... & C_{d,G} \\
+            C_{d,0} \\
+            C_{d,1} \\
+            \vdots  \\
+            C_{d,G}
         \end{array}
     \right)
 \end{equation*}
@@ -354,9 +357,9 @@ where
 \begin{equation*}
     C_{d,i}=
     \begin{cases}
-        0                                            & d + i \leq G     \\
-        1                                            & d>0              \\
-        \mathlarger{\prod}_{k = i}^{d + i - 1} G - k & \text{otherwise}
+        1                                            & d=0              \\
+        \mathlarger{\prod}_{k = i}^{d + i - 1} G - k & d + i \le G      \\
+        0                                            & \text{otherwise}
     \end{cases}
 \end{equation*}
 
@@ -378,8 +381,8 @@ where
 
 \begin{equation*}
     V_{d,i}=\begin{cases}
-        1                  & d + i \leq G     \\
-        \alpha^{G - d - i} & \text{otherwise}
+        \alpha^{G - d - i} & d + i \le G      \\
+        1                  & \text{otherwise}
     \end{cases}
 \end{equation*}
 
@@ -391,13 +394,15 @@ where
     \begin{array}{cccc}
         B_0 & B_1 & B_2 & B_3 \\
     \end{array}
-    \right)
     \times
     W
+    \right)
     \times
+    \left(
     C
-    \times
+    *
     V
+    \right)
 \end{equation*}
 \\
 where
@@ -408,10 +413,9 @@ $V$ is the variable vector.\\
 \\
 $C$ and $V$ are responsible for the derivatives of the bezier curve.
 
-\subsection{Compile constant matrices}
+\subsection{Compile constant variables}
 
-$W$ and\\
-$C$ \\
+$W$ and $C$ \\
 are compile constant, because we know the degree and the derivative at compile time.
 \\\\
 $V$ on the other hand must be generated with respect to $\alpha$, which may not be knowen at compile time.
@@ -432,6 +436,7 @@ We can easily generalize this to n-dimensional points, by pluging n-dimensional 
     \right)
     =
     \left(
+    \left(
     \begin{array}{cccc}
         B_{x0} & B_{x1} & B_{x2} & B_{x3} \\
         B_{y0} & B_{y1} & B_{y2} & B_{y3} \\
@@ -441,8 +446,52 @@ We can easily generalize this to n-dimensional points, by pluging n-dimensional 
     \right)
     \times
     W
+    \right)
     \times
+    \left(
     C
+    *
+    V
+    \right)
+\end{equation*}
+
+\subsection{Speed vs Memory concideration}
+
+With this method we store the precalcualted weighted points and multiply them on run time with the $C$ vector and $V$ vector.\\
+Hence, more computation and less memory consuption.
+\begin{equation*}
+    P=
+    \left(
+    \begin{array}{cccc}
+        B_0 & B_1 & B_2 & B_3 \\
+    \end{array}
+    \times
+    W
+    \right)
+    \times
+    \left(
+    C
+    *
+    V
+    \right)
+\end{equation*}
+\\
+With this method we store for each derivative the precalcualted weighted points, given by the $W \times C$ and multiply them on run time with the $V$ vector.\\
+Hence, less computation and more memory consuption.
+\begin{equation*}
+    P=
+    \left(
+    \left(
+    \begin{array}{cccc}
+        B_0 & B_1 & B_2 & B_3 \\
+    \end{array}
+    \times
+    W\right)
+    *
+    C
+    \right)
     \times
     V
 \end{equation*}
+\\
+The current implementation uses the first method.
