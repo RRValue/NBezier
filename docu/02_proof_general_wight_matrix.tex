@@ -34,6 +34,8 @@ and expand further an get
     +  & P_{n-1} & {n \choose n-1}x^{n-1} & ( \sum_{i = 0}^{1}   {1 \choose i}    (-1)^{i}  (x)^{i}) \\
     +  & P_n     & {n \choose n}x^n       & ( \sum_{i = 0}^{0}   {0 \choose i}    (-1)^{i}  (x)^{i}) \\
 \end{align*}
+\\
+we expand the inner terms and get
 
 \begin{gather}
     \begin{align*}
@@ -62,9 +64,147 @@ Align all terms in the brackets to the right.
 \begin{gather}
     \begin{align*}
           & P_0     & ( & {n \choose 0}  {n \choose 0} & (-1)^{0} & (x)^{0} & + & {n \choose 0}  {n \choose 1}   & (-1)^{1} & (x)^{1} & + \dots + & {n \choose 0}    {n \choose n-1}   & (-1)^{n-1} & (x)^{n-1} & + & {n \choose 0}  {n \choose n}     & (-1)^{n}   & (x)^{n})  \\
-        + & P_1     & ( &                              &          &         &   & {n \choose 1}  {n-1 \choose 0} & (-1)^{0} & (x)^{1} & + \dots + & {n \choose 1}    {n-1 \choose n-2} & (-1)^{n-1} & (x)^{n-1} & + & {n \choose 1}  {n-1 \choose n-1} & (-1)^{n-1} & (x)^{n} ) \\
+        + & P_1     & ( &                              &          &         &   & {n \choose 1}  {n-1 \choose 0} & (-1)^{0} & (x)^{1} & + \dots + & {n \choose 1}    {n-1 \choose n-2} & (-1)^{n-2} & (x)^{n-1} & + & {n \choose 1}  {n-1 \choose n-1} & (-1)^{n-1} & (x)^{n} ) \\
         + & \dots                                                                                                                                                                                                                                                               \\
         + & P_{n-1} & ( &                              &          &         &   &                                &          &         &           & {n \choose n-1}  {1 \choose 0}     & (-1)^{0}   & (x)^{n-1} & + & {n \choose n-1}    {1 \choose 1} & (-1)^{1}   & (x)^{n})  \\
         + & P_n     & ( &                              &          &         &   &                                &          &         &           &                                    &            &           &   & {n \choose n}      {0 \choose 0} & (-1)^{0}   & (x)^{n})  \\
     \end{align*}
 \end{gather}
+\\ we reorder by exponent and get
+
+\begin{gather}
+    \begin{align*}
+          & x^{n}   & (P_0 & {n \choose 0}{n \choose n}(-1)^{n}     & + & P_1 {n \choose 1}{n-1 \choose n-1}(-1)^{n-1} & + \dots + & P_{n-1} {n \choose n-1}{1 \choose 1}(-1)^{1}  & + & P_{n} {n \choose n}{0 \choose 0}(-1)^{0}) \\
+        + & x^{n-1} & (P_0 & {n \choose 0}{n \choose n-1}(-1)^{n-1} & + & P_1 {n \choose 1}{n-1 \choose n-2}(-1)^{n-2} & + \dots + & P_{n-1} {n \choose n-1}{1 \choose 0}(-1)^{0})                                                 \\
+        + & \dots                                                                                                                                                                                                                  \\
+        + & x^{1}   & (P_0 & {n \choose 0}{n \choose 1}(-1)^{1}     & + & P_1 {n \choose 1}{n-1 \choose 0}(-1)^{0})                                                                                                                \\
+        + & x^{0}   & (P_0 & {n \choose 0}{n \choose 0}(-1)^{0})
+    \end{align*}
+\end{gather}
+\\
+With the identitiy
+
+\begin{equation*}
+    {n \choose i} = {n \choose n-i}
+\end{equation*}
+\\
+we get this equation
+
+\begin{gather}
+    \begin{align*}
+          & x^{n}   & (P_0 & {n \choose 0}{n \choose 0}(-1)^{n}   & + & P_1 {n \choose 1}{n-1 \choose 0}(-1)^{n-1}  & + \dots + & P_{n-1} {n \choose n-1}{1 \choose 0}(-1)^{1}  & + & P_{n} {n \choose n}{0 \choose 0}(-1)^{0}) \\
+        + & x^{n-1} & (P_0 & {n \choose 0}{n \choose 1}(-1)^{n-1} & + & P_1 {n \choose 1}{n-1 \choose 1}(-1)^{n-2}  & + \dots + & P_{n-1} {n \choose n-1}{1 \choose 1}(-1)^{0})                                                 \\
+        + & \dots                                                                                                                                                                                                               \\
+        + & x^{1}   & (P_0 & {n \choose 0}{n \choose n-1}(-1)^{1} & + & P_1 {n \choose 1}{n-1 \choose n-1}(-1)^{0})                                                                                                             \\
+        + & x^{0}   & (P_0 & {n \choose 0}{n \choose n}(-1)^{0})
+    \end{align*}
+\end{gather}
+\\
+If we look closer to pairs of binomial coefficients we can see, that they have this format:
+\\
+
+The i-th pair of the j-th row can be written as
+\begin{equation*}
+    {n \choose i}{n-i \choose j}
+\end{equation*}
+\\
+We safely can apply this identitiy to all pairs of binomial coefficients
+
+\begin{equation*}
+    {n \choose h}{n-h \choose k} = {n \choose k}{n-k \choose h}
+\end{equation*}
+\\
+and get
+
+\begin{gather}
+    \begin{align*}
+          & x^{n}   & (P_0 & {n \choose 0}{n \choose 0}(-1)^{n}     & + & P_1 {n \choose 0}{n \choose 1}(-1)^{n-1}   & + \dots + & P_{n-1} {n \choose 0}{n \choose n-1}(-1)^{1}  & + & P_{n} {n \choose 0}{n \choose 0}(-1)^{0}) \\
+        + & x^{n-1} & (P_0 & {n \choose 1}{n-1 \choose 0}(-1)^{n-1} & + & P_1 {n \choose 1}{n-1 \choose 1}(-1)^{n-2} & + \dots + & P_{n-1} {n \choose 1}{n-1 \choose 0}(-1)^{0})                                                 \\
+        + & \dots                                                                                                                                                                                                                \\
+        + & x^{1}   & (P_0 & {n \choose n-1}{1 \choose 0}(-1)^{1}   & + & P_1 {n \choose n-1}{1 \choose 1}(-1)^{0})                                                                                                              \\
+        + & x^{0}   & (P_0 & {n \choose n}{0 \choose 0}(-1)^{0})
+    \end{align*}
+\end{gather}
+\\
+Now we can factor out the first binomial coefficient and get
+
+\begin{gather}
+    \begin{align*}
+          & x^{n}    {n \choose 0}   & (P_0 & {n \choose 0}(-1)^{n}     & + & P_1 {n \choose 1}(-1)^{n-1}   & + \dots + & P_{n-1} {n \choose n-1}(-1)^{1}  & + & P_{n} {n \choose 0}(-1)^{0}) \\
+        + & x^{n-1}  {n \choose 1}   & (P_0 & {n-1 \choose 0}(-1)^{n-1} & + & P_1 {n-1 \choose 1}(-1)^{n-2} & + \dots + & P_{n-1} {n-1 \choose 0}(-1)^{0})                                    \\
+        + & \dots                                                                                                                                                                             \\
+        + & x^{1}    {n \choose n-1} & (P_0 & {1 \choose 0}(-1)^{1}     & + & P_1 {1 \choose 1}(-1)^{0})                                                                                      \\
+        + & x^{0}    {n \choose n}   & (P_0 & {0 \choose 0}(-1)^{0})
+    \end{align*}
+\end{gather}
+\\ We now seperate the exponent terms and Points, and multiplied both parts as matrices.
+
+\begin{equation*}
+    \begin{pmatrix*}[l]
+        P_0 {n \choose 0}(-1)^{n}     &+&  P_1 {n \choose 1}(-1)^{n-1}  &+ \dots + &P_{n-1} {n \choose n-1}(-1)^{1}  &+&  P_{n} {n \choose 0}(-1)^{0} \\
+        P_0 {n-1 \choose 0}(-1)^{n-1}  &+&  P_1 {n-1 \choose 1}(-1)^{n-2} &+ \dots + &P_{n-1} {n-1 \choose 0}(-1)^{0}                               \\
+        \vdots                                                                                                                                  \\
+        P_0 {1 \choose 0}(-1)^{1} &+& P_1 {1 \choose 1}(-1)^{0}                                                                                   \\
+        P_0 {0 \choose 0}(-1)^{0}
+    \end{pmatrix*}^T
+    \times
+    \left(
+    \begin{array}{cccc}
+        x^{n}    {n \choose 0}   \\
+        x^{n-1}    {n \choose 1} \\
+        \vdots                   \\
+        x^{1}    {n \choose n-1} \\
+        x^{0}    {n \choose n}   \\
+    \end{array}
+    \right)
+\end{equation*}
+\\ Transpose the left matrix yields
+
+\begin{equation*}
+    \begin{pmatrix*}[l]
+        P_0 {n \choose 0}(-1)^{n}   &+& P_0 {n-1 \choose 0}(-1)^{n-1}   &+ \dots + & P_0 {1 \choose 0}(-1)^{1} &+&  P_0 {0 \choose 0}(-1)^{0} \\
+        P_1 {n \choose 1}(-1)^{n-1}     &+& P_1 {n-1 \choose 1}(-1)^{n-2}  &+ \dots + &  P_1 {1 \choose 1}(-1)^{0}                                 \\
+        \vdots                                                                                                                                  \\
+        P_{n-1} {n \choose n-1}(-1)^{1}    &+&     P_{n-1} {n-1 \choose 0}(-1)^{0}                                                                               \\
+        P_{n} {n \choose 0}(-1)^{0}
+    \end{pmatrix*}
+\end{equation*}
+\\
+No we can write this as product of the Points $P_i$ and the general weight matrix $W$
+
+\begin{equation*}
+    \begin{pmatrix*}
+        P_0 & P_1 & \dots & P_{n-1} & P_{n}
+    \end{pmatrix*}
+    \times
+    \begin{pmatrix*}
+        {n \choose 0}(-1)^{n}   & {n-1 \choose 0}(-1)^{n-1}  & \hdots & {1 \choose 0}(-1)^{1} & {0 \choose 0}(-1)^{0} \\
+        {n \choose 1}(-1)^{n-1} & {n-1 \choose 1}(-1)^{n-2}  & \hdots & {1 \choose 1}(-1)^{0} & 0                     \\
+        \vdots                  & \vdots                     & \ddots & \vdots                & \vdots                \\
+        {n \choose n-1}(-1)^{1} & {n-1 \choose 0}(-1)^{0}    & \hdots & 0                     & 0                     \\
+        {n \choose 0}(-1)^{0}   & 0                          & \hdots & 0                     & 0
+    \end{pmatrix*}
+\end{equation*}
+\\
+When looking at the i-th element of the j-th row, we can derive a formula for each matrix cell
+
+\begin{equation*}
+    W=
+    \left(
+    \begin{array}{cccc}
+        W_{0,0}   & W_{1,0}   & \cdots & W_{G-1,0}   \\
+        W_{0,1}   & W_{1,1}   & \cdots & W_{G-1,1}   \\
+        \vdots    & \vdots    & \ddots & \vdots      \\
+        W_{0,G-1} & W_{1,G-1} & \cdots & W_{G-1,G-1} \\
+    \end{array}
+    \right)
+\end{equation*}
+\\
+where
+\\
+\begin{equation*}
+    W_{i,j}=\begin{cases}
+        (-1)^{n-i-j} {n-j \choose i} {n \choose j} & i + j \le n      \\
+        0                                            & \text{otherwise}
+    \end{cases}
+\end{equation*}
