@@ -1,4 +1,5 @@
 \section{Proof general weight matrix}
+\label{sec:proofgeneralweightmatrix}
 
 We start with the general equation to calculate the point on a bezier curve of degree n.
 
@@ -118,84 +119,72 @@ and get
 
 \begin{gather}
     \begin{align*}
-          & x^{n}   & (P_0 & {n \choose 0}{n \choose 0}(-1)^{n}     & + & P_1 {n \choose 0}{n \choose 1}(-1)^{n-1}   & + \dots + & P_{n-1} {n \choose 0}{n \choose n-1}(-1)^{1}  & + & P_{n} {n \choose 0}{n \choose 0}(-1)^{0}) \\
-        + & x^{n-1} & (P_0 & {n \choose 1}{n-1 \choose 0}(-1)^{n-1} & + & P_1 {n \choose 1}{n-1 \choose 1}(-1)^{n-2} & + \dots + & P_{n-1} {n \choose 1}{n-1 \choose 0}(-1)^{0})                                                 \\
-        + & \dots                                                                                                                                                                                                                \\
-        + & x^{1}   & (P_0 & {n \choose n-1}{1 \choose 0}(-1)^{1}   & + & P_1 {n \choose n-1}{1 \choose 1}(-1)^{0})                                                                                                              \\
+          & x^{n}   & (P_0 & {n \choose 0}{n \choose 0}(-1)^{n}     & + & P_1 {n \choose 0}{n \choose 1}(-1)^{n-1}   & + \dots + & P_{n-1} {n \choose 0}{n \choose n-1}(-1)^{1}    & + & P_{n} {n \choose 0}{n \choose n}(-1)^{0}) \\
+        + & x^{n-1} & (P_0 & {n \choose 1}{n-1 \choose 0}(-1)^{n-1} & + & P_1 {n \choose 1}{n-1 \choose 1}(-1)^{n-2} & + \dots + & P_{n-1} {n \choose 1}{n-1 \choose n-1}(-1)^{0})                                                 \\
+        + & \dots                                                                                                                                                                                                                  \\
+        + & x^{1}   & (P_0 & {n \choose n-1}{1 \choose 0}(-1)^{1}   & + & P_1 {n \choose n-1}{1 \choose 1}(-1)^{0})                                                                                                                \\
         + & x^{0}   & (P_0 & {n \choose n}{0 \choose 0}(-1)^{0})
-    \end{align*}
-\end{gather}
-\\
-Now we can factor out the first binomial coefficient and get
-
-\begin{gather}
-    \begin{align*}
-          & x^{n}    {n \choose 0}   & (P_0 & {n \choose 0}(-1)^{n}     & + & P_1 {n \choose 1}(-1)^{n-1}   & + \dots + & P_{n-1} {n \choose n-1}(-1)^{1}  & + & P_{n} {n \choose 0}(-1)^{0}) \\
-        + & x^{n-1}  {n \choose 1}   & (P_0 & {n-1 \choose 0}(-1)^{n-1} & + & P_1 {n-1 \choose 1}(-1)^{n-2} & + \dots + & P_{n-1} {n-1 \choose 0}(-1)^{0})                                    \\
-        + & \dots                                                                                                                                                                             \\
-        + & x^{1}    {n \choose n-1} & (P_0 & {1 \choose 0}(-1)^{1}     & + & P_1 {1 \choose 1}(-1)^{0})                                                                                      \\
-        + & x^{0}    {n \choose n}   & (P_0 & {0 \choose 0}(-1)^{0})
     \end{align*}
 \end{gather}
 \\ We now seperate the exponent terms and Points, and multiplied both parts as matrices.
 
 \begin{equation*}
-    \begin{pmatrix*}[l]
-        P_0 {n \choose 0}(-1)^{n}     &+&  P_1 {n \choose 1}(-1)^{n-1}  &+ \dots + &P_{n-1} {n \choose n-1}(-1)^{1}  &+&  P_{n} {n \choose 0}(-1)^{0} \\
-        P_0 {n-1 \choose 0}(-1)^{n-1}  &+&  P_1 {n-1 \choose 1}(-1)^{n-2} &+ \dots + &P_{n-1} {n-1 \choose 0}(-1)^{0}                               \\
+    \begin{psmallmatrix}
+        P_0 {n \choose 0}{n \choose 0}(-1)^{n} &+&  P_1 {n \choose 0}{n \choose 1}(-1)^{n-1}  &+ \dots + &P_{n-1} {n \choose 0}{n \choose n-1}(-1)^{1}  &+&  P_{n} {n \choose 0}{n \choose n}(-1)^{0} \\
+        P_0 {n \choose 1}{n-1 \choose 0}(-1)^{n-1}  &+&  P_1 {n \choose 1}{n-1 \choose 1}(-1)^{n-2} &+ \dots + &P_{n-1} {n \choose 1}{n-1 \choose n-1}(-1)^{0}                               \\
         \vdots                                                                                                                                  \\
-        P_0 {1 \choose 0}(-1)^{1} &+& P_1 {1 \choose 1}(-1)^{0}                                                                                   \\
-        P_0 {0 \choose 0}(-1)^{0}
-    \end{pmatrix*}^T
+        P_0 {n \choose n-1}{1 \choose 0}(-1)^{1} &+& P_1 {n \choose n-1}{1 \choose 1}(-1)^{0}                                                                                   \\
+        P_0 {n \choose n}{0 \choose 0}(-1)^{0}
+    \end{psmallmatrix}^T
     \times
     \left(
-    \begin{array}{cccc}
-        x^{n}    {n \choose 0}   \\
-        x^{n-1}    {n \choose 1} \\
-        \vdots                   \\
-        x^{1}    {n \choose n-1} \\
-        x^{0}    {n \choose n}   \\
+    \begin{array}{c}
+        x^{n}   \\
+        x^{n-1} \\
+        \vdots  \\
+        x^{1}   \\
+        x^{0}   \\
     \end{array}
     \right)
 \end{equation*}
 \\ Transpose the left matrix yields
 
 \begin{equation*}
-    \begin{pmatrix*}[l]
-        P_0 {n \choose 0}(-1)^{n}   &+& P_0 {n-1 \choose 0}(-1)^{n-1}   &+ \dots + & P_0 {1 \choose 0}(-1)^{1} &+&  P_0 {0 \choose 0}(-1)^{0} \\
-        P_1 {n \choose 1}(-1)^{n-1}     &+& P_1 {n-1 \choose 1}(-1)^{n-2}  &+ \dots + &  P_1 {1 \choose 1}(-1)^{0}                                 \\
-        \vdots                                                                                                                                  \\
-        P_{n-1} {n \choose n-1}(-1)^{1}    &+&     P_{n-1} {n-1 \choose 0}(-1)^{0}                                                                               \\
-        P_{n} {n \choose 0}(-1)^{0}
-    \end{pmatrix*}
+    \begin{psmallmatrix*}[l]
+        P_0     {n \choose 0}{n \choose 0}  (-1)^{n}   &+& P_0     {n \choose 1}{n-1 \choose 0}(-1)^{n-1} &+ \dots + & P_0 {n \choose n-1}{1 \choose 0}(-1)^{1} &+& P_0 {n \choose n}{0 \choose 0}(-1)^{0} \\
+        P_1     {n \choose 0}{n \choose 1}  (-1)^{n-1} &+& P_1     {n \choose 1}{n-1 \choose 1}(-1)^{n-2} &+ \dots + & P_1 {n \choose n-1}{1 \choose 1}(-1)^{0}                                            \\
+        \vdots                                                                                                                                                                                             \\
+        P_{n-1} {n \choose 0}{n \choose n-1}(-1)^{1}   &+& P_{n-1} {n \choose 1}{n-1 \choose n-1}(-1)^{0}                                                                                                  \\
+        P_{n}   {n \choose 0}{n \choose n}  (-1)^{0}
+    \end{psmallmatrix*}
 \end{equation*}
 \\
 No we can write this as product of the Points $P_i$ and the general weight matrix $W$
 
 \begin{equation*}
-    \begin{pmatrix*}
+    \begin{psmallmatrix*}
         P_0 & P_1 & \dots & P_{n-1} & P_{n}
-    \end{pmatrix*}
+    \end{psmallmatrix*}
     \times
-    \begin{pmatrix*}
-        {n \choose 0}(-1)^{n}   & {n-1 \choose 0}(-1)^{n-1}  & \hdots & {1 \choose 0}(-1)^{1} & {0 \choose 0}(-1)^{0} \\
-        {n \choose 1}(-1)^{n-1} & {n-1 \choose 1}(-1)^{n-2}  & \hdots & {1 \choose 1}(-1)^{0} & 0                     \\
-        \vdots                  & \vdots                     & \ddots & \vdots                & \vdots                \\
-        {n \choose n-1}(-1)^{1} & {n-1 \choose 0}(-1)^{0}    & \hdots & 0                     & 0                     \\
-        {n \choose 0}(-1)^{0}   & 0                          & \hdots & 0                     & 0
-    \end{pmatrix*}
+    \begin{psmallmatrix*}
+        {n \choose 0}{n \choose 0}(-1)^{n}   & {n \choose 1}{n-1 \choose 0}(-1)^{n-1}  & \hdots & {n \choose n-1}{1 \choose 0}(-1)^{1} & {n \choose n}{0 \choose 0}(-1)^{0} \\
+        {n \choose 0}{n \choose 1}(-1)^{n-1} & {n \choose 1}{n-1 \choose 1}(-1)^{n-2}  & \hdots & {n \choose n-1}{1 \choose 1}(-1)^{0} & 0                                  \\
+        \vdots                               & \vdots                                  & \ddots & \vdots                               & \vdots                             \\
+        {n \choose 0}{n \choose n-1}(-1)^{1} & {n \choose 1}{n-1 \choose n-1}(-1)^{0}  & \hdots & 0                                    & 0                                  \\
+        {n \choose 0}{n \choose n}(-1)^{0}   & 0                                       & \hdots & 0                                    & 0
+    \end{psmallmatrix*}
 \end{equation*}
 \\
-When looking at the i-th element of the j-th row, we can derive a formula for each matrix cell
+When we looking at the i-th element of the j-th row, we derive the formula for each matrix cell
 
 \begin{equation*}
     W=
     \left(
     \begin{array}{cccc}
-        W_{0,0}   & W_{1,0}   & \cdots & W_{G-1,0}   \\
-        W_{0,1}   & W_{1,1}   & \cdots & W_{G-1,1}   \\
-        \vdots    & \vdots    & \ddots & \vdots      \\
-        W_{0,G-1} & W_{1,G-1} & \cdots & W_{G-1,G-1} \\
+        W_{0,0} & W_{1,0} & \cdots & W_{n,0} \\
+        W_{0,1} & W_{1,1} & \cdots & W_{n,1} \\
+        \vdots  & \vdots  & \ddots & \vdots  \\
+        W_{0,n} & W_{1,n} & \cdots & W_{n,n} \\
     \end{array}
     \right)
 \end{equation*}
@@ -204,7 +193,7 @@ where
 \\
 \begin{equation*}
     W_{i,j}=\begin{cases}
-        (-1)^{n-i-j} {n-j \choose i} {n \choose j} & i + j \le n      \\
-        0                                            & \text{otherwise}
+        (-1)^{n-i-j} {n \choose i}{n-i \choose j} & i + j \le n      \\
+        0                                         & \text{otherwise}
     \end{cases}
 \end{equation*}

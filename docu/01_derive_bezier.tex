@@ -242,16 +242,16 @@ We saw the matrix
 This matrix condesens the bezier points into a set of points, that have been weighted according to the Degree of the bezier.
 \\
 \\
-This matrix can be generalized without further proof to
+This matrix can be generalized to see proof in "\nameref{sec:proofgeneralweightmatrix}"
 
 \begin{equation*}
     W=
     \left(
     \begin{array}{cccc}
-        W_{0,0}   & W_{1,0}   & \cdots & W_{G-1,0}   \\
-        W_{0,1}   & W_{1,1}   & \cdots & W_{G-1,1}   \\
-        \vdots    & \vdots    & \ddots & \vdots      \\
-        W_{0,G-1} & W_{1,G-1} & \cdots & W_{G-1,G-1} \\
+        W_{0,0} & W_{1,0} & \cdots & W_{G,0} \\
+        W_{0,1} & W_{1,1} & \cdots & W_{G,1} \\
+        \vdots  & \vdots  & \ddots & \vdots  \\
+        W_{0,G} & W_{1,G} & \cdots & W_{G,G} \\
     \end{array}
     \right)
 \end{equation*}
@@ -260,7 +260,7 @@ where
 \\
 \begin{equation*}
     W_{i,j}=\begin{cases}
-        (-1)^{G+i+j+1} {G-j \choose i} {G \choose j} & i + j \le G      \\
+        (-1)^{G-i-j} {G \choose i}{G-i \choose j} & i + j \le G      \\
         0                                            & \text{otherwise}
     \end{cases}
 \end{equation*}
@@ -344,7 +344,7 @@ Next we derive the general form, where
     C_{d}=
     \left(
     \begin{array}{cccc}
-            C_{d,0} & C_{d,1} & ... & C_{d,G - 1} \\
+            C_{d,0} & C_{d,1} & ... & C_{d,G} \\
         \end{array}
     \right)
 \end{equation*}
@@ -366,10 +366,10 @@ where
     V_{d}=
     \left(
     \begin{array}{cccc}
-            V_{d,0}   \\
-            V_{d,0}   \\
-            ...       \\
-            V_{d,G-1} \\
+            V_{d,0} \\
+            V_{d,0} \\
+            ...     \\
+            V_{d,G} \\
         \end{array}
     \right)
 \end{equation*}
