@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 
-using DerivativeFactorsScalars = ::testing::Types<float,        //
+using CoefficientVectorScalars = ::testing::Types<float,        //
                                                   double,       //
                                                   long double,  //
                                                   int,          //

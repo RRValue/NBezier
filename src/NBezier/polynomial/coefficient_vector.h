@@ -14,7 +14,7 @@ OpenNameSpace(NBezier);
 OpenNameSpace(Polynomial);
 
 template<typename Scalar>
-concept DerivativeFactorsType = (std::integral<Scalar> || std::floating_point<Scalar>)&&  //
+concept CoefficientVectorType = (std::integral<Scalar> || std::floating_point<Scalar>)&&  //
     !std::is_same<Scalar, bool>::value;
 
 template<size_t Derivative, size_t Degree>
@@ -22,11 +22,11 @@ concept DerivativeRequirement =  //
     0 <= Derivative && Derivative <= Degree;
 
 template<typename Scalar, size_t Degree, size_t Derivative>
-    requires DerivativeFactorsType<Scalar> &&  //
+    requires CoefficientVectorType<Scalar> &&  //
              DerivativeRequirement<Derivative, Degree>
-struct DerivativeFactors
+struct CoefficientVector
 {
-    StaticClass(DerivativeFactors);
+    StaticClass(CoefficientVector);
 
 private:
     template<size_t Index>
@@ -76,7 +76,7 @@ public:
         return c;
     }
 
-    bool operator==(const DerivativeFactors&) const noexcept = default;
+    bool operator==(const CoefficientVector&) const noexcept = default;
 };
 
 CloseNameSpace(Polynomial);
