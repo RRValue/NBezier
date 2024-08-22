@@ -17,6 +17,6 @@
 #define NBEnableForceInline
 #ifdef NBEnableForceInline
 #define NBInline inline
-#else  
+#else
 #define NBForceInline
 #endif  // NBezierEnableForceInline

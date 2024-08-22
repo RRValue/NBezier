@@ -14,8 +14,8 @@ OpenNameSpace(NBezier);
 OpenNameSpace(Polynomial);
 
 template<typename Scalar>
-concept CoefficientVectorType = (std::integral<Scalar> || std::floating_point<Scalar>)&&  //
-    !std::is_same<Scalar, bool>::value;
+concept CoefficientVectorType = (std::integral<Scalar> || std::floating_point<Scalar>) &&  //
+                                !std::is_same<Scalar, bool>::value;
 
 template<size_t Derivative, size_t Degree>
 concept DerivativeRequirement =  //

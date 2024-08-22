@@ -2,8 +2,8 @@
 
 #include "NBezier/defines.h"
 
-#include "NBezier/weight_matrix.h"
 #include "NBezier/bezier_requirements.h"
+#include "NBezier/weight_matrix.h"
 
 #include "boost/qvm/mat.hpp"
 #include "boost/qvm/mat_access.hpp"

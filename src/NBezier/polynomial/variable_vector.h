@@ -13,8 +13,8 @@ OpenNameSpace(NBezier);
 OpenNameSpace(Polynomial);
 
 template<class T>
-concept VariableVectorType = (std::integral<T> || std::floating_point<T>)&&  //
-    !std::is_same<T, bool>::value;
+concept VariableVectorType = (std::integral<T> || std::floating_point<T>) &&  //
+                             !std::is_same<T, bool>::value;
 
 template<size_t Degree, size_t Derivative>
 concept GetRequirement = Derivative <= Degree;

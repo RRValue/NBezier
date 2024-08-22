@@ -8,8 +8,8 @@ OpenNameSpace(NBezier);
 OpenNameSpace(Binomial);
 
 template<class T>
-concept Factorialable = (std::integral<T> || std::floating_point<T>)&&  //
-    !std::is_same<T, bool>::value;
+concept Factorialable = (std::integral<T> || std::floating_point<T>) &&  //
+                        !std::is_same<T, bool>::value;
 
 template<typename T>
     requires Factorialable<T>

@@ -3,8 +3,8 @@
 #include "NBezier/defines.h"
 
 #include "NBezier/bezier_points.h"
-#include "NBezier/polynomial/evaluation.h"
 #include "NBezier/bezier_requirements.h"
+#include "NBezier/polynomial/evaluation.h"
 
 #include <boost/math/ccmath/sqrt.hpp>
 #include <boost/qvm/mat_operations.hpp>
