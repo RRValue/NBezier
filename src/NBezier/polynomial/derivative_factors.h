@@ -65,18 +65,6 @@ private:
         (deriveCoefficients<Derivatives>(c), ...);
     }
 
-    template<size_t Index>
-    NBInline static constexpr void assignDiagonalCell(auto& m, auto& c)
-    {
-        boost::qvm::A<Index, Index>(m) = boost::qvm::A<Index>(c);
-    }
-
-    template<size_t... Indices>
-    NBInline static constexpr void assignDiagonalMatrix(auto& m, auto& c, std::index_sequence<Indices...>)
-    {
-        (assignDiagonalCell<Indices>(m, c), ...);
-    }
-
 public:
     static constexpr auto get() noexcept
     {
@@ -86,17 +74,6 @@ public:
         generateCoefficients(c, std::make_index_sequence<Derivative>{});
 
         return c;
-    }
-
-    static constexpr auto getDiagonal() noexcept
-    {
-        auto c = get();
-
-        boost::qvm::mat<Scalar, Degree + 1, Degree + 1> m = {};
-
-        assignDiagonalMatrix(m, c, std::make_index_sequence<Degree + 1>{});
-
-        return m;
     }
 
     bool operator==(const DerivativeFactors&) const noexcept = default;
