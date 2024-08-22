@@ -24,7 +24,7 @@ static void BM_BezierPositionRunTime(benchmark::State& state)
     constexpr auto p2 = Point<float, 3>{1, 1, 0};
     constexpr BezierPoints<float, 3, 2> b{p0, p1, p2};
 
-    auto result= Point<float, 3>{};
+    auto result = Point<float, 3>{};
 
     for(auto _ : state)
     {

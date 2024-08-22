@@ -40,3 +40,7 @@ if(MSVC)
     set_target_properties(${ComponentName} PROPERTIES PDB_OUTPUT_DIRECTORY ${PROJECT_BIN_PATH})
     set_target_properties(${ComponentName} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BIN_PATH})
 endif(MSVC)
+
+add_custom_target(${ComponentName}_Format
+    COMMAND clang-format --style=file -i ${Header} ${Sources}
+)
