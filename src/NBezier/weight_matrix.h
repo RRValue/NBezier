@@ -12,26 +12,26 @@
 OpenNameSpace(NBezier);
 
 template<typename Scalar>
-concept BezierMatrixCellType = (std::signed_integral<Scalar> || std::floating_point<Scalar>)&&  //
+concept WeightMatrixCellType = (std::signed_integral<Scalar> || std::floating_point<Scalar>)&&  //
     !std::is_same<Scalar, bool>::value;
 
 template<size_t Degree>
-concept BezierMatrixDegreeRequirement = Degree > 0;
+concept WeightMatrixDegreeRequirement = Degree > 0;
 
-struct BezierMatrix
+struct WeightMatrix
 {
-    StaticClass(BezierMatrix);
+    StaticClass(WeightMatrix);
 
 public:
     template<typename Scalar, size_t Degree>
-        requires BezierMatrixCellType<Scalar> &&  //
-                 BezierMatrixDegreeRequirement<Degree>
+        requires WeightMatrixCellType<Scalar> &&  //
+                 WeightMatrixDegreeRequirement<Degree>
     static constexpr auto get() noexcept
     {
         return generateMatrix<Scalar, Degree>(std::make_index_sequence<Degree * Degree>{});
     }
 
-    bool operator==(const BezierMatrix&) const noexcept = default;
+    bool operator==(const WeightMatrix&) const noexcept = default;
 
 private:
     template<typename Scalar, size_t Degree, std::size_t... Indices>

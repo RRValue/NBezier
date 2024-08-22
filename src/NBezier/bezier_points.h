@@ -2,7 +2,7 @@
 
 #include "NBezier/defines.h"
 
-#include "NBezier/bezier_matrix.h"
+#include "NBezier/weight_matrix.h"
 #include "NBezier/bezier_requirements.h"
 
 #include "boost/qvm/mat.hpp"
@@ -192,7 +192,7 @@ private:
 
     NBInline constexpr void updateDerivedPoints()
     {
-        constexpr auto bezier_matrix = BezierMatrix::get<Scalar, Degree + 1>();
+        constexpr auto bezier_matrix = WeightMatrix::get<Scalar, Degree + 1>();
 
         m_derived_points = m_points * bezier_matrix;
     }

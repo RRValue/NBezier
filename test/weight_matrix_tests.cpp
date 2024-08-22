@@ -1,4 +1,4 @@
-#include "NBezier/bezier_matrix.h"
+#include "NBezier/weight_matrix.h"
 
 #include "bezier_test_types.h"
 
@@ -12,25 +12,25 @@
 UseNameSpace(NBezier);
 
 template<typename T>
-class BezierMatrixGenerationTest : public testing::Test
+class WeightMatrixGenerationTest : public testing::Test
 {
 public:
     typedef T Scalar;
 };
 
-TYPED_TEST_SUITE_P(BezierMatrixGenerationTest);
+TYPED_TEST_SUITE_P(WeightMatrixGenerationTest);
 
-TYPED_TEST_P(BezierMatrixGenerationTest, Generation)
+TYPED_TEST_P(WeightMatrixGenerationTest, Generation)
 {
     using S = TestFixture::Scalar;
 
     {
-        constexpr auto m = BezierMatrix::get<S, 1>();
+        constexpr auto m = WeightMatrix::get<S, 1>();
         EXPECT_EQ(A00(m), S(1));
     }
 
     {
-        auto m = BezierMatrix::get<S, 2>();
+        auto m = WeightMatrix::get<S, 2>();
         EXPECT_EQ(A00(m), S(-1));
         EXPECT_EQ(A01(m), S(1));
         EXPECT_EQ(A10(m), S(1));
@@ -38,7 +38,7 @@ TYPED_TEST_P(BezierMatrixGenerationTest, Generation)
     }
 
     {
-        constexpr auto m = BezierMatrix::get<S, 3>();
+        constexpr auto m = WeightMatrix::get<S, 3>();
         EXPECT_EQ(A00(m), S(1));
         EXPECT_EQ(A01(m), S(-2));
         EXPECT_EQ(A02(m), S(1));
@@ -51,7 +51,7 @@ TYPED_TEST_P(BezierMatrixGenerationTest, Generation)
     }
 
     {
-        constexpr auto m = BezierMatrix::get<S, 4>();
+        constexpr auto m = WeightMatrix::get<S, 4>();
         EXPECT_EQ(A00(m), S(-1));
         EXPECT_EQ(A01(m), S(3));
         EXPECT_EQ(A02(m), S(-3));
@@ -71,7 +71,7 @@ TYPED_TEST_P(BezierMatrixGenerationTest, Generation)
     }
 
     {
-        constexpr auto m = BezierMatrix::get<S, 5>();
+        constexpr auto m = WeightMatrix::get<S, 5>();
         EXPECT_EQ(A00(m), S(1));
         EXPECT_EQ(A01(m), S(-4));
         EXPECT_EQ(A02(m), S(6));
@@ -100,6 +100,6 @@ TYPED_TEST_P(BezierMatrixGenerationTest, Generation)
     }
 }
 
-REGISTER_TYPED_TEST_SUITE_P(BezierMatrixGenerationTest, Generation);
+REGISTER_TYPED_TEST_SUITE_P(WeightMatrixGenerationTest, Generation);
 
-INSTANTIATE_TYPED_TEST_SUITE_P(BezierMatrixGeneration, BezierMatrixGenerationTest, BezierScalars);
+INSTANTIATE_TYPED_TEST_SUITE_P(WeightMatrixGeneration, WeightMatrixGenerationTest, BezierScalars);
