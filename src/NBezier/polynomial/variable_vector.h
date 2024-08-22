@@ -13,17 +13,17 @@ OpenNameSpace(NBezier);
 OpenNameSpace(Polynomial);
 
 template<class T>
-concept VariableType = (std::integral<T> || std::floating_point<T>)&&  //
+concept VariableVectorType = (std::integral<T> || std::floating_point<T>)&&  //
     !std::is_same<T, bool>::value;
 
 template<size_t Degree, size_t Derivative>
 concept GetRequirement = Derivative <= Degree;
 
 template<typename Scalar, size_t Degree>
-    requires VariableType<Scalar>
-struct Variable
+    requires VariableVectorType<Scalar>
+struct VariableVector
 {
-    StaticClass(Variable);
+    StaticClass(VariableVector);
 
 private:
     template<size_t Index>
@@ -66,7 +66,7 @@ public:
         return vec;
     }
 
-    bool operator==(const Variable&) const noexcept = default;
+    bool operator==(const VariableVector&) const noexcept = default;
 };
 
 CloseNameSpace(Polynomial);

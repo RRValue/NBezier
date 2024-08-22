@@ -4,7 +4,7 @@
 
 #include "NBezier/points.h"
 #include "NBezier/polynomial/coefficient_vector.h"
-#include "NBezier/polynomial/variable.h"
+#include "NBezier/polynomial/variable_vector.h"
 
 #include <boost/qvm/mat.hpp>
 #include <boost/qvm/mat_operations.hpp>
@@ -59,7 +59,7 @@ public:
     static constexpr auto eval(const Points<Scalar, Dimension, NParameter>& p, const Scalar& a)
     {
         constexpr auto c = CoefficientVector<Scalar, NParameter - 1, Derivative>::get();
-        const auto v = Variable<Scalar, NParameter - 1>::variableVector<Derivative>(a);
+        const auto v = VariableVector<Scalar, NParameter - 1>::variableVector<Derivative>(a);
 
         return p * cwiseProduct<Scalar, NParameter>(c, v);
     }

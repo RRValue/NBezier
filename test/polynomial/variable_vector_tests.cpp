@@ -1,4 +1,4 @@
-#include "NBezier/polynomial/variable.h"
+#include "NBezier/polynomial/variable_vector.h"
 
 #include "polynomial_test_types.h"
 
@@ -7,22 +7,22 @@
 UseNameSpace(NBezier::Polynomial);
 
 template<typename T>
-class VariableGetTest : public testing::Test
+class VariableVectorGetTest : public testing::Test
 {
 public:
     typedef T Scalar;
 
-    using Variable0 = Variable<Scalar, 0>;
-    using Variable1 = Variable<Scalar, 1>;
-    using Variable2 = Variable<Scalar, 2>;
-    using Variable3 = Variable<Scalar, 3>;
-    using Variable4 = Variable<Scalar, 4>;
-    using Variable5 = Variable<Scalar, 5>;
+    using VariableVector0 = VariableVector<Scalar, 0>;
+    using VariableVector1 = VariableVector<Scalar, 1>;
+    using VariableVector2 = VariableVector<Scalar, 2>;
+    using VariableVector3 = VariableVector<Scalar, 3>;
+    using VariableVector4 = VariableVector<Scalar, 4>;
+    using VariableVector5 = VariableVector<Scalar, 5>;
 };
 
-TYPED_TEST_SUITE_P(VariableGetTest);
+TYPED_TEST_SUITE_P(VariableVectorGetTest);
 
-TYPED_TEST_P(VariableGetTest, GetVector)
+TYPED_TEST_P(VariableVectorGetTest, Get)
 {
     typedef TestFixture::Scalar Scalar;
 
@@ -35,7 +35,7 @@ TYPED_TEST_P(VariableGetTest, GetVector)
     constexpr auto variable = Scalar(2);
 
     {
-        constexpr auto v0 = TestFixture::Variable0::variableVector<0>(variable);
+        constexpr auto v0 = TestFixture::VariableVector0::variableVector<0>(variable);
         auto ex_v0 = boost::qvm::vec<Scalar, 1>{1};
 
         fill_exp_variable(ex_v0, 0, 0, variable);
@@ -44,8 +44,8 @@ TYPED_TEST_P(VariableGetTest, GetVector)
     }
 
     {
-        constexpr auto v0 = TestFixture::Variable1::variableVector<0>(variable);
-        constexpr auto v1 = TestFixture::Variable1::variableVector<1>(variable);
+        constexpr auto v0 = TestFixture::VariableVector1::variableVector<0>(variable);
+        constexpr auto v1 = TestFixture::VariableVector1::variableVector<1>(variable);
 
         auto ex_v0 = boost::qvm::vec<Scalar, 2>{};
         auto ex_v1 = boost::qvm::vec<Scalar, 2>{};
@@ -58,9 +58,9 @@ TYPED_TEST_P(VariableGetTest, GetVector)
     }
 
     {
-        constexpr auto v0 = TestFixture::Variable2::variableVector<0>(variable);
-        constexpr auto v1 = TestFixture::Variable2::variableVector<1>(variable);
-        constexpr auto v2 = TestFixture::Variable2::variableVector<2>(variable);
+        constexpr auto v0 = TestFixture::VariableVector2::variableVector<0>(variable);
+        constexpr auto v1 = TestFixture::VariableVector2::variableVector<1>(variable);
+        constexpr auto v2 = TestFixture::VariableVector2::variableVector<2>(variable);
 
         auto ex_v0 = boost::qvm::vec<Scalar, 3>{};
         auto ex_v1 = boost::qvm::vec<Scalar, 3>{};
@@ -76,10 +76,10 @@ TYPED_TEST_P(VariableGetTest, GetVector)
     }
 
     {
-        constexpr auto v0 = TestFixture::Variable3::variableVector<0>(variable);
-        constexpr auto v1 = TestFixture::Variable3::variableVector<1>(variable);
-        constexpr auto v2 = TestFixture::Variable3::variableVector<2>(variable);
-        constexpr auto v3 = TestFixture::Variable3::variableVector<3>(variable);
+        constexpr auto v0 = TestFixture::VariableVector3::variableVector<0>(variable);
+        constexpr auto v1 = TestFixture::VariableVector3::variableVector<1>(variable);
+        constexpr auto v2 = TestFixture::VariableVector3::variableVector<2>(variable);
+        constexpr auto v3 = TestFixture::VariableVector3::variableVector<3>(variable);
 
         auto ex_v0 = boost::qvm::vec<Scalar, 4>{};
         auto ex_v1 = boost::qvm::vec<Scalar, 4>{};
@@ -98,11 +98,11 @@ TYPED_TEST_P(VariableGetTest, GetVector)
     }
 
     {
-        constexpr auto v0 = TestFixture::Variable4::variableVector<0>(variable);
-        constexpr auto v1 = TestFixture::Variable4::variableVector<1>(variable);
-        constexpr auto v2 = TestFixture::Variable4::variableVector<2>(variable);
-        constexpr auto v3 = TestFixture::Variable4::variableVector<3>(variable);
-        constexpr auto v4 = TestFixture::Variable4::variableVector<4>(variable);
+        constexpr auto v0 = TestFixture::VariableVector4::variableVector<0>(variable);
+        constexpr auto v1 = TestFixture::VariableVector4::variableVector<1>(variable);
+        constexpr auto v2 = TestFixture::VariableVector4::variableVector<2>(variable);
+        constexpr auto v3 = TestFixture::VariableVector4::variableVector<3>(variable);
+        constexpr auto v4 = TestFixture::VariableVector4::variableVector<4>(variable);
 
         auto ex_v0 = boost::qvm::vec<Scalar, 5>{};
         auto ex_v1 = boost::qvm::vec<Scalar, 5>{};
@@ -124,12 +124,12 @@ TYPED_TEST_P(VariableGetTest, GetVector)
     }
 
     {
-        constexpr auto v0 = TestFixture::Variable5::variableVector<0>(variable);
-        constexpr auto v1 = TestFixture::Variable5::variableVector<1>(variable);
-        constexpr auto v2 = TestFixture::Variable5::variableVector<2>(variable);
-        constexpr auto v3 = TestFixture::Variable5::variableVector<3>(variable);
-        constexpr auto v4 = TestFixture::Variable5::variableVector<4>(variable);
-        constexpr auto v5 = TestFixture::Variable5::variableVector<5>(variable);
+        constexpr auto v0 = TestFixture::VariableVector5::variableVector<0>(variable);
+        constexpr auto v1 = TestFixture::VariableVector5::variableVector<1>(variable);
+        constexpr auto v2 = TestFixture::VariableVector5::variableVector<2>(variable);
+        constexpr auto v3 = TestFixture::VariableVector5::variableVector<3>(variable);
+        constexpr auto v4 = TestFixture::VariableVector5::variableVector<4>(variable);
+        constexpr auto v5 = TestFixture::VariableVector5::variableVector<5>(variable);
 
         auto ex_v0 = boost::qvm::vec<Scalar, 6>{};
         auto ex_v1 = boost::qvm::vec<Scalar, 6>{};
@@ -154,6 +154,6 @@ TYPED_TEST_P(VariableGetTest, GetVector)
     }
 }
 
-REGISTER_TYPED_TEST_SUITE_P(VariableGetTest, GetVector);
+REGISTER_TYPED_TEST_SUITE_P(VariableVectorGetTest, Get);
 
-INSTANTIATE_TYPED_TEST_SUITE_P(VariableGeneration, VariableGetTest, VariableScalars);
+INSTANTIATE_TYPED_TEST_SUITE_P(VariableVectorGeneration, VariableVectorGetTest, VariableVectorScalars);

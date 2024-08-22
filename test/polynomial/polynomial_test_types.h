@@ -10,7 +10,7 @@ using CoefficientVectorScalars = ::testing::Types<float,        //
                                                   int,          //
                                                   unsigned int>;
 
-using VariableScalars = ::testing::Types<float,        //
+using VariableVectorScalars = ::testing::Types<float,        //
                                          double,       //
                                          long double,  //
                                          int,          //
