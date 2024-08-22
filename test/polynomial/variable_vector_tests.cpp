@@ -35,7 +35,7 @@ TYPED_TEST_P(VariableVectorGetTest, Get)
     constexpr auto variable = Scalar(2);
 
     {
-        constexpr auto v0 = TestFixture::VariableVector0::variableVector<0>(variable);
+        constexpr auto v0 = TestFixture::VariableVector0::get<0>(variable);
         auto ex_v0 = boost::qvm::vec<Scalar, 1>{1};
 
         fill_exp_variable(ex_v0, 0, 0, variable);
@@ -44,8 +44,8 @@ TYPED_TEST_P(VariableVectorGetTest, Get)
     }
 
     {
-        constexpr auto v0 = TestFixture::VariableVector1::variableVector<0>(variable);
-        constexpr auto v1 = TestFixture::VariableVector1::variableVector<1>(variable);
+        constexpr auto v0 = TestFixture::VariableVector1::get<0>(variable);
+        constexpr auto v1 = TestFixture::VariableVector1::get<1>(variable);
 
         auto ex_v0 = boost::qvm::vec<Scalar, 2>{};
         auto ex_v1 = boost::qvm::vec<Scalar, 2>{};
@@ -58,9 +58,9 @@ TYPED_TEST_P(VariableVectorGetTest, Get)
     }
 
     {
-        constexpr auto v0 = TestFixture::VariableVector2::variableVector<0>(variable);
-        constexpr auto v1 = TestFixture::VariableVector2::variableVector<1>(variable);
-        constexpr auto v2 = TestFixture::VariableVector2::variableVector<2>(variable);
+        constexpr auto v0 = TestFixture::VariableVector2::get<0>(variable);
+        constexpr auto v1 = TestFixture::VariableVector2::get<1>(variable);
+        constexpr auto v2 = TestFixture::VariableVector2::get<2>(variable);
 
         auto ex_v0 = boost::qvm::vec<Scalar, 3>{};
         auto ex_v1 = boost::qvm::vec<Scalar, 3>{};
@@ -76,10 +76,10 @@ TYPED_TEST_P(VariableVectorGetTest, Get)
     }
 
     {
-        constexpr auto v0 = TestFixture::VariableVector3::variableVector<0>(variable);
-        constexpr auto v1 = TestFixture::VariableVector3::variableVector<1>(variable);
-        constexpr auto v2 = TestFixture::VariableVector3::variableVector<2>(variable);
-        constexpr auto v3 = TestFixture::VariableVector3::variableVector<3>(variable);
+        constexpr auto v0 = TestFixture::VariableVector3::get<0>(variable);
+        constexpr auto v1 = TestFixture::VariableVector3::get<1>(variable);
+        constexpr auto v2 = TestFixture::VariableVector3::get<2>(variable);
+        constexpr auto v3 = TestFixture::VariableVector3::get<3>(variable);
 
         auto ex_v0 = boost::qvm::vec<Scalar, 4>{};
         auto ex_v1 = boost::qvm::vec<Scalar, 4>{};
@@ -98,11 +98,11 @@ TYPED_TEST_P(VariableVectorGetTest, Get)
     }
 
     {
-        constexpr auto v0 = TestFixture::VariableVector4::variableVector<0>(variable);
-        constexpr auto v1 = TestFixture::VariableVector4::variableVector<1>(variable);
-        constexpr auto v2 = TestFixture::VariableVector4::variableVector<2>(variable);
-        constexpr auto v3 = TestFixture::VariableVector4::variableVector<3>(variable);
-        constexpr auto v4 = TestFixture::VariableVector4::variableVector<4>(variable);
+        constexpr auto v0 = TestFixture::VariableVector4::get<0>(variable);
+        constexpr auto v1 = TestFixture::VariableVector4::get<1>(variable);
+        constexpr auto v2 = TestFixture::VariableVector4::get<2>(variable);
+        constexpr auto v3 = TestFixture::VariableVector4::get<3>(variable);
+        constexpr auto v4 = TestFixture::VariableVector4::get<4>(variable);
 
         auto ex_v0 = boost::qvm::vec<Scalar, 5>{};
         auto ex_v1 = boost::qvm::vec<Scalar, 5>{};
@@ -124,12 +124,12 @@ TYPED_TEST_P(VariableVectorGetTest, Get)
     }
 
     {
-        constexpr auto v0 = TestFixture::VariableVector5::variableVector<0>(variable);
-        constexpr auto v1 = TestFixture::VariableVector5::variableVector<1>(variable);
-        constexpr auto v2 = TestFixture::VariableVector5::variableVector<2>(variable);
-        constexpr auto v3 = TestFixture::VariableVector5::variableVector<3>(variable);
-        constexpr auto v4 = TestFixture::VariableVector5::variableVector<4>(variable);
-        constexpr auto v5 = TestFixture::VariableVector5::variableVector<5>(variable);
+        constexpr auto v0 = TestFixture::VariableVector5::get<0>(variable);
+        constexpr auto v1 = TestFixture::VariableVector5::get<1>(variable);
+        constexpr auto v2 = TestFixture::VariableVector5::get<2>(variable);
+        constexpr auto v3 = TestFixture::VariableVector5::get<3>(variable);
+        constexpr auto v4 = TestFixture::VariableVector5::get<4>(variable);
+        constexpr auto v5 = TestFixture::VariableVector5::get<5>(variable);
 
         auto ex_v0 = boost::qvm::vec<Scalar, 6>{};
         auto ex_v1 = boost::qvm::vec<Scalar, 6>{};

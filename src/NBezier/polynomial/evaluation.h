@@ -59,7 +59,7 @@ public:
     static constexpr auto eval(const Points<Scalar, Dimension, NParameter>& p, const Scalar& a)
     {
         constexpr auto c = CoefficientVector<Scalar, NParameter - 1, Derivative>::get();
-        const auto v = VariableVector<Scalar, NParameter - 1>::variableVector<Derivative>(a);
+        const auto v = VariableVector<Scalar, NParameter - 1>::get<Derivative>(a);
 
         return p * cwiseProduct<Scalar, NParameter>(c, v);
     }

@@ -57,7 +57,7 @@ private:
 public:
     template<size_t Derivative>
         requires GetRequirement<Degree, Derivative>
-    static constexpr auto variableVector(const Scalar& variable)
+    static constexpr auto get(const Scalar& variable)
     {
         auto vec = boost::qvm::vec<Scalar, Degree + 1>{};
 
