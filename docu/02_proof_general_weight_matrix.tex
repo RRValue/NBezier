@@ -4,17 +4,17 @@
 We start with the general equation to calculate the point on a bezier curve of degree n.
 
 \begin{equation*}
-    P=\mathlarger{\sum}_{i = 0}^{n} {n \choose i}x^i (1-x)^{n-i} P_i
+    P=\mathlarger{\sum}_{i = 0}^{n} {n \choose i}x^i (1-x)^{n-i} B_i
 \end{equation*}
 \\ We expand this term and get
 
 \begin{equation*}
     P=
-    {n \choose 0}x^0 (1-x)^{n} P_0 +
-    {n \choose 1}x^1 (1-x)^{n - 1} P_1 +
+    {n \choose 0}x^0 (1-x)^{n} B_0 +
+    {n \choose 1}x^1 (1-x)^{n - 1} B_1 +
     \dots +
-    {n \choose n-1}x^{n-1} (1-x)^{1} P_{n-1} +
-    {n \choose n}x^{n} (1-x)^{0} P_{n}
+    {n \choose n-1}x^{n-1} (1-x)^{1} B_{n-1} +
+    {n \choose n}x^{n} (1-x)^{0} B_{n}
 \end{equation*}
 \\
 We use the this identitiy
@@ -29,79 +29,115 @@ We use the this identitiy
 and expand further an get
 
 \begin{align*}
-    P= & P_0     & {n \choose 0}x^0       & ( \sum_{i = 0}^{n}   {n \choose i}    (-1)^{i}  (x)^{i}) \\
-    +  & P_1     & {n \choose 1}x^1       & ( \sum_{i = 0}^{n-1} {n-1 \choose i}  (-1)^{i}  (x)^{i}) \\
+    P= & B_0     & {n \choose 0}x^0       & ( \sum_{i = 0}^{n}   {n \choose i}    (-1)^{i}  (x)^{i}) \\
+    +  & B_1     & {n \choose 1}x^1       & ( \sum_{i = 0}^{n-1} {n-1 \choose i}  (-1)^{i}  (x)^{i}) \\
     +  & \dots                                                                                       \\
-    +  & P_{n-1} & {n \choose n-1}x^{n-1} & ( \sum_{i = 0}^{1}   {1 \choose i}    (-1)^{i}  (x)^{i}) \\
-    +  & P_n     & {n \choose n}x^n       & ( \sum_{i = 0}^{0}   {0 \choose i}    (-1)^{i}  (x)^{i}) \\
+    +  & B_{n-1} & {n \choose n-1}x^{n-1} & ( \sum_{i = 0}^{1}   {1 \choose i}    (-1)^{i}  (x)^{i}) \\
+    +  & B_n     & {n \choose n}x^n       & ( \sum_{i = 0}^{0}   {0 \choose i}    (-1)^{i}  (x)^{i}) \\
 \end{align*}
+\\ we can immediately pull out the points $B_i$
+
+\begin{equation*}
+    P=
+    \begin{psmallmatrix*}
+        B_0 & B_1 & \dots & B_{n-1} & B_{n}
+    \end{psmallmatrix*}
+    \times
+    \begin{psmallmatrix}
+        {n \choose 0}x^0       & ( \sum_{i = 0}^{n}   {n \choose i}    (-1)^{i}  (x)^{i}) \\
+        {n \choose 1}x^1       & ( \sum_{i = 0}^{n-1} {n-1 \choose i}  (-1)^{i}  (x)^{i}) \\
+        \vdots                                                                            \\
+        & \\
+        {n \choose n-1}x^{n-1} & ( \sum_{i = 0}^{1}   {1 \choose i}    (-1)^{i}  (x)^{i}) \\
+        {n \choose n}x^n       & ( \sum_{i = 0}^{0}   {0 \choose i}    (-1)^{i}  (x)^{i})
+    \end{psmallmatrix}
+\end{equation*} 
 \\
 we expand the inner terms and get
 
-\begin{gather}
-    \begin{align*}
-          & P_0     & {n \choose 0}   & x^0     & ( & {n \choose 0}   & (-1)^{0} & (x)^{0}  & + & {n \choose 1}   & (-1)^{1} & (x)^{1}  & + \dots + & {n \choose n-1}   & (-1)^{n-1} & (x)^{n-1}   & + & {n \choose n} (-1)^{n} (x)^{n}) \\
-        + & P_1     & {n \choose 1}   & x^1     & ( & {n-1 \choose 0} & (-1)^{0} & (x)^{0}  & + & {n-1 \choose 1} & (-1)^{1} & (x)^{1}  & + \dots + & {n-1 \choose n-1} & (-1)^{n-1} & (x)^{n-1} )                                       \\
-        + & \dots                                                                                                                                                                                                                        \\
-        + & P_{n-1} & {n \choose n-1} & x^{n-1} & ( & {1 \choose 0}   & (-1)^{0} & (x)^{0}  & + & {1 \choose 1}   & (-1)^{1} & (x)^{1})                                                                                                  \\
-        + & P_n     & {n \choose n}   & x^n     & ( & {0 \choose 0}   & (-1)^{0} & (x)^{0})                                                                                                                                              \\
-    \end{align*}
-\end{gather}
+\begin{gather*}
+    P=B \times
+    \begin{psmallmatrix}
+        {n \choose 0}   & x^0     & ( & {n \choose 0}   & (-1)^{0} & (x)^{0}  & + & {n \choose 1}   & (-1)^{1} & (x)^{1}  & + \hdots + & {n \choose n-1}   & (-1)^{n-1} & (x)^{n-1}   & + & {n \choose n} (-1)^{n} (x)^{n}) \\
+        {n \choose 1}   & x^1     & ( & {n-1 \choose 0} & (-1)^{0} & (x)^{0}  & + & {n-1 \choose 1} & (-1)^{1} & (x)^{1}  & + \hdots + & {n-1 \choose n-1} & (-1)^{n-1} & (x)^{n-1} )                                       \\
+        \vdots                                                                                                                                                                                                              \\
+        & \\
+        {n \choose n-1} & x^{n-1} & ( & {1 \choose 0}   & (-1)^{0} & (x)^{0}  & + & {1 \choose 1}   & (-1)^{1} & (x)^{1})                                                                                                   \\
+        {n \choose n}   & x^n     & ( & {0 \choose 0}   & (-1)^{0} & (x)^{0})                                                                                                                                               \\
+    \end{psmallmatrix}
+\end{gather*}
 \\
 We distribute the left binomial coefficients and the x terms into the right brackets.
 
-\begin{gather}
-    \begin{align*}
-          & P_0     & ( & {n \choose 0}    {n \choose 0}   & (-1)^{0} & (x)^{0}   & + & {n \choose 0}    {n \choose 1}   & (-1)^{1} & (x)^{1}  & + \dots + & {n \choose 0}  {n \choose n-1}   & (-1)^{n-1} & (x)^{n-1} & + & {n \choose 0}  {n \choose n} & (-1)^{n} & (x)^{n}) \\
-        + & P_1     & ( & {n \choose 1}    {n-1 \choose 0} & (-1)^{0} & (x)^{1}   & + & {n \choose 1}    {n-1 \choose 1} & (-1)^{1} & (x)^{2}  & + \dots + & {n \choose 1}  {n-1 \choose n-1} & (-1)^{n-1} & (x)^{n} )                                                          \\
-        + & \dots                                                                                                                                                                                                                                                               \\
-        + & P_{n-1} & ( & {n \choose n-1} {1 \choose 0}    & (-1)^{0} & (x)^{n-1} & + & {n \choose n-1}  {1 \choose 1}   & (-1)^{1} & (x)^{n})                                                                                                                                  \\
-        + & P_n     & ( & {n \choose n}    {0 \choose 0}   & (-1)^{0} & (x)^{n})                                                                                                                                                                                                \\
-    \end{align*}
-\end{gather}
-\\
-Align all terms in the brackets to the right.
+\begin{gather*}
+    P=B \times
+    \begin{psmallmatrix}
+        {n \choose 0}    {n \choose 0}   & (-1)^{0} & (x)^{0}   & + & {n \choose 0}    {n \choose 1}   & (-1)^{1} & (x)^{1} & + \hdots + & {n \choose 0}  {n \choose n-1}   & (-1)^{n-1} & (x)^{n-1} & + & (x)^{n} & {n \choose 0}  {n \choose n} & (-1)^{n} \\
+        {n \choose 1}    {n-1 \choose 0} & (-1)^{0} & (x)^{1}   & + & {n \choose 1}    {n-1 \choose 1} & (-1)^{1} & (x)^{2} & + \hdots + & {n \choose 1}  {n-1 \choose n-1} & (-1)^{n-1} & (x)^{n}                                                           \\
+        \vdots                                                                                                                                                                                                                                               \\
+        & \\
+        {n \choose n-1} {1 \choose 0}    & (-1)^{0} & (x)^{n-1} & + & {n \choose n-1}  {1 \choose 1}   & (-1)^{1} & (x)^{n}                                                                                                                                  \\
+        {n \choose n}    {0 \choose 0}   & (-1)^{0} & (x)^{n}                                                                                                                                                                                                \\
+    \end{psmallmatrix}
+\end{gather*}
+\\ We reorder by exponent and get
 
-\begin{gather}
-    \begin{align*}
-          & P_0     & ( & {n \choose 0}  {n \choose 0} & (-1)^{0} & (x)^{0} & + & {n \choose 0}  {n \choose 1}   & (-1)^{1} & (x)^{1} & + \dots + & {n \choose 0}    {n \choose n-1}   & (-1)^{n-1} & (x)^{n-1} & + & {n \choose 0}  {n \choose n}     & (-1)^{n}   & (x)^{n})  \\
-        + & P_1     & ( &                              &          &         &   & {n \choose 1}  {n-1 \choose 0} & (-1)^{0} & (x)^{1} & + \dots + & {n \choose 1}    {n-1 \choose n-2} & (-1)^{n-2} & (x)^{n-1} & + & {n \choose 1}  {n-1 \choose n-1} & (-1)^{n-1} & (x)^{n} ) \\
-        + & \dots                                                                                                                                                                                                                                                               \\
-        + & P_{n-1} & ( &                              &          &         &   &                                &          &         &           & {n \choose n-1}  {1 \choose 0}     & (-1)^{0}   & (x)^{n-1} & + & {n \choose n-1}    {1 \choose 1} & (-1)^{1}   & (x)^{n})  \\
-        + & P_n     & ( &                              &          &         &   &                                &          &         &           &                                    &            &           &   & {n \choose n}      {0 \choose 0} & (-1)^{0}   & (x)^{n})  \\
-    \end{align*}
-\end{gather}
-\\ we reorder by exponent and get
+\begin{gather*}
+    P=B \times
+    \begin{psmallmatrix}
+        (x)^{n} & {n \choose 0}    {n \choose n}     & (-1)^{n}   & + & (x)^{n-1} & {n \choose 0}   {n \choose n-1}   & (-1)^{n-1} & + \hdots + & (x)^{1} & {n \choose 0} {n \choose 1}   & (-1)^{1} & + & (x)^{0} & {n \choose 0}    {n \choose 0}   & (-1)^{0} \\
+        (x)^{n} & {n \choose 1}    {n-1 \choose n-1} & (-1)^{n-1} & + & (x)^{n-1} & {n \choose 1}   {n-1 \choose n-2} & (-1)^{n-2} & + \hdots + & (x)^{1} & {n \choose 1} {n-1 \choose 0} & (-1)^{0} & + & (x)^{0} & 0                                           \\
+        \vdots                                                                                                                                                                                                                                                   \\
+        & \\
+        (x)^{n} & {n \choose n-1}  {1 \choose 1}     & (-1)^{1}   & + & (x)^{n-1} & {n \choose n-1} {1 \choose 0}     & (-1)^{0}   & + \hdots + & (x)^{1} & 0                             &          & + & (x)^{0} & 0                                           \\
+        (x)^{n} & {n \choose n}    {0 \choose 0}     & (-1)^{0}   & + & (x)^{n-1} & 0                                 &            & + \hdots + & (x)^{1} & 0                             &          & + & (x)^{0} & 0                                           \\
+    \end{psmallmatrix}
+\end{gather*}
+\\ we can pull out the variable x and get
 
-\begin{gather}
-    \begin{align*}
-          & x^{n}   & (P_0 & {n \choose 0}{n \choose n}(-1)^{n}     & + & P_1 {n \choose 1}{n-1 \choose n-1}(-1)^{n-1} & + \dots + & P_{n-1} {n \choose n-1}{1 \choose 1}(-1)^{1}  & + & P_{n} {n \choose n}{0 \choose 0}(-1)^{0}) \\
-        + & x^{n-1} & (P_0 & {n \choose 0}{n \choose n-1}(-1)^{n-1} & + & P_1 {n \choose 1}{n-1 \choose n-2}(-1)^{n-2} & + \dots + & P_{n-1} {n \choose n-1}{1 \choose 0}(-1)^{0})                                                 \\
-        + & \dots                                                                                                                                                                                                                  \\
-        + & x^{1}   & (P_0 & {n \choose 0}{n \choose 1}(-1)^{1}     & + & P_1 {n \choose 1}{n-1 \choose 0}(-1)^{0})                                                                                                                \\
-        + & x^{0}   & (P_0 & {n \choose 0}{n \choose 0}(-1)^{0})
-    \end{align*}
-\end{gather}
+\begin{gather*}
+    P=B \times
+    \begin{psmallmatrix}
+        {n \choose 0}{n \choose n}    (-1)^{n}   & {n \choose 0}{n \choose n-1}  (-1)^{n-1} & \hdots & {n \choose 0}{n \choose 1}  (-1)^{1} & {n \choose 0}{n \choose 0}(-1)^{0} \\
+        {n \choose 1}{n-1 \choose n-1}(-1)^{n-1} & {n \choose 1}{n-1 \choose n-2}(-1)^{n-2} & \hdots & {n \choose 1}{n-1 \choose 0}(-1)^{0} & 0                                  \\
+        \vdots                                   & \vdots                                   & \ddots & \vdots                               & \vdots                             \\
+        & \\
+        {n \choose n-1}{1 \choose 1}  (-1)^{1}   & {n \choose n-1}{1 \choose 0}  (-1)^{0}   & \hdots & 0                                    & 0                                  \\
+        {n \choose n}  {0 \choose 0}  (-1)^{0}   & 0                                        & \hdots & 0                                    & 0                                  \\
+    \end{psmallmatrix}
+    \times
+    \begin{psmallmatrix}
+        x^{n}   \\
+        x^{n-1} \\
+        \vdots  \\
+        & \\
+        x^{1}   \\
+        x^{0}   \\
+    \end{psmallmatrix}
+\end{gather*}
 \\
-With the identitiy
+When we apply the identitiy
 
 \begin{equation*}
     {n \choose i} = {n \choose n-i}
 \end{equation*}
-\\
-we get this equation
+to every right binomialin coefficient in every row, we get
 
-\begin{gather}
-    \begin{align*}
-          & x^{n}   & (P_0 & {n \choose 0}{n \choose 0}(-1)^{n}   & + & P_1 {n \choose 1}{n-1 \choose 0}(-1)^{n-1}  & + \dots + & P_{n-1} {n \choose n-1}{1 \choose 0}(-1)^{1}  & + & P_{n} {n \choose n}{0 \choose 0}(-1)^{0}) \\
-        + & x^{n-1} & (P_0 & {n \choose 0}{n \choose 1}(-1)^{n-1} & + & P_1 {n \choose 1}{n-1 \choose 1}(-1)^{n-2}  & + \dots + & P_{n-1} {n \choose n-1}{1 \choose 1}(-1)^{0})                                                 \\
-        + & \dots                                                                                                                                                                                                               \\
-        + & x^{1}   & (P_0 & {n \choose 0}{n \choose n-1}(-1)^{1} & + & P_1 {n \choose 1}{n-1 \choose n-1}(-1)^{0})                                                                                                             \\
-        + & x^{0}   & (P_0 & {n \choose 0}{n \choose n}(-1)^{0})
-    \end{align*}
-\end{gather}
+\begin{gather*}
+    P=B \times
+    \begin{psmallmatrix}
+        {n \choose 0}{n \choose 0}  (-1)^{n}   & {n \choose 0}{n \choose 1}  (-1)^{n-1} & \hdots & {n \choose 0}{n \choose n-1}  (-1)^{1} & {n \choose 0}{n \choose n}(-1)^{0} \\
+        {n \choose 1}{n-1 \choose 0}(-1)^{n-1} & {n \choose 1}{n-1 \choose 1}(-1)^{n-2} & \hdots & {n \choose 1}{n-1 \choose n-1}(-1)^{0} & 0                                  \\
+        \vdots                                 & \vdots                                 & \ddots & \vdots                                 & \vdots                             \\
+        & \\
+        {n \choose n-1}{1 \choose 0}(-1)^{1}   & {n \choose n-1}{1 \choose 1}(-1)^{0}   & \hdots & 0                                      & 0                                  \\
+        {n \choose n}  {0 \choose 0}(-1)^{0}   & 0                                      & \hdots & 0                                      & 0                                  \\
+    \end{psmallmatrix}
+    \times
+    V
+\end{gather*}
 \\
-If we look closer to pairs of binomial coefficients we can see, that they have this format:
+If we now look closer to pairs of binomial coefficients we can see, that they have this format:
 \\
 
 The i-th pair of the j-th row can be written as
@@ -117,65 +153,27 @@ We safely can apply this identitiy to all pairs of binomial coefficients
 \\
 and get
 
-\begin{gather}
-    \begin{align*}
-          & x^{n}   & (P_0 & {n \choose 0}{n \choose 0}(-1)^{n}     & + & P_1 {n \choose 0}{n \choose 1}(-1)^{n-1}   & + \dots + & P_{n-1} {n \choose 0}{n \choose n-1}(-1)^{1}    & + & P_{n} {n \choose 0}{n \choose n}(-1)^{0}) \\
-        + & x^{n-1} & (P_0 & {n \choose 1}{n-1 \choose 0}(-1)^{n-1} & + & P_1 {n \choose 1}{n-1 \choose 1}(-1)^{n-2} & + \dots + & P_{n-1} {n \choose 1}{n-1 \choose n-1}(-1)^{0})                                                 \\
-        + & \dots                                                                                                                                                                                                                  \\
-        + & x^{1}   & (P_0 & {n \choose n-1}{1 \choose 0}(-1)^{1}   & + & P_1 {n \choose n-1}{1 \choose 1}(-1)^{0})                                                                                                                \\
-        + & x^{0}   & (P_0 & {n \choose n}{0 \choose 0}(-1)^{0})
-    \end{align*}
-\end{gather}
-\\ We now seperate the exponent terms and multiplied both parts as matrices.
-
-\begin{equation*}
-    \begin{psmallmatrix}
-        P_0 {n \choose 0}{n \choose 0}(-1)^{n} &+&  P_1 {n \choose 0}{n \choose 1}(-1)^{n-1}  &+ \dots + &P_{n-1} {n \choose 0}{n \choose n-1}(-1)^{1}  &+&  P_{n} {n \choose 0}{n \choose n}(-1)^{0} \\
-        P_0 {n \choose 1}{n-1 \choose 0}(-1)^{n-1}  &+&  P_1 {n \choose 1}{n-1 \choose 1}(-1)^{n-2} &+ \dots + &P_{n-1} {n \choose 1}{n-1 \choose n-1}(-1)^{0}                               \\
-        \vdots                                                                                                                                  \\
-        P_0 {n \choose n-1}{1 \choose 0}(-1)^{1} &+& P_1 {n \choose n-1}{1 \choose 1}(-1)^{0}                                                                                   \\
-        P_0 {n \choose n}{0 \choose 0}(-1)^{0}
-    \end{psmallmatrix}^T
-    \times
-    \left(
-    \begin{array}{c}
-        x^{n}   \\
-        x^{n-1} \\
-        \vdots  \\
-        x^{1}   \\
-        x^{0}   \\
-    \end{array}
-    \right)
-\end{equation*}
-\\ Transpose the left matrix yields
-
-\begin{equation*}
-    \begin{psmallmatrix*}[l]
-        P_0     {n \choose 0}{n \choose 0}  (-1)^{n}   &+& P_0     {n \choose 1}{n-1 \choose 0}(-1)^{n-1} &+ \dots + & P_0 {n \choose n-1}{1 \choose 0}(-1)^{1} &+& P_0 {n \choose n}{0 \choose 0}(-1)^{0} \\
-        P_1     {n \choose 0}{n \choose 1}  (-1)^{n-1} &+& P_1     {n \choose 1}{n-1 \choose 1}(-1)^{n-2} &+ \dots + & P_1 {n \choose n-1}{1 \choose 1}(-1)^{0}                                            \\
-        \vdots                                                                                                                                                                                             \\
-        P_{n-1} {n \choose 0}{n \choose n-1}(-1)^{1}   &+& P_{n-1} {n \choose 1}{n-1 \choose n-1}(-1)^{0}                                                                                                  \\
-        P_{n}   {n \choose 0}{n \choose n}  (-1)^{0}
-    \end{psmallmatrix*}
-\end{equation*}
-\\
-No we can write this as product of the Points $P_i$ and a weight matrix $W$
-
-\begin{equation*}
-    \begin{psmallmatrix*}
-        P_0 & P_1 & \dots & P_{n-1} & P_{n}
-    \end{psmallmatrix*}
-    \times
+\begin{gather*}
+    P=B \times
     \begin{psmallmatrix*}
         {n \choose 0}{n \choose 0}(-1)^{n}   & {n \choose 1}{n-1 \choose 0}(-1)^{n-1}  & \hdots & {n \choose n-1}{1 \choose 0}(-1)^{1} & {n \choose n}{0 \choose 0}(-1)^{0} \\
         {n \choose 0}{n \choose 1}(-1)^{n-1} & {n \choose 1}{n-1 \choose 1}(-1)^{n-2}  & \hdots & {n \choose n-1}{1 \choose 1}(-1)^{0} & 0                                  \\
         \vdots                               & \vdots                                  & \ddots & \vdots                               & \vdots                             \\
+        & \\
         {n \choose 0}{n \choose n-1}(-1)^{1} & {n \choose 1}{n-1 \choose n-1}(-1)^{0}  & \hdots & 0                                    & 0                                  \\
         {n \choose 0}{n \choose n}(-1)^{0}   & 0                                       & \hdots & 0                                    & 0
     \end{psmallmatrix*}
-\end{equation*}
+    \times
+    V
+\end{gather*}
 \\
-When we looking at the i-th element of the j-th row, we derive the formula for each matrix cell
+Rewrite the equation in short, yields
+
+\begin{gather*}
+    P=B \times W \times V
+\end{gather*}
+\\
+When we looking at the i-th element of the j-th row, we derive the formula for each cell of the weight matrix W
 
 \begin{equation*}
     W=
