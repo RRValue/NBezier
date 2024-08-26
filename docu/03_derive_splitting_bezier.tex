@@ -1,0 +1,82 @@
+\section{Derivation splitting of a bezier Curve}
+
+Points
+\begin{equation*}
+    \left(
+    \begin{array}{cccc}
+        P_0 & P_1 & P_2 & P_3 \\
+    \end{array}
+    \right)
+\end{equation*}
+\\
+Full form Left
+\begin{equation*}
+    \left(
+    \begin{array}{cccc}
+        P_0 & (1-\alpha ) P_0 & (1-\alpha )^2 P_0         & (1-\alpha )^3 P_0           \\
+        0   & \alpha  P_1     & 2 (1-\alpha ) \alpha  P_1 & 3 (1-\alpha )^2 \alpha  P_1 \\
+        0   & 0               & \alpha ^2 P_2             & 3 (1-\alpha ) \alpha ^2 P_2 \\
+        0   & 0               & 0                         & \alpha ^3 P_3               \\
+    \end{array}
+    \right)
+\end{equation*}
+\\
+Weigth Left
+\begin{equation*}
+    \left(
+    \begin{array}{cccc}
+        1 & 1 & 1 & 1 \\
+        0 & 1 & 2 & 3 \\
+        0 & 0 & 1 & 3 \\
+        0 & 0 & 0 & 1 \\
+    \end{array}
+    \right)
+\end{equation*}
+\\
+Variable Left
+\begin{equation*}
+    \left(
+    \begin{array}{cccc}
+        1 & 1-\alpha & (1-\alpha )^2      & (1-\alpha )^3         \\
+        0 & \alpha   & (1-\alpha ) \alpha & (1-\alpha )^2 \alpha  \\
+        0 & 0        & \alpha ^2          & (1-\alpha ) \alpha ^2 \\
+        0 & 0        & 0                  & \alpha ^3             \\
+    \end{array}
+    \right)
+\end{equation*}
+\\
+Full form right
+\begin{equation*}
+    \left(
+    \begin{array}{cccc}
+        (1-\alpha )^3 P_0           & 0                         & 0               & 0   \\
+        3 (1-\alpha )^2 \alpha  P_1 & (1-\alpha )^2 P_1         & 0               & 0   \\
+        3 (1-\alpha ) \alpha ^2 P_2 & 2 (1-\alpha ) \alpha  P_2 & (1-\alpha ) P_2 & 0   \\
+        \alpha ^3 P_3               & \alpha ^2 P_3             & \alpha  P_3     & P_3 \\
+    \end{array}
+    \right)
+\end{equation*}
+\\
+Weights right
+\begin{equation*}
+    \left(
+    \begin{array}{cccc}
+        1 & 0 & 0 & 0 \\
+        3 & 1 & 0 & 0 \\
+        3 & 2 & 1 & 0 \\
+        1 & 1 & 1 & 1 \\
+    \end{array}
+    \right)
+\end{equation*}
+\\
+Variable Right
+\begin{equation*}
+    \left(
+    \begin{array}{cccc}
+        (1-\alpha )^3         & 0                  & 0        & 0 \\
+        (1-\alpha )^2 \alpha  & (1-\alpha )^2      & 0        & 0 \\
+        (1-\alpha ) \alpha ^2 & (1-\alpha ) \alpha & 1-\alpha & 0 \\
+        \alpha ^3             & \alpha ^2          & \alpha   & 1 \\
+    \end{array}
+    \right)
+\end{equation*}
