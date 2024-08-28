@@ -4,8 +4,8 @@
 
 #include "NBezier/bezier.h"
 #include "NBezier/bezier_requirements.h"
+#include "NBezier/split_matrices.h"
 
-#include <boost/math/ccmath/sqrt.hpp>
 #include <boost/qvm/mat_operations.hpp>
 #include <boost/qvm/vec_operations.hpp>
 
@@ -35,6 +35,20 @@ struct BezierSplit
     static constexpr auto at(const BezierPoints<Scalar, Dimension, Degree>& p, const Scalar& at)
     {
         return splitPoints(p, at, std::make_index_sequence<Degree + 1>{});
+    }
+
+    template<typename Scalar, size_t Dimension, size_t Degree>
+        requires BezierSplitRequirement<Scalar, Dimension, Degree>
+    static constexpr auto at2(const BezierPoints<Scalar, Dimension, Degree>& p, const Scalar& at)
+    {
+        BezierSplitResult<Scalar, Dimension, Degree> result = {};
+
+        const auto matrices = SplitMatrices::get<Scalar, Degree + 1>(at);
+
+        result.m_left = p.getPoints() * matrices.m_left;
+        result.m_right = p.getPoints() * matrices.m_right;
+
+        return result;
     }
 
 private:
