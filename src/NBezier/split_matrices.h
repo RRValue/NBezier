@@ -30,12 +30,7 @@ struct SplitMatrices
         requires SplitMatricesRequirement<Scalar, Degree>
     static constexpr auto get(const Scalar& alpha) noexcept
     {
-        auto result = SplitMatriesResult<Scalar, Degree>{SplitWeightMatrix::getLeft<Scalar, Degree>(),  //
-                                                         SplitWeightMatrix::getRight<Scalar, Degree>()};
-
-        generate<Scalar, Degree>(result, alpha);
-
-        return result;
+        return generate<Scalar, Degree>(alpha);
     }
 
 private:
@@ -51,13 +46,17 @@ private:
 
 private:
     template<typename Scalar, size_t Degree>
-    NBInline static constexpr auto generate(auto& matrices, const Scalar& alpha)
+    NBInline static constexpr auto generate(const Scalar& alpha)
     {
+        constexpr auto weights = SplitMatriesResult<Scalar, Degree>{SplitWeightMatrix::getLeft<Scalar, Degree>(),  //
+                                                                    SplitWeightMatrix::getRight<Scalar, Degree>()};
+
+        auto result = weights;
         auto params = UV{alpha, Scalar(1) - alpha, Scalar(1), Scalar(1)};
 
-        assignPotences<Degree>(matrices, params, std::make_index_sequence<Degree - 1>{});
+        assignPotences<Degree>(result, params, std::make_index_sequence<Degree - 1>{});
 
-        return matrices;
+        return result;
     }
 
     template<size_t Degree, size_t... Steps>
@@ -107,10 +106,7 @@ private:
     template<size_t Row, size_t Column>
     NBInline static constexpr void assignCell(auto& dst, const auto& value)
     {
-        constexpr auto row = Row;
-        constexpr auto column = Column;
-
-        boost::qvm::A<row, column>(dst) *= value;
+        boost::qvm::A<Row, Column>(dst) *= value;
     }
 };
 
