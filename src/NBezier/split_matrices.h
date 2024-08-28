@@ -75,8 +75,8 @@ private:
 
         assignRow<Step + 1>(matrices.m_left, params.u_accum, assign_steps);
         assignRowInverse<Degree, Step + 1>(matrices.m_right, params.v_accum, assign_steps);
-        assignDiagonal<0, Step + 1>(matrices.m_left, params.v_accum, assign_steps);
-        assignDiagonalInverse<Degree, 0, Step + 1>(matrices.m_right, params.u_accum, assign_steps);
+        assignDiagonal<Step + 1>(matrices.m_left, params.v_accum, assign_steps);
+        assignDiagonalInverse<Degree, Step + 1>(matrices.m_right, params.u_accum, assign_steps);
     }
 
     template<size_t Row, size_t... Steps>
@@ -91,16 +91,16 @@ private:
         (assignCell<Degree - 1 - Row, Degree - 1 - (Row + Steps)>(dst, value), ...);
     }
 
-    template<size_t Row, size_t Column, size_t... Steps>
+    template<size_t Column, size_t... Steps>
     NBInline static constexpr void assignDiagonal(auto& dst, const auto& value, std::index_sequence<Steps...>)
     {
-        (assignCell<Row + Steps, Column + Steps>(dst, value), ...);
+        (assignCell<Steps, Column + Steps>(dst, value), ...);
     }
 
-    template<size_t Degree, size_t Row, size_t Column, size_t... Steps>
+    template<size_t Degree, size_t Column, size_t... Steps>
     NBInline static constexpr void assignDiagonalInverse(auto& dst, const auto& value, std::index_sequence<Steps...>)
     {
-        (assignCell<Degree - 1 - (Row + Steps), Degree - 1 - (Column + Steps)>(dst, value), ...);
+        (assignCell<Degree - 1 - (Steps), Degree - 1 - (Column + Steps)>(dst, value), ...);
     }
 
     template<size_t Row, size_t Column>
