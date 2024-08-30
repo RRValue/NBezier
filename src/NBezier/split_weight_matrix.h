@@ -47,12 +47,12 @@ private:
     {
         boost::qvm::mat<Scalar, Degree, Degree> m = {};
 
-        (fillCellLeft<Degree, Indices>(m), ...);
+        (fillCellLeft<Scalar, Degree, Indices>(m), ...);
 
         return m;
     }
 
-    template<std::size_t Degree, std::size_t Index>
+    template<typename Scalar, std::size_t Degree, std::size_t Index>
     NBInline static constexpr void fillCellLeft(auto& m)
     {
         constexpr auto row = Index / Degree;
@@ -61,7 +61,7 @@ private:
         if(col < row)
             return;
 
-        boost::qvm::A<row, col>(m) = Binomial::Coefficient<int>::get(col, row);
+        boost::qvm::A<row, col>(m) = Binomial::Coefficient::get(Scalar(col), Scalar(row));
     }
 
     template<typename Scalar, size_t Degree, std::size_t... Indices>
@@ -69,12 +69,12 @@ private:
     {
         boost::qvm::mat<Scalar, Degree, Degree> m = {};
 
-        (fillCellRight<Degree, Indices>(m), ...);
+        (fillCellRight<Scalar, Degree, Indices>(m), ...);
 
         return m;
     }
 
-    template<std::size_t Degree, std::size_t Index>
+    template<typename Scalar, std::size_t Degree, std::size_t Index>
     NBInline static constexpr void fillCellRight(auto& m)
     {
         constexpr auto row = Index / Degree;
@@ -83,7 +83,7 @@ private:
         if(col > row)
             return;
 
-        boost::qvm::A<row, col>(m) = Binomial::Coefficient<int>::get(Degree - col - 1, row - col);
+        boost::qvm::A<row, col>(m) = Binomial::Coefficient::get(Scalar(Degree - col - 1), Scalar(row - col));
     }
 };
 

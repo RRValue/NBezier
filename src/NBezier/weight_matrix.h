@@ -39,12 +39,12 @@ private:
     {
         boost::qvm::mat<Scalar, Degree, Degree> m = {};
 
-        (fillCell<Degree, Indices>(m), ...);
+        (fillCell<Scalar, Degree, Indices>(m), ...);
 
         return m;
     }
 
-    template<std::size_t Degree, std::size_t Index>
+    template<typename Scalar, std::size_t Degree, std::size_t Index>
     NBInline static constexpr void fillCell(auto& m)
     {
         constexpr auto row = Index / Degree;
@@ -52,8 +52,8 @@ private:
 
         constexpr auto signbit = (Degree - 1 + row + col) % 2 ? false : true;
         constexpr auto sign = signbit ? int(1) : int(-1);
-        constexpr auto row_factor = Binomial::Coefficient<int>::get(Degree - 1, row);
-        constexpr auto col_factor = Binomial::Coefficient<int>::get(Degree - 1 - row, col);
+        constexpr auto row_factor = Binomial::Coefficient::get(Scalar(Degree - 1), Scalar(row));
+        constexpr auto col_factor = Binomial::Coefficient::get(Scalar(Degree - 1 - row), Scalar(col));
         constexpr auto value = sign * row_factor * col_factor;
 
         boost::qvm::A<row, col>(m) = value;

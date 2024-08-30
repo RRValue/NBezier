@@ -1,6 +1,7 @@
 #pragma once
 
 #include "NBezier/defines.h"
+#include "NBezier/binomial/type.h"
 
 #include <boost/qvm/vec.hpp>
 #include <boost/qvm/vec_access.hpp>
@@ -13,17 +14,12 @@
 OpenNameSpace(NBezier);
 OpenNameSpace(Polynomial);
 
-template<typename Scalar>
-concept CoefficientVectorType = (std::integral<Scalar> || std::floating_point<Scalar>) &&  //
-                                !std::is_same<Scalar, bool>::value;
-
 template<size_t Derivative, size_t Degree>
 concept DerivativeRequirement =  //
     0 <= Derivative && Derivative <= Degree;
 
-template<typename Scalar, size_t Degree, size_t Derivative>
-    requires CoefficientVectorType<Scalar> &&  //
-             DerivativeRequirement<Derivative, Degree>
+template<Binomial::Type Scalar, size_t Degree, size_t Derivative>
+    requires DerivativeRequirement<Derivative, Degree>
 struct CoefficientVector
 {
     StaticClass(CoefficientVector);
