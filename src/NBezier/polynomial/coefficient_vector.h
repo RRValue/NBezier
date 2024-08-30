@@ -32,9 +32,13 @@ private:
     }
 
     template<size_t... Indices>
-    NBInline static constexpr void initCoefficients(auto& c, std::index_sequence<Indices...>)
+    NBInline static constexpr auto initCoefficients(std::index_sequence<Indices...>)
     {
+        boost::qvm::vec<Scalar, Degree + 1> c;
+
         (initCoefficients<Indices>(c), ...);
+
+        return c;
     }
 
     template<size_t Derivative, size_t Index>
@@ -64,9 +68,9 @@ private:
 public:
     static constexpr auto get() noexcept
     {
-        boost::qvm::vec<Scalar, Degree + 1> c = {};
+        constexpr auto init_vec = initCoefficients(std::make_index_sequence<Degree + 1>{});
+        auto c = init_vec;
 
-        initCoefficients(c, std::make_index_sequence<Degree + 1>{});
         generateCoefficients(c, std::make_index_sequence<Derivative>{});
 
         return c;

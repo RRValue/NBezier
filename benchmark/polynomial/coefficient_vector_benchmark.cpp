@@ -5,35 +5,38 @@
 UseNameSpace(NBezier::Polynomial);
 
 template<size_t Derivative>
-    using CoefficientVector4 = CoefficientVector<float, 4, Derivative>;
+    using CoefficientVector5 = CoefficientVector<float, 5, Derivative>;
 
 static void BM_CoefficientVectorGetCompileTime(benchmark::State& state)
 {
     for(auto _ : state)
     {
-        constexpr auto c0 = CoefficientVector4<0>::get();
-        constexpr auto c1 = CoefficientVector4<1>::get();
-        constexpr auto c2 = CoefficientVector4<2>::get();
-        constexpr auto c3 = CoefficientVector4<3>::get();
-        constexpr auto c4 = CoefficientVector4<4>::get();
+        constexpr auto c0 = CoefficientVector5<0>::get();
+        constexpr auto c1 = CoefficientVector5<1>::get();
+        constexpr auto c2 = CoefficientVector5<2>::get();
+        constexpr auto c3 = CoefficientVector5<3>::get();
+        constexpr auto c4 = CoefficientVector5<4>::get();
+        constexpr auto c5 = CoefficientVector5<5>::get();
     }
 }
 
 static void BM_CoefficientVectorGetRunTime(benchmark::State& state)
 {
-    auto c0 = boost::qvm::vec<float, 5>{};
-    auto c1 = boost::qvm::vec<float, 5>{};
-    auto c2 = boost::qvm::vec<float, 5>{};
-    auto c3 = boost::qvm::vec<float, 5>{};
-    auto c4 = boost::qvm::vec<float, 5>{};
+    auto c0 = boost::qvm::vec<float, 6>{};
+    auto c1 = boost::qvm::vec<float, 6>{};
+    auto c2 = boost::qvm::vec<float, 6>{};
+    auto c3 = boost::qvm::vec<float, 6>{};
+    auto c4 = boost::qvm::vec<float, 6>{};
+    auto c5 = boost::qvm::vec<float, 6>{};
 
     for(auto _ : state)
     {
-        benchmark::DoNotOptimize(c0 = CoefficientVector4<0>::get());
-        benchmark::DoNotOptimize(c1 = CoefficientVector4<1>::get());
-        benchmark::DoNotOptimize(c2 = CoefficientVector4<2>::get());
-        benchmark::DoNotOptimize(c3 = CoefficientVector4<3>::get());
-        benchmark::DoNotOptimize(c4 = CoefficientVector4<4>::get());
+        benchmark::DoNotOptimize(c0 = CoefficientVector5<0>::get());
+        benchmark::DoNotOptimize(c1 = CoefficientVector5<1>::get());
+        benchmark::DoNotOptimize(c2 = CoefficientVector5<2>::get());
+        benchmark::DoNotOptimize(c3 = CoefficientVector5<3>::get());
+        benchmark::DoNotOptimize(c4 = CoefficientVector5<4>::get());
+        benchmark::DoNotOptimize(c4 = CoefficientVector5<5>::get());
     }
 }
 
