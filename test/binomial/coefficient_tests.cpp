@@ -1,4 +1,5 @@
 #include "NBezier/binomial/coefficient.h"
+#include "NBezier/binomial/type.h"
 
 #include "binomial_test_types.h"
 
@@ -9,191 +10,188 @@ UseNameSpace(NBezier::Binomial);
 template<typename T>
 class CoefficientTest : public testing::Test
 {
-public:
-    typedef Coefficient<T> TestType;
-    typedef T Type;
 };
 
 TYPED_TEST_SUITE_P(CoefficientTest);
 
 TYPED_TEST_P(CoefficientTest, FirstRow)
 {
-    constexpr auto _0_choose_0 = TestFixture::TestType::get(0, 0);
-    constexpr auto _0_choose_1 = TestFixture::TestType::get(0, 1);
+    constexpr auto _0_choose_0 = Coefficient::get(TypeParam(0), TypeParam(0));
+    constexpr auto _0_choose_1 = Coefficient::get(TypeParam(0), TypeParam(1));
 
-    EXPECT_EQ(_0_choose_0, TestFixture::Type(1));
-    EXPECT_EQ(_0_choose_1, TestFixture::Type(0));
+    EXPECT_EQ(_0_choose_0, TypeParam(1));
+    EXPECT_EQ(_0_choose_1, TypeParam(0));
 }
 
 TYPED_TEST_P(CoefficientTest, SecondRow)
 {
-    constexpr auto _1_choose_0 = TestFixture::TestType::get(1, 0);
-    constexpr auto _1_choose_1 = TestFixture::TestType::get(1, 1);
-    constexpr auto _1_choose_2 = TestFixture::TestType::get(1, 2);
+    constexpr auto _1_choose_0 = Coefficient::get(TypeParam(1), TypeParam(0));
+    constexpr auto _1_choose_1 = Coefficient::get(TypeParam(1), TypeParam(1));
+    constexpr auto _1_choose_2 = Coefficient::get(TypeParam(1), TypeParam(2));
 
-    EXPECT_EQ(_1_choose_0, TestFixture::Type(1));
-    EXPECT_EQ(_1_choose_1, TestFixture::Type(1));
-    EXPECT_EQ(_1_choose_2, TestFixture::Type(0));
+    EXPECT_EQ(_1_choose_0, TypeParam(1));
+    EXPECT_EQ(_1_choose_1, TypeParam(1));
+    EXPECT_EQ(_1_choose_2, TypeParam(0));
 }
 
 TYPED_TEST_P(CoefficientTest, ThirdRow)
 {
-    constexpr auto _2_choose_0 = TestFixture::TestType::get(2, 0);
-    constexpr auto _2_choose_1 = TestFixture::TestType::get(2, 1);
-    constexpr auto _2_choose_2 = TestFixture::TestType::get(2, 2);
-    constexpr auto _2_choose_3 = TestFixture::TestType::get(2, 3);
+    constexpr auto _2_choose_0 = Coefficient::get(TypeParam(2), TypeParam(0));
+    constexpr auto _2_choose_1 = Coefficient::get(TypeParam(2), TypeParam(1));
+    constexpr auto _2_choose_2 = Coefficient::get(TypeParam(2), TypeParam(2));
+    constexpr auto _2_choose_3 = Coefficient::get(TypeParam(2), TypeParam(3));
 
-    EXPECT_EQ(_2_choose_0, TestFixture::Type(1));
-    EXPECT_EQ(_2_choose_1, TestFixture::Type(2));
-    EXPECT_EQ(_2_choose_2, TestFixture::Type(1));
-    EXPECT_EQ(_2_choose_3, TestFixture::Type(0));
+    EXPECT_EQ(_2_choose_0, TypeParam(1));
+    EXPECT_EQ(_2_choose_1, TypeParam(2));
+    EXPECT_EQ(_2_choose_2, TypeParam(1));
+    EXPECT_EQ(_2_choose_3, TypeParam(0));
 }
 
 TYPED_TEST_P(CoefficientTest, FourthRow)
 {
-    constexpr auto _3_choose_0 = TestFixture::TestType::get(3, 0);
-    constexpr auto _3_choose_1 = TestFixture::TestType::get(3, 1);
-    constexpr auto _3_choose_2 = TestFixture::TestType::get(3, 2);
-    constexpr auto _3_choose_3 = TestFixture::TestType::get(3, 3);
-    constexpr auto _3_choose_4 = TestFixture::TestType::get(3, 4);
+    constexpr auto _3_choose_0 = Coefficient::get(TypeParam(3), TypeParam(0));
+    constexpr auto _3_choose_1 = Coefficient::get(TypeParam(3), TypeParam(1));
+    constexpr auto _3_choose_2 = Coefficient::get(TypeParam(3), TypeParam(2));
+    constexpr auto _3_choose_3 = Coefficient::get(TypeParam(3), TypeParam(3));
+    constexpr auto _3_choose_4 = Coefficient::get(TypeParam(3), TypeParam(4));
 
-    EXPECT_EQ(_3_choose_0, TestFixture::Type(1));
-    EXPECT_EQ(_3_choose_1, TestFixture::Type(3));
-    EXPECT_EQ(_3_choose_2, TestFixture::Type(3));
-    EXPECT_EQ(_3_choose_3, TestFixture::Type(1));
-    EXPECT_EQ(_3_choose_4, TestFixture::Type(0));
+    EXPECT_EQ(_3_choose_0, TypeParam(1));
+    EXPECT_EQ(_3_choose_1, TypeParam(3));
+    EXPECT_EQ(_3_choose_2, TypeParam(3));
+    EXPECT_EQ(_3_choose_3, TypeParam(1));
+    EXPECT_EQ(_3_choose_4, TypeParam(0));
 }
 
 TYPED_TEST_P(CoefficientTest, FifthRow)
 {
-    constexpr auto _4_choose_0 = TestFixture::TestType::get(4, 0);
-    constexpr auto _4_choose_1 = TestFixture::TestType::get(4, 1);
-    constexpr auto _4_choose_2 = TestFixture::TestType::get(4, 2);
-    constexpr auto _4_choose_3 = TestFixture::TestType::get(4, 3);
-    constexpr auto _4_choose_4 = TestFixture::TestType::get(4, 4);
-    constexpr auto _4_choose_5 = TestFixture::TestType::get(4, 5);
+    constexpr auto _4_choose_0 = Coefficient::get(TypeParam(4), TypeParam(0));
+    constexpr auto _4_choose_1 = Coefficient::get(TypeParam(4), TypeParam(1));
+    constexpr auto _4_choose_2 = Coefficient::get(TypeParam(4), TypeParam(2));
+    constexpr auto _4_choose_3 = Coefficient::get(TypeParam(4), TypeParam(3));
+    constexpr auto _4_choose_4 = Coefficient::get(TypeParam(4), TypeParam(4));
+    constexpr auto _4_choose_5 = Coefficient::get(TypeParam(4), TypeParam(5));
 
-    EXPECT_EQ(_4_choose_0, TestFixture::Type(1));
-    EXPECT_EQ(_4_choose_1, TestFixture::Type(4));
-    EXPECT_EQ(_4_choose_2, TestFixture::Type(6));
-    EXPECT_EQ(_4_choose_3, TestFixture::Type(4));
-    EXPECT_EQ(_4_choose_4, TestFixture::Type(1));
-    EXPECT_EQ(_4_choose_5, TestFixture::Type(0));
+    EXPECT_EQ(_4_choose_0, TypeParam(1));
+    EXPECT_EQ(_4_choose_1, TypeParam(4));
+    EXPECT_EQ(_4_choose_2, TypeParam(6));
+    EXPECT_EQ(_4_choose_3, TypeParam(4));
+    EXPECT_EQ(_4_choose_4, TypeParam(1));
+    EXPECT_EQ(_4_choose_5, TypeParam(0));
 }
 
 TYPED_TEST_P(CoefficientTest, SixthRow)
 {
-    constexpr auto _5_choose_0 = TestFixture::TestType::get(5, 0);
-    constexpr auto _5_choose_1 = TestFixture::TestType::get(5, 1);
-    constexpr auto _5_choose_2 = TestFixture::TestType::get(5, 2);
-    constexpr auto _5_choose_3 = TestFixture::TestType::get(5, 3);
-    constexpr auto _5_choose_4 = TestFixture::TestType::get(5, 4);
-    constexpr auto _5_choose_5 = TestFixture::TestType::get(5, 5);
-    constexpr auto _5_choose_6 = TestFixture::TestType::get(5, 6);
+    constexpr auto _5_choose_0 = Coefficient::get(TypeParam(5), TypeParam(0));
+    constexpr auto _5_choose_1 = Coefficient::get(TypeParam(5), TypeParam(1));
+    constexpr auto _5_choose_2 = Coefficient::get(TypeParam(5), TypeParam(2));
+    constexpr auto _5_choose_3 = Coefficient::get(TypeParam(5), TypeParam(3));
+    constexpr auto _5_choose_4 = Coefficient::get(TypeParam(5), TypeParam(4));
+    constexpr auto _5_choose_5 = Coefficient::get(TypeParam(5), TypeParam(5));
+    constexpr auto _5_choose_6 = Coefficient::get(TypeParam(5), TypeParam(6));
 
-    EXPECT_EQ(_5_choose_0, TestFixture::Type(1));
-    EXPECT_EQ(_5_choose_1, TestFixture::Type(5));
-    EXPECT_EQ(_5_choose_2, TestFixture::Type(10));
-    EXPECT_EQ(_5_choose_3, TestFixture::Type(10));
-    EXPECT_EQ(_5_choose_4, TestFixture::Type(5));
-    EXPECT_EQ(_5_choose_5, TestFixture::Type(1));
-    EXPECT_EQ(_5_choose_6, TestFixture::Type(0));
+    EXPECT_EQ(_5_choose_0, TypeParam(1));
+    EXPECT_EQ(_5_choose_1, TypeParam(5));
+    EXPECT_EQ(_5_choose_2, TypeParam(10));
+    EXPECT_EQ(_5_choose_3, TypeParam(10));
+    EXPECT_EQ(_5_choose_4, TypeParam(5));
+    EXPECT_EQ(_5_choose_5, TypeParam(1));
+    EXPECT_EQ(_5_choose_6, TypeParam(0));
 }
 
 TYPED_TEST_P(CoefficientTest, SeventhRow)
 {
-    constexpr auto _6_choose_0 = TestFixture::TestType::get(6, 0);
-    constexpr auto _6_choose_1 = TestFixture::TestType::get(6, 1);
-    constexpr auto _6_choose_2 = TestFixture::TestType::get(6, 2);
-    constexpr auto _6_choose_3 = TestFixture::TestType::get(6, 3);
-    constexpr auto _6_choose_4 = TestFixture::TestType::get(6, 4);
-    constexpr auto _6_choose_5 = TestFixture::TestType::get(6, 5);
-    constexpr auto _6_choose_6 = TestFixture::TestType::get(6, 6);
-    constexpr auto _6_choose_7 = TestFixture::TestType::get(6, 7);
+    constexpr auto _6_choose_0 = Coefficient::get(TypeParam(6), TypeParam(0));
+    constexpr auto _6_choose_1 = Coefficient::get(TypeParam(6), TypeParam(1));
+    constexpr auto _6_choose_2 = Coefficient::get(TypeParam(6), TypeParam(2));
+    constexpr auto _6_choose_3 = Coefficient::get(TypeParam(6), TypeParam(3));
+    constexpr auto _6_choose_4 = Coefficient::get(TypeParam(6), TypeParam(4));
+    constexpr auto _6_choose_5 = Coefficient::get(TypeParam(6), TypeParam(5));
+    constexpr auto _6_choose_6 = Coefficient::get(TypeParam(6), TypeParam(6));
+    constexpr auto _6_choose_7 = Coefficient::get(TypeParam(6), TypeParam(7));
 
-    EXPECT_EQ(_6_choose_0, TestFixture::Type(1));
-    EXPECT_EQ(_6_choose_1, TestFixture::Type(6));
-    EXPECT_EQ(_6_choose_2, TestFixture::Type(15));
-    EXPECT_EQ(_6_choose_3, TestFixture::Type(20));
-    EXPECT_EQ(_6_choose_4, TestFixture::Type(15));
-    EXPECT_EQ(_6_choose_5, TestFixture::Type(6));
-    EXPECT_EQ(_6_choose_6, TestFixture::Type(1));
-    EXPECT_EQ(_6_choose_7, TestFixture::Type(0));
+    EXPECT_EQ(_6_choose_0, TypeParam(1));
+    EXPECT_EQ(_6_choose_1, TypeParam(6));
+    EXPECT_EQ(_6_choose_2, TypeParam(15));
+    EXPECT_EQ(_6_choose_3, TypeParam(20));
+    EXPECT_EQ(_6_choose_4, TypeParam(15));
+    EXPECT_EQ(_6_choose_5, TypeParam(6));
+    EXPECT_EQ(_6_choose_6, TypeParam(1));
+    EXPECT_EQ(_6_choose_7, TypeParam(0));
 }
 
 TYPED_TEST_P(CoefficientTest, EighthRow)
 {
-    constexpr auto _7_choose_0 = TestFixture::TestType::get(7, 0);
-    constexpr auto _7_choose_1 = TestFixture::TestType::get(7, 1);
-    constexpr auto _7_choose_2 = TestFixture::TestType::get(7, 2);
-    constexpr auto _7_choose_3 = TestFixture::TestType::get(7, 3);
-    constexpr auto _7_choose_4 = TestFixture::TestType::get(7, 4);
-    constexpr auto _7_choose_5 = TestFixture::TestType::get(7, 5);
-    constexpr auto _7_choose_6 = TestFixture::TestType::get(7, 6);
-    constexpr auto _7_choose_7 = TestFixture::TestType::get(7, 7);
-    constexpr auto _7_choose_8 = TestFixture::TestType::get(7, 8);
+    constexpr auto _7_choose_0 = Coefficient::get(TypeParam(7), TypeParam(0));
+    constexpr auto _7_choose_1 = Coefficient::get(TypeParam(7), TypeParam(1));
+    constexpr auto _7_choose_2 = Coefficient::get(TypeParam(7), TypeParam(2));
+    constexpr auto _7_choose_3 = Coefficient::get(TypeParam(7), TypeParam(3));
+    constexpr auto _7_choose_4 = Coefficient::get(TypeParam(7), TypeParam(4));
+    constexpr auto _7_choose_5 = Coefficient::get(TypeParam(7), TypeParam(5));
+    constexpr auto _7_choose_6 = Coefficient::get(TypeParam(7), TypeParam(6));
+    constexpr auto _7_choose_7 = Coefficient::get(TypeParam(7), TypeParam(7));
+    constexpr auto _7_choose_8 = Coefficient::get(TypeParam(7), TypeParam(8));
 
-    EXPECT_EQ(_7_choose_0, TestFixture::Type(1));
-    EXPECT_EQ(_7_choose_1, TestFixture::Type(7));
-    EXPECT_EQ(_7_choose_2, TestFixture::Type(21));
-    EXPECT_EQ(_7_choose_3, TestFixture::Type(35));
-    EXPECT_EQ(_7_choose_4, TestFixture::Type(35));
-    EXPECT_EQ(_7_choose_5, TestFixture::Type(21));
-    EXPECT_EQ(_7_choose_6, TestFixture::Type(7));
-    EXPECT_EQ(_7_choose_7, TestFixture::Type(1));
-    EXPECT_EQ(_7_choose_8, TestFixture::Type(0));
+    EXPECT_EQ(_7_choose_0, TypeParam(1));
+    EXPECT_EQ(_7_choose_1, TypeParam(7));
+    EXPECT_EQ(_7_choose_2, TypeParam(21));
+    EXPECT_EQ(_7_choose_3, TypeParam(35));
+    EXPECT_EQ(_7_choose_4, TypeParam(35));
+    EXPECT_EQ(_7_choose_5, TypeParam(21));
+    EXPECT_EQ(_7_choose_6, TypeParam(7));
+    EXPECT_EQ(_7_choose_7, TypeParam(1));
+    EXPECT_EQ(_7_choose_8, TypeParam(0));
 }
 
 TYPED_TEST_P(CoefficientTest, NinethRow)
 {
-    constexpr auto _8_choose_0 = TestFixture::TestType::get(8, 0);
-    constexpr auto _8_choose_1 = TestFixture::TestType::get(8, 1);
-    constexpr auto _8_choose_2 = TestFixture::TestType::get(8, 2);
-    constexpr auto _8_choose_3 = TestFixture::TestType::get(8, 3);
-    constexpr auto _8_choose_4 = TestFixture::TestType::get(8, 4);
-    constexpr auto _8_choose_5 = TestFixture::TestType::get(8, 5);
-    constexpr auto _8_choose_6 = TestFixture::TestType::get(8, 6);
-    constexpr auto _8_choose_7 = TestFixture::TestType::get(8, 7);
-    constexpr auto _8_choose_8 = TestFixture::TestType::get(8, 8);
-    constexpr auto _8_choose_9 = TestFixture::TestType::get(8, 9);
+    constexpr auto _8_choose_0 = Coefficient::get(TypeParam(8), TypeParam(0));
+    constexpr auto _8_choose_1 = Coefficient::get(TypeParam(8), TypeParam(1));
+    constexpr auto _8_choose_2 = Coefficient::get(TypeParam(8), TypeParam(2));
+    constexpr auto _8_choose_3 = Coefficient::get(TypeParam(8), TypeParam(3));
+    constexpr auto _8_choose_4 = Coefficient::get(TypeParam(8), TypeParam(4));
+    constexpr auto _8_choose_5 = Coefficient::get(TypeParam(8), TypeParam(5));
+    constexpr auto _8_choose_6 = Coefficient::get(TypeParam(8), TypeParam(6));
+    constexpr auto _8_choose_7 = Coefficient::get(TypeParam(8), TypeParam(7));
+    constexpr auto _8_choose_8 = Coefficient::get(TypeParam(8), TypeParam(8));
+    constexpr auto _8_choose_9 = Coefficient::get(TypeParam(8), TypeParam(9));
 
-    EXPECT_EQ(_8_choose_0, TestFixture::Type(1));
-    EXPECT_EQ(_8_choose_1, TestFixture::Type(8));
-    EXPECT_EQ(_8_choose_2, TestFixture::Type(28));
-    EXPECT_EQ(_8_choose_3, TestFixture::Type(56));
-    EXPECT_EQ(_8_choose_4, TestFixture::Type(70));
-    EXPECT_EQ(_8_choose_5, TestFixture::Type(56));
-    EXPECT_EQ(_8_choose_6, TestFixture::Type(28));
-    EXPECT_EQ(_8_choose_7, TestFixture::Type(8));
-    EXPECT_EQ(_8_choose_8, TestFixture::Type(1));
-    EXPECT_EQ(_8_choose_9, TestFixture::Type(0));
+    EXPECT_EQ(_8_choose_0, TypeParam(1));
+    EXPECT_EQ(_8_choose_1, TypeParam(8));
+    EXPECT_EQ(_8_choose_2, TypeParam(28));
+    EXPECT_EQ(_8_choose_3, TypeParam(56));
+    EXPECT_EQ(_8_choose_4, TypeParam(70));
+    EXPECT_EQ(_8_choose_5, TypeParam(56));
+    EXPECT_EQ(_8_choose_6, TypeParam(28));
+    EXPECT_EQ(_8_choose_7, TypeParam(8));
+    EXPECT_EQ(_8_choose_8, TypeParam(1));
+    EXPECT_EQ(_8_choose_9, TypeParam(0));
 }
 
 TYPED_TEST_P(CoefficientTest, TenthRow)
 {
-    constexpr auto _9_choose_0 = TestFixture::TestType::get(9, 0);
-    constexpr auto _9_choose_1 = TestFixture::TestType::get(9, 1);
-    constexpr auto _9_choose_2 = TestFixture::TestType::get(9, 2);
-    constexpr auto _9_choose_3 = TestFixture::TestType::get(9, 3);
-    constexpr auto _9_choose_4 = TestFixture::TestType::get(9, 4);
-    constexpr auto _9_choose_5 = TestFixture::TestType::get(9, 5);
-    constexpr auto _9_choose_6 = TestFixture::TestType::get(9, 6);
-    constexpr auto _9_choose_7 = TestFixture::TestType::get(9, 7);
-    constexpr auto _9_choose_8 = TestFixture::TestType::get(9, 8);
-    constexpr auto _9_choose_9 = TestFixture::TestType::get(9, 9);
-    constexpr auto _9_choose_10 = TestFixture::TestType::get(9, 10);
+    constexpr auto _9_choose_0 = Coefficient::get(TypeParam(9), TypeParam(0));
+    constexpr auto _9_choose_1 = Coefficient::get(TypeParam(9), TypeParam(1));
+    constexpr auto _9_choose_2 = Coefficient::get(TypeParam(9), TypeParam(2));
+    constexpr auto _9_choose_3 = Coefficient::get(TypeParam(9), TypeParam(3));
+    constexpr auto _9_choose_4 = Coefficient::get(TypeParam(9), TypeParam(4));
+    constexpr auto _9_choose_5 = Coefficient::get(TypeParam(9), TypeParam(5));
+    constexpr auto _9_choose_6 = Coefficient::get(TypeParam(9), TypeParam(6));
+    constexpr auto _9_choose_7 = Coefficient::get(TypeParam(9), TypeParam(7));
+    constexpr auto _9_choose_8 = Coefficient::get(TypeParam(9), TypeParam(8));
+    constexpr auto _9_choose_9 = Coefficient::get(TypeParam(9), TypeParam(9));
+    constexpr auto _9_choose_10 = Coefficient::get(TypeParam(9), TypeParam(10));
 
-    EXPECT_EQ(_9_choose_0, TestFixture::Type(1));
-    EXPECT_EQ(_9_choose_1, TestFixture::Type(9));
-    EXPECT_EQ(_9_choose_2, TestFixture::Type(36));
-    EXPECT_EQ(_9_choose_3, TestFixture::Type(84));
-    EXPECT_EQ(_9_choose_4, TestFixture::Type(126));
-    EXPECT_EQ(_9_choose_5, TestFixture::Type(126));
-    EXPECT_EQ(_9_choose_6, TestFixture::Type(84));
-    EXPECT_EQ(_9_choose_7, TestFixture::Type(36));
-    EXPECT_EQ(_9_choose_8, TestFixture::Type(9));
-    EXPECT_EQ(_9_choose_9, TestFixture::Type(1));
-    EXPECT_EQ(_9_choose_10, TestFixture::Type(0));
+    EXPECT_EQ(_9_choose_0, TypeParam(1));
+    EXPECT_EQ(_9_choose_1, TypeParam(9));
+    EXPECT_EQ(_9_choose_2, TypeParam(36));
+    EXPECT_EQ(_9_choose_3, TypeParam(84));
+    EXPECT_EQ(_9_choose_4, TypeParam(126));
+    EXPECT_EQ(_9_choose_5, TypeParam(126));
+    EXPECT_EQ(_9_choose_6, TypeParam(84));
+    EXPECT_EQ(_9_choose_7, TypeParam(36));
+    EXPECT_EQ(_9_choose_8, TypeParam(9));
+    EXPECT_EQ(_9_choose_9, TypeParam(1));
+    EXPECT_EQ(_9_choose_10, TypeParam(0));
 }
 
 REGISTER_TYPED_TEST_SUITE_P(CoefficientTest,  //
