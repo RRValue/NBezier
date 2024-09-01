@@ -1,0 +1,111 @@
+\section{Proof general form of bezier curve}
+\label{sec:proofgeneralformofbeziercurve}
+
+\subsection{Definition}
+Let $P_{B_0,B_1,\ldots,B_n}$ denote a bezier curve by any selection of points $B_0,B_1,\ldots,B_n$.
+Then to start,
+
+$P_{B_0}(x)=B_0$, and
+
+$P(x)=P_{B_0,B_1,\ldots,B_n}(x)=(1-x)P_{B_0,B_1,\ldots,B_{n-1}}+xP_{B_1,B_1,\ldots,B_n}$
+
+\subsection{Proof}
+We proof the general form of a bezier curve by induction.
+\\
+We define, that $P_k$ is a bezier curve of degree $k$.
+\\
+\\
+\textbf{Initial case}
+\\
+\begin{equation*}
+    P_0(x)=B_0
+\end{equation*}
+\\
+\textbf{Hypothesis}
+\\
+\begin{equation*}
+    P_n(x)=\mathlarger{\sum}_{i = 0}^{n} {n \choose i}x^i (1-x)^{n-i} B_i
+\end{equation*}
+\\
+\textbf{Claim}
+\\
+\begin{equation*}
+    P_{n+1}(x)=\mathlarger{\sum}_{i = 0}^{n+1} {n+1 \choose i}x^i (1-x)^{n+1-i} B_i
+\end{equation*}
+\\
+\textbf{Induction step}
+\\
+From the defition we can write
+
+\begin{equation*}
+    P_{n+1}(x)=(1-x)\mathlarger{\sum}_{i = 0}^{n} {n \choose i}x^i (1-x)^{n-i}B_i + x\mathlarger{\sum}_{i = 0}^{n} {n \choose i}x^i (1-x)^{n-i}B_{i+1}
+\end{equation*}
+\\
+We expand this equation
+
+\begin{equation*}
+    \mathlarger{\sum}_{i = 0}^{n} {n \choose i}x^i (1-x)^{n-i}B_i -\mathlarger{\sum}_{i = 0}^{n} {n \choose i}x^{i+1} (1-x)^{n-i}B_i + \mathlarger{\sum}_{i = 0}^{n} {n \choose i}x^{i+1} (1-x)^{n-i} B_{i+1}
+\end{equation*}
+\\
+We expand further an get
+\begin{align*}
+    = & {n \choose 0}x^{0} (1-x)^{n}B_0 & + & {n \choose 1}x^1 (1-x)^{n-1}B_1 & + & \ldots & + & {n \choose n}  x^{n}   (1-x)^{0}B_n &   & \\
+    - & {n \choose 0}x^{1} (1-x)^{n}B_0 & - & {n \choose 1}x^2 (1-x)^{n-1}B_1 & - & \ldots & - & {n \choose n}  x^{n+1} (1-x)^{0}B_n &   & \\
+    + &                                 & + & {n \choose 0}x^1 (1-x)^{n}  B_1 & + & \ldots & + & {n \choose n-1}x^{n}   (1-x)^{1}B_n & + & {n \choose n}x^{n+1} (1-x)^{0} B_{n+1} \\
+\end{align*}
+\\
+Now we can readout the single $B_k$ terms and reformulate them.
+\\
+For the $B_0$'s we can write
+
+\begin{equation*}
+    {n \choose 0}x^0 (1-x)^n B_0 - {n \choose 0}x^1 (1-x)^n B_0
+\end{equation*}
+\begin{equation*}
+    =(1-x){n \choose 0}x^0 (1-x)^n B_0
+\end{equation*}
+\begin{equation*}
+    ={n \choose 0}x^0 (1-x)^{n+1}B_0 =\end{equation*}
+\begin{equation*}
+    ={n+1 \choose 0}x^0 (1-x)^{n+1}B_0
+\end{equation*}
+\\
+For the $B_k$'s where $k\in {1, \ldots, n}$ we can write.
+
+\begin{equation*}
+    {n \choose k}x^k (1-x)^{n-k} B_k - {n \choose k}x^{k+1} (1-x)^{n-k} B_k + {n \choose k - 1}x^k (1-x)^{n-k+1} B_k
+\end{equation*}
+\begin{equation*}
+    =({n \choose k}x^k (1-x)^{n-k} - {n \choose k}x^{k+1} (1-x)^{n-k} + {n \choose k - 1}x^k (1-x)^{n-k+1})B_k
+\end{equation*}
+\begin{equation*}
+    =((1-x){n \choose k}x^k (1-x)^{n-k} + {n \choose k - 1}x^k (1-x)^{n-k+1})B_k
+\end{equation*}
+\begin{equation*}
+    =({n \choose k}x^k (1-x)^{n-k+1} + {n \choose k - 1}x^k (1-x)^{n-k+1})B_k
+\end{equation*}
+\begin{equation*}
+    =({n \choose k} + {n \choose k - 1})x^k(1-x)^{n-k+1}B_k
+\end{equation*}
+\begin{equation*}
+    ={n+1 \choose k}x^k(1-x)^{n-k+1}B_k
+\end{equation*}
+\\
+For the $B_{n+1}$'s we can write.
+
+\begin{equation*}
+    {n \choose n}x^{n+1} (1-x)^0 B_{n+1}
+\end{equation*}
+\begin{equation*}
+    ={n+1 \choose n+1}x^{n+1} (1-x)^0 B_{n+1}
+\end{equation*}
+\\
+we can now sum up every $B_k$, wher $k \in {0, \ldots, n+1}$
+\begin{gather*}
+    {n+1 \choose 0}x^0 (1-x)^{n+1}B_0 + {n+1 \choose 1}x^1(1-x)^{n}B_1 + \ldots + {n+1 \choose n}x^n(1-x)^{1}B_n + {n+1 \choose n+1}x^{n+1} (1-x)^0 B_{n+1}
+\end{gather*}
+\begin{equation*}
+    = P_{n+1}(x)=\mathlarger{\sum}_{i = 0}^{n+1} {n+1 \choose i}x^i (1-x)^{n+1-i} B_i
+\end{equation*}
+\\
+which is equal to our claim. $ \blacksquare$
