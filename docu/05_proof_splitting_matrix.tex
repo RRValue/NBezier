@@ -1,2 +1,28 @@
 \section{Proof splitting matrix}
 \label{sec:proofsplittingmatrix}
+
+\begin{equation*}
+    \sum _{i=0}^{n-j} \binom{n-j}{i}x^{i+j}y^j(1-x)^{n-j-i}(1-y)^i 
+\end{equation*}
+\begin{equation*}
+    =(xy)^j\sum _{i=0}^{n-j} \binom{n-j}{i}x^i(1-x)^{n-j-i}(1-y)^i 
+\end{equation*}
+
+We use this identity to further expand
+\begin{equation*}
+    (1-x)^n =
+    \sum_{i = 0}^{n} {n \choose i} (-1)^{i}(x)^{i}
+\end{equation*}
+
+And get this
+\begin{equation*}
+    =(xy)^j\sum _{i=0}^{n-j} \binom{n-j}{i}x^i
+    (\sum_{k = 0}^{n-j-i} {n-j-i \choose k} (-1)^{k}(x)^{k})
+    (\sum_{k = 0}^{i} {i \choose k} (-1)^{k}(y)^{k})
+\end{equation*}
+
+\begin{equation*}
+    =(xy)^j\sum _{i=0}^{n-j}x^i
+    (\sum_{k = 0}^{n-j-i} \binom{n-j}{i}{n-j-i \choose k} (-1)^{k}(x)^{k})
+    (\sum_{k = 0}^{i} \binom{n-j}{i}{i \choose k} (-1)^{k}(y)^{k})
+\end{equation*}
