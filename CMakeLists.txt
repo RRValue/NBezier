@@ -17,7 +17,7 @@ enable_testing()
 
 # properties
 if(MSVC)
-    # update __cplusplus macro 
+    # update __cplusplus macro
     add_compile_options(/Zc:__cplusplus)
 
     # treat warnings as errors

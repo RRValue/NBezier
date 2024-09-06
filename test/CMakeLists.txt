@@ -9,8 +9,8 @@ file(GLOB_RECURSE Sources ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 add_executable(${ComponentName} "")
 
 target_sources(${ComponentName}
-  PRIVATE ${Header}
-  PRIVATE ${Sources})
+    PRIVATE ${Header}
+    PRIVATE ${Sources})
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX test FILES ${Header} ${Sources})
 
@@ -28,10 +28,10 @@ target_link_libraries(${ComponentName}
 # external libs (google test)
 target_link_libraries(${ComponentName}
     PRIVATE
-      debug ${GTEST_MAIN_LIBRARY_DEBUG}
-      debug ${GTEST_LIBRARY_DEBUG}
-      optimized ${GTEST_MAIN_LIBRARY}
-      optimized ${GTEST_LIBRARY})
+    debug ${GTEST_MAIN_LIBRARY_DEBUG}
+    debug ${GTEST_LIBRARY_DEBUG}
+    optimized ${GTEST_MAIN_LIBRARY}
+    optimized ${GTEST_LIBRARY})
 
 gtest_discover_tests(${ComponentName})
 

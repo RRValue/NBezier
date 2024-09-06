@@ -6,8 +6,8 @@ file(GLOB_RECURSE Sources ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 add_library(${ComponentName} STATIC)
 
 target_sources(${ComponentName}
-  PRIVATE ${Sources}
-  PUBLIC FILE_SET HEADERS BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/.. FILES ${Header})
+    PRIVATE ${Sources}
+    PUBLIC FILE_SET HEADERS BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/.. FILES ${Header})
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX src FILES ${Header} ${Sources})
 
