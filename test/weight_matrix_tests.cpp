@@ -9,6 +9,8 @@
 #include <concepts>
 #include <tuple>
 
+ClangDisableWarning(-Wmissing - braces);
+
 UseNameSpace(NBezier);
 
 template<typename T>
@@ -72,3 +74,5 @@ TYPED_TEST_P(WeightMatrixGenerationTest, Generation)
 REGISTER_TYPED_TEST_SUITE_P(WeightMatrixGenerationTest, Generation);
 
 INSTANTIATE_TYPED_TEST_SUITE_P(WeightMatrixGeneration, WeightMatrixGenerationTest, BezierScalars);
+
+ClangEnableWarning();

@@ -13,7 +13,7 @@ static void BM_BezierPositionCompileTime(benchmark::State& state)
 
     for(auto _ : state)
     {
-        constexpr auto result = Bezier::point(b, 0.5f);
+        [[maybe_unused]] constexpr auto result = Bezier::point(b, 0.5f);
     }
 }
 

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "NBezier/defines.h"
 #include "NBezier/binomial/type.h"
+#include "NBezier/defines.h"
 
 #include <boost/qvm/vec.hpp>
 #include <boost/qvm/vec_access.hpp>
@@ -25,10 +25,10 @@ struct CoefficientVector
     StaticClass(CoefficientVector);
 
 private:
-    template<size_t Index>
+    template<size_t _Index>
     NBInline static constexpr void initCoefficients(auto& c)
     {
-        A<Index>(c) = Scalar(1);
+        A<_Index>(c) = Scalar(1);
     }
 
     template<size_t... Indices>
@@ -41,22 +41,22 @@ private:
         return c;
     }
 
-    template<size_t Derivative, size_t Index>
+    template<size_t _Derivative, size_t _Index>
     NBInline static constexpr void multCoefficient(auto& c)
     {
-        A<Index>(c) *= (Degree - Index - Derivative);
+        A<_Index>(c) *= Scalar(Degree - _Index - _Derivative);
     }
 
-    template<size_t Derivative, size_t... Indices>
+    template<size_t _Derivative, size_t... Indices>
     NBInline static constexpr void derive(auto& c, std::index_sequence<Indices...>)
     {
-        (multCoefficient<Derivative, Indices>(c), ...);
+        (multCoefficient<_Derivative, Indices>(c), ...);
     }
 
-    template<size_t Derivative>
+    template<size_t _Derivative>
     NBInline static constexpr void deriveCoefficients(auto& c)
     {
-        derive<Derivative>(c, std::make_index_sequence<Degree + 1>{});
+        derive<_Derivative>(c, std::make_index_sequence<Degree + 1>{});
     }
 
     template<size_t... Derivatives>

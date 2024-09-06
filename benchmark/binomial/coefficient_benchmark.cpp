@@ -8,10 +8,10 @@ static void BM_CoefficientGetCompileTime(benchmark::State& state)
 {
     for(auto _ : state)
     {
-        constexpr auto _2_choose_0 = Coefficient::get(2, 0);
-        constexpr auto _2_choose_1 = Coefficient::get(2, 1);
-        constexpr auto _2_choose_2 = Coefficient::get(2, 2);
-        constexpr auto _2_choose_3 = Coefficient::get(2, 3);
+        [[maybe_unused]] constexpr auto _2_choose_0 = Coefficient::get(2, 0);
+        [[maybe_unused]] constexpr auto _2_choose_1 = Coefficient::get(2, 1);
+        [[maybe_unused]] constexpr auto _2_choose_2 = Coefficient::get(2, 2);
+        [[maybe_unused]] constexpr auto _2_choose_3 = Coefficient::get(2, 3);
     }
 }
 

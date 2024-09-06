@@ -14,9 +14,9 @@ TEST(So, what2)
     constexpr auto p3 = Point<float, 3>{2, 2, 1};
     constexpr BezierPoints<float, 3, 3> b{p0, p1, p2, p3};
 
-    constexpr auto position = Bezier::point(b, 0.5f);
-    constexpr auto tangent = Bezier::tangent(b, 0.5f);
-    constexpr auto normal = Bezier::normal(b, 0.5f);
-    constexpr auto curvature = Bezier::curvature(b, 0.5f);
-    constexpr auto torsion = Bezier::torsion(b, 0.5f);
+    [[maybe_unused]] constexpr auto position = Bezier::point(b, 0.5f);
+    [[maybe_unused]] constexpr auto tangent = Bezier::tangent(b, 0.5f);
+    [[maybe_unused]] constexpr auto normal = Bezier::normal(b, 0.5f);
+    [[maybe_unused]] constexpr auto curvature = Bezier::curvature(b, 0.5f);
+    [[maybe_unused]] constexpr auto torsion = Bezier::torsion(b, 0.5f);
 }

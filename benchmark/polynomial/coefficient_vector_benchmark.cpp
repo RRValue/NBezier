@@ -5,18 +5,18 @@
 UseNameSpace(NBezier::Polynomial);
 
 template<size_t Derivative>
-    using CoefficientVector5 = CoefficientVector<float, 5, Derivative>;
+using CoefficientVector5 = CoefficientVector<float, 5, Derivative>;
 
 static void BM_CoefficientVectorGetCompileTime(benchmark::State& state)
 {
     for(auto _ : state)
     {
-        constexpr auto c0 = CoefficientVector5<0>::get();
-        constexpr auto c1 = CoefficientVector5<1>::get();
-        constexpr auto c2 = CoefficientVector5<2>::get();
-        constexpr auto c3 = CoefficientVector5<3>::get();
-        constexpr auto c4 = CoefficientVector5<4>::get();
-        constexpr auto c5 = CoefficientVector5<5>::get();
+        [[maybe_unused]] constexpr auto c0 = CoefficientVector5<0>::get();
+        [[maybe_unused]] constexpr auto c1 = CoefficientVector5<1>::get();
+        [[maybe_unused]] constexpr auto c2 = CoefficientVector5<2>::get();
+        [[maybe_unused]] constexpr auto c3 = CoefficientVector5<3>::get();
+        [[maybe_unused]] constexpr auto c4 = CoefficientVector5<4>::get();
+        [[maybe_unused]] constexpr auto c5 = CoefficientVector5<5>::get();
     }
 }
 
@@ -36,7 +36,7 @@ static void BM_CoefficientVectorGetRunTime(benchmark::State& state)
         benchmark::DoNotOptimize(c2 = CoefficientVector5<2>::get());
         benchmark::DoNotOptimize(c3 = CoefficientVector5<3>::get());
         benchmark::DoNotOptimize(c4 = CoefficientVector5<4>::get());
-        benchmark::DoNotOptimize(c4 = CoefficientVector5<5>::get());
+        benchmark::DoNotOptimize(c5 = CoefficientVector5<5>::get());
     }
 }
 

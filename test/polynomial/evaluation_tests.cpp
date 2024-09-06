@@ -1,6 +1,6 @@
-#include "NBezier/polynomial/evaluation.h"
-
 #include "../bezier_test_types.h"
+#include "NBezier/defines.h"
+#include "NBezier/polynomial/evaluation.h"
 
 #include <gtest/gtest.h>
 
@@ -8,6 +8,8 @@
 
 UseNameSpace(NBezier);
 UseNameSpace(NBezier::Polynomial);
+
+ClangDisableWarning(-Wmissing - braces);
 
 template<typename T>
 class EvaluationTest : public testing::Test
@@ -20,7 +22,7 @@ TYPED_TEST_SUITE_P(EvaluationTest);
 
 TYPED_TEST_P(EvaluationTest, Eval)
 {
-    typedef TestFixture::Scalar Scalar;
+    typedef typename TestFixture::Scalar Scalar;
 
     {
         constexpr auto p0 = boost::qvm::vec<Scalar, 1>{2};
@@ -104,3 +106,5 @@ TYPED_TEST_P(EvaluationTest, Eval)
 REGISTER_TYPED_TEST_SUITE_P(EvaluationTest, Eval);
 
 INSTANTIATE_TYPED_TEST_SUITE_P(EvaluationTestEval, EvaluationTest, BezierScalars);
+
+ClangEnableWarning();

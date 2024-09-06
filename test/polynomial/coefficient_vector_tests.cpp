@@ -18,34 +18,16 @@ class CoefficientVectorGetTest : public testing::Test
 {
 public:
     typedef T Scalar;
-
-    template<size_t Derivative>
-    using CoefficientVector0 = CoefficientVector<Scalar, 0, Derivative>;
-
-    template<size_t Derivative>
-    using CoefficientVector1 = CoefficientVector<Scalar, 1, Derivative>;
-
-    template<size_t Derivative>
-    using CoefficientVector2 = CoefficientVector<Scalar, 2, Derivative>;
-
-    template<size_t Derivative>
-    using CoefficientVector3 = CoefficientVector<Scalar, 3, Derivative>;
-
-    template<size_t Derivative>
-    using CoefficientVector4 = CoefficientVector<Scalar, 4, Derivative>;
-
-    template<size_t Derivative>
-    using CoefficientVector5 = CoefficientVector<Scalar, 5, Derivative>;
 };
 
 TYPED_TEST_SUITE_P(CoefficientVectorGetTest);
 
 TYPED_TEST_P(CoefficientVectorGetTest, GetVector)
 {
-    typedef TestFixture::Scalar Scalar;
+    typedef typename TestFixture::Scalar Scalar;
 
     {
-        constexpr auto c0 = TestFixture::CoefficientVector0<0>::get();
+        constexpr auto c0 = CoefficientVector<Scalar, 0, 0>::get();
 
         constexpr auto ex_c0 = boost::qvm::vec<Scalar, 1>{1};
 
@@ -53,8 +35,8 @@ TYPED_TEST_P(CoefficientVectorGetTest, GetVector)
     }
 
     {
-        constexpr auto c0 = TestFixture::CoefficientVector1<0>::get();
-        constexpr auto c1 = TestFixture::CoefficientVector1<1>::get();
+        constexpr auto c0 = CoefficientVector<Scalar, 1, 0>::get();
+        constexpr auto c1 = CoefficientVector<Scalar, 1, 1>::get();
 
         constexpr auto ex_c0 = boost::qvm::vec<Scalar, 2>{1, 1};
         constexpr auto ex_c1 = boost::qvm::vec<Scalar, 2>{1, 0};
@@ -64,9 +46,9 @@ TYPED_TEST_P(CoefficientVectorGetTest, GetVector)
     }
 
     {
-        constexpr auto c0 = TestFixture::CoefficientVector2<0>::get();
-        constexpr auto c1 = TestFixture::CoefficientVector2<1>::get();
-        constexpr auto c2 = TestFixture::CoefficientVector2<2>::get();
+        constexpr auto c0 = CoefficientVector<Scalar, 2, 0>::get();
+        constexpr auto c1 = CoefficientVector<Scalar, 2, 1>::get();
+        constexpr auto c2 = CoefficientVector<Scalar, 2, 2>::get();
 
         constexpr auto ex_c0 = boost::qvm::vec<Scalar, 3>{1, 1, 1};
         constexpr auto ex_c1 = boost::qvm::vec<Scalar, 3>{2, 1, 0};
@@ -78,10 +60,10 @@ TYPED_TEST_P(CoefficientVectorGetTest, GetVector)
     }
 
     {
-        constexpr auto c0 = TestFixture::CoefficientVector3<0>::get();
-        constexpr auto c1 = TestFixture::CoefficientVector3<1>::get();
-        constexpr auto c2 = TestFixture::CoefficientVector3<2>::get();
-        constexpr auto c3 = TestFixture::CoefficientVector3<3>::get();
+        constexpr auto c0 = CoefficientVector<Scalar, 3, 0>::get();
+        constexpr auto c1 = CoefficientVector<Scalar, 3, 1>::get();
+        constexpr auto c2 = CoefficientVector<Scalar, 3, 2>::get();
+        constexpr auto c3 = CoefficientVector<Scalar, 3, 3>::get();
 
         constexpr auto ex_c0 = boost::qvm::vec<Scalar, 4>{1, 1, 1, 1};
         constexpr auto ex_c1 = boost::qvm::vec<Scalar, 4>{3, 2, 1, 0};
@@ -95,11 +77,11 @@ TYPED_TEST_P(CoefficientVectorGetTest, GetVector)
     }
 
     {
-        constexpr auto c0 = TestFixture::CoefficientVector4<0>::get();
-        constexpr auto c1 = TestFixture::CoefficientVector4<1>::get();
-        constexpr auto c2 = TestFixture::CoefficientVector4<2>::get();
-        constexpr auto c3 = TestFixture::CoefficientVector4<3>::get();
-        constexpr auto c4 = TestFixture::CoefficientVector4<4>::get();
+        constexpr auto c0 = CoefficientVector<Scalar, 4, 0>::get();
+        constexpr auto c1 = CoefficientVector<Scalar, 4, 1>::get();
+        constexpr auto c2 = CoefficientVector<Scalar, 4, 2>::get();
+        constexpr auto c3 = CoefficientVector<Scalar, 4, 3>::get();
+        constexpr auto c4 = CoefficientVector<Scalar, 4, 4>::get();
 
         constexpr auto ex_c0 = boost::qvm::vec<Scalar, 5>{1, 1, 1, 1, 1};
         constexpr auto ex_c1 = boost::qvm::vec<Scalar, 5>{4, 3, 2, 1, 0};
@@ -115,12 +97,12 @@ TYPED_TEST_P(CoefficientVectorGetTest, GetVector)
     }
 
     {
-        constexpr auto c0 = TestFixture::CoefficientVector5<0>::get();
-        constexpr auto c1 = TestFixture::CoefficientVector5<1>::get();
-        constexpr auto c2 = TestFixture::CoefficientVector5<2>::get();
-        constexpr auto c3 = TestFixture::CoefficientVector5<3>::get();
-        constexpr auto c4 = TestFixture::CoefficientVector5<4>::get();
-        constexpr auto c5 = TestFixture::CoefficientVector5<5>::get();
+        constexpr auto c0 = CoefficientVector<Scalar, 5, 0>::get();
+        constexpr auto c1 = CoefficientVector<Scalar, 5, 1>::get();
+        constexpr auto c2 = CoefficientVector<Scalar, 5, 2>::get();
+        constexpr auto c3 = CoefficientVector<Scalar, 5, 3>::get();
+        constexpr auto c4 = CoefficientVector<Scalar, 5, 4>::get();
+        constexpr auto c5 = CoefficientVector<Scalar, 5, 5>::get();
 
         constexpr auto ex_c0 = boost::qvm::vec<Scalar, 6>{1, 1, 1, 1, 1, 1};
         constexpr auto ex_c1 = boost::qvm::vec<Scalar, 6>{5, 4, 3, 2, 1, 0};

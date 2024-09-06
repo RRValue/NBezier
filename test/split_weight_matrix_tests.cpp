@@ -9,6 +9,8 @@
 #include <concepts>
 #include <tuple>
 
+ClangDisableWarning(-Wmissing - braces);
+
 UseNameSpace(NBezier);
 
 template<typename T>
@@ -115,9 +117,13 @@ TYPED_TEST_P(SplitWeightMatrixGenerationTest, GetRight)
                                                     S(6), S(3), S(1), S(0), S(0),  //
                                                     S(4), S(3), S(2), S(1), S(0),  //
                                                     S(1), S(1), S(1), S(1), S(1)};
+
+        EXPECT_EQ(m, e);
     }
 }
 
 REGISTER_TYPED_TEST_SUITE_P(SplitWeightMatrixGenerationTest, GetLeft, GetRight);
 
 INSTANTIATE_TYPED_TEST_SUITE_P(SplitWeightMatrixGeneration, SplitWeightMatrixGenerationTest, BezierScalars);
+
+ClangEnableWarning();

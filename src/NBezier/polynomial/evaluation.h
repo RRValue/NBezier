@@ -53,15 +53,20 @@ private:
 public:
     StaticClass(Evaluation);
 
-    template<size_t Derivative, typename Scalar, size_t Dimension, size_t NParameter>
-        requires EvaluationType<Scalar> &&  //
-                 EvaluationRequirement<Dimension, NParameter>
-    static constexpr auto eval(const Points<Scalar, Dimension, NParameter>& p, const Scalar& a)
+    template<size_t Derivative, typename PointsType, typename Scalar>
+        requires EvaluationType<Scalar>
+    static constexpr auto eval(const PointsType& p, const Scalar& a)
     {
-        constexpr auto c = CoefficientVector<Scalar, NParameter - 1, Derivative>::get();
-        const auto v = VariableVector<Scalar, NParameter - 1>::get<Derivative>(a);
+        typedef typename boost::qvm::mat_traits<PointsType>::scalar_type PointScalar;
+        constexpr auto Dim = boost::qvm::mat_traits<PointsType>::rows;
+        constexpr auto NumPoints = boost::qvm::mat_traits<PointsType>::cols;
 
-        return p * cwiseProduct<Scalar, NParameter>(c, v);
+        static_assert(EvaluationRequirement<Dim, NumPoints>);
+
+        constexpr auto c = CoefficientVector<PointScalar, NumPoints - 1, Derivative>::get();
+        const auto v = VariableVector<PointScalar, NumPoints - 1, Derivative>::get(a);
+
+        return p * cwiseProduct<PointScalar, NumPoints>(c, v);
     }
 };
 

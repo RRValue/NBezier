@@ -19,8 +19,8 @@ concept VariableVectorType = (std::integral<T> || std::floating_point<T>) &&  //
 template<size_t Degree, size_t Derivative>
 concept GetRequirement = Derivative <= Degree;
 
-template<typename Scalar, size_t Degree>
-    requires VariableVectorType<Scalar>
+template<typename Scalar, size_t Degree, size_t Derivative>
+    requires VariableVectorType<Scalar> && GetRequirement<Degree, Derivative>
 struct VariableVector
 {
     StaticClass(VariableVector);
@@ -42,21 +42,19 @@ private:
         return value;
     }
 
-    template<size_t Derivative, size_t Index>
+    template<size_t _Derivative, size_t Index>
     NBInline static constexpr void generateNthVariable(auto& vec, const Scalar& variable)
     {
-        A<Index>(vec) = potentiate(variable, std::make_index_sequence<Degree - Index - Derivative>{});
+        A<Index>(vec) = potentiate(variable, std::make_index_sequence<Degree - Index - _Derivative>{});
     }
 
-    template<size_t Derivative, size_t... Indices>
+    template<size_t _Derivative, size_t... Indices>
     NBInline static constexpr void generateVariables(auto& vec, const Scalar& variable, std::index_sequence<Indices...>)
     {
-        (generateNthVariable<Derivative, Indices>(vec, variable), ...);
+        (generateNthVariable<_Derivative, Indices>(vec, variable), ...);
     }
 
 public:
-    template<size_t Derivative>
-        requires GetRequirement<Degree, Derivative>
     static constexpr auto get(const Scalar& variable)
     {
         auto vec = boost::qvm::vec<Scalar, Degree + 1>{};

@@ -34,17 +34,17 @@ struct BezierPoints
     typedef boost::qvm::vec<Scalar, Dimension> Point;
 
 private:
-    template<size_t Index, typename PointArg>
+    template<size_t _Index, typename PointArg>
     constexpr void construct(PointArg point)
     {
-        setPoint<Index>(point, std::make_index_sequence<Dimension>{});
+        setPoint<_Index>(point, std::make_index_sequence<Dimension>{});
     }
 
-    template<size_t Index, typename PointArg, typename... PointsArgs>
+    template<size_t _Index, typename PointArg, typename... PointsArgs>
     constexpr void construct(PointArg point, PointsArgs... args)
     {
-        setPoint<Index>(point, std::make_index_sequence<Dimension>{});
-        construct<Index + 1>(args...);
+        setPoint<_Index>(point, std::make_index_sequence<Dimension>{});
+        construct<_Index + 1>(args...);
     }
 
 public:
@@ -162,32 +162,32 @@ private:
         A<D, DstIndex>(dst) = A<D, SrcIndex>(src);
     }
 
-    template<size_t Index, size_t Dimension>
+    template<size_t _Index, size_t _Dimension>
     NBInline constexpr void getPoint(auto& p) const
     {
-        A<Dimension>(p) = A<Dimension, Index>(m_points);
+        A<_Dimension>(p) = A<_Dimension, _Index>(m_points);
     }
 
-    template<size_t Index, size_t... Dimensions>
+    template<size_t _Index, size_t... Dimensions>
     NBInline constexpr auto getPoint(std::index_sequence<Dimensions...>) const
     {
         Point p = {};
 
-        (getPoint<Index, Dimensions>(p), ...);
+        (getPoint<_Index, Dimensions>(p), ...);
 
         return p;
     }
 
-    template<size_t Index, size_t... Dimensions>
-    NBInline constexpr void setPoint(const auto& p, std::index_sequence<Dimensions...>)
+    template<size_t _Index, size_t... _Dimensions>
+    NBInline constexpr void setPoint(const auto& p, std::index_sequence<_Dimensions...>)
     {
-        (setPoint<Index, Dimensions>(p), ...);
+        (setPoint<_Index, _Dimensions>(p), ...);
     }
 
-    template<size_t Index, size_t Dimension>
+    template<size_t _Index, size_t _Dimension>
     NBInline constexpr void setPoint(const auto& p)
     {
-        A<Dimension, Index>(m_points) = A<Dimension>(p);
+        A<_Dimension, _Index>(m_points) = A<_Dimension>(p);
     }
 
     NBInline constexpr void updateDerivedPoints()

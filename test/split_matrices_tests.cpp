@@ -9,6 +9,8 @@
 #include <concepts>
 #include <tuple>
 
+ClangDisableWarning(-Wmissing - braces);
+
 UseNameSpace(NBezier);
 
 template<typename T>
@@ -103,3 +105,5 @@ TYPED_TEST_P(SplitMatricesGenerationTest, Get)
 REGISTER_TYPED_TEST_SUITE_P(SplitMatricesGenerationTest, Get);
 
 INSTANTIATE_TYPED_TEST_SUITE_P(SplitMatricesGeneration, SplitMatricesGenerationTest, BezierScalars);
+
+ClangEnableWarning();

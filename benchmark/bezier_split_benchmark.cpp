@@ -21,7 +21,7 @@ static void BM_BezierSplitCompileTime(benchmark::State& state)
 
     for(auto _ : state)
     {
-        constexpr auto split = BezierSplit::at(bezier, 0.5f);
+        [[maybe_unused]] constexpr auto split = BezierSplit::at(bezier, 0.5f);
     }
 }
 

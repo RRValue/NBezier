@@ -15,10 +15,10 @@ TEST(BezierPoints, test)
     BezierPoints<float, 2, 1> b{};
     b.setPoint<0>(p0);
     b.setPoint<1>(p1);
-    auto b_0 = b.getPoint<0>();
+    [[maybe_unused]] auto b_0 = b.getPoint<0>();
 
     constexpr BezierPoints<float, 2, 1> constexpr_b{p0, p1};
-    constexpr auto pout = constexpr_b.getPoint<0>();
+    [[maybe_unused]] constexpr auto pout = constexpr_b.getPoint<0>();
 }
 
 TEST(BezierPoints, reduceLeftAndRight)
