@@ -9,7 +9,9 @@
 UseNameSpace(NBezier);
 UseNameSpace(NBezier::Polynomial);
 
-ClangDisableWarning(-Wmissing - braces);
+// clang-format off
+ClangDisableWarning(-Wmissing-braces);
+// clang-format on
 
 template<typename T>
 class EvaluationTest : public testing::Test

@@ -9,7 +9,9 @@
 #include <concepts>
 #include <tuple>
 
-ClangDisableWarning(-Wmissing - braces);
+// clang-format off
+ClangDisableWarning(-Wmissing-braces);
+// clang-format on
 
 UseNameSpace(NBezier);
 
