@@ -27,6 +27,8 @@ concept EvaluationRequirement = NParameter > 0 && Dimension > 0;
 
 struct Evaluation
 {
+    StaticClass(Evaluation);
+
 private:
     template<size_t Index>
     NBInline static constexpr void cwiseProduct(auto& lhs, const auto& rhs)
@@ -51,8 +53,6 @@ private:
     }
 
 public:
-    StaticClass(Evaluation);
-
     template<size_t Derivative, typename PointsType, typename Scalar>
         requires EvaluationType<Scalar>
     static constexpr auto eval(const PointsType& p, const Scalar& a)
