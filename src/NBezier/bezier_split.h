@@ -29,6 +29,22 @@ struct BezierSplit
 {
     StaticClass(BezierSplit);
 
+    template<typename PointsType, typename Scalar>
+    static constexpr auto at(const PointsType& points, const Scalar& at)
+    {
+        typedef typename boost::qvm::mat_traits<PointsType>::scalar_type PointScalar;
+        constexpr auto Dimension = boost::qvm::mat_traits<PointsType>::rows;
+        constexpr auto Degree= boost::qvm::mat_traits<PointsType>::cols - 1;
+
+        static_assert(BezierSplitRequirement<Scalar, Dimension, Degree>);
+        static_assert(std::is_same_v<Scalar, PointScalar>);
+
+        const auto matrices = SplitMatrices::get<Scalar, Degree + 1>(at);
+        
+        return BezierSplitResult<Scalar, Dimension, Degree>{points * matrices.m_left,  //
+                                                            points * matrices.m_right};
+    }
+
     template<typename Scalar, size_t Dimension, size_t Degree>
         requires BezierSplitRequirement<Scalar, Dimension, Degree>
     static constexpr auto at(const BezierPoints<Scalar, Dimension, Degree>& p, const Scalar& at)
