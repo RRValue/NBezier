@@ -30,6 +30,9 @@ template<typename Scalar, size_t Dimension, size_t Degree>
              BezierDimensionRequirement<Dimension>
 struct BezierPoints
 {
+    typedef Scalar PointsScalar;
+    static constexpr auto PointsDegree = Degree;
+    static constexpr auto PointsDimension = Dimension;
     typedef boost::qvm::mat<Scalar, Dimension, Degree + 1> Points;
     typedef boost::qvm::vec<Scalar, Dimension> Point;
 

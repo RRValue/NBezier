@@ -22,6 +22,12 @@ if(MSVC)
 
     # treat warnings as errors
     add_compile_options(/WX)
+
+    if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+        add_compile_options(/clang:-fconstexpr-depth=2147483647)
+        add_compile_options(/clang:-fconstexpr-backtrace-limit=2147483647)
+        add_compile_options(/clang:-fconstexpr-steps=2147483647)
+    endif()
 endif(MSVC)
 
 add_subdirectory(src/NBezier)
