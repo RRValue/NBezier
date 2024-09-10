@@ -15,7 +15,7 @@ target_sources(${ComponentName}
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX test FILES ${Header} ${Sources})
 
 # include google test
-target_include_directories(${ComponentName} PRIVATE ${GTEST_INCLUDE_DIR})
+target_include_directories(${ComponentName} PRIVATE ${GTest_DIR}/../../../include)
 
 # internal lib NBezier
 target_link_libraries(${ComponentName}
@@ -28,10 +28,10 @@ target_link_libraries(${ComponentName}
 # external libs (google test)
 target_link_libraries(${ComponentName}
     PRIVATE
-    debug ${GTEST_MAIN_LIBRARY_DEBUG}
-    debug ${GTEST_LIBRARY_DEBUG}
-    optimized ${GTEST_MAIN_LIBRARY}
-    optimized ${GTEST_LIBRARY})
+    debug ${GTest_DIR}/../../gtest_main_d.lib
+    debug ${GTest_DIR}/../../gtest_d.lib}
+    optimized ${GTest_DIR}/../../gtest_main.lib}
+    optimized ${GTest_DIR}/../../gtest.lib)
 
 gtest_discover_tests(${ComponentName})
 
