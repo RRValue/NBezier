@@ -29,8 +29,8 @@ target_link_libraries(${ComponentName}
 target_link_libraries(${ComponentName}
     PRIVATE
     debug ${GTest_DIR}/../../gtest_main_d.lib
-    debug ${GTest_DIR}/../../gtest_d.lib}
-    optimized ${GTest_DIR}/../../gtest_main.lib}
+    debug ${GTest_DIR}/../../gtest_d.lib
+    optimized ${GTest_DIR}/../../gtest_main.lib
     optimized ${GTest_DIR}/../../gtest.lib)
 
 gtest_discover_tests(${ComponentName})
