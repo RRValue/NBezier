@@ -8,7 +8,7 @@
 UseNameSpace(NBezier);
 
 #if !defined(MSVC)
-TEST(Bezier, Length)
+TEST(Bezier, LengthConstexpr)
 {
     constexpr auto p0 = Point<float, 2>{-1, 1};
     constexpr auto p1 = Point<float, 2>{0, -1};
@@ -24,3 +24,16 @@ TEST(Bezier, Length)
     EXPECT_TRUE(std::abs(exp_length - length_run_time) < float(1e-05));
 }
 #endif  //! defined(MSVC)
+
+TEST(Bezier, LengthRunTime)
+{
+    constexpr auto p0 = Point<float, 2>{-1, 1};
+    constexpr auto p1 = Point<float, 2>{0, -1};
+    constexpr auto p2 = Point<float, 2>{1, 1};
+
+    constexpr auto bezier = BezierPoints<float, 2, 2>{p0, p1, p2};
+    constexpr auto exp_length = float(2.957885715);
+    const auto length_run_time = BezierLength::get(bezier);
+
+    EXPECT_TRUE(std::abs(exp_length - length_run_time) < float(1e-05));
+}
