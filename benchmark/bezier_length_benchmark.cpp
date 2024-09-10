@@ -5,6 +5,7 @@
 
 UseNameSpace(NBezier);
 
+#if !defined(MSVC)
 static void BM_BezierLengthCompileTime(benchmark::State& state)
 {
     constexpr auto p0 = Point<float, 2>{-1, 1};
@@ -19,6 +20,9 @@ static void BM_BezierLengthCompileTime(benchmark::State& state)
     }
 }
 
+BENCHMARK(BM_BezierLengthCompileTime);
+#endif  // !defined(MSVC)
+
 static void BM_BezierLengthRunTime(benchmark::State& state)
 {
     constexpr auto p0 = Point<float, 2>{-1, 1};
@@ -32,6 +36,4 @@ static void BM_BezierLengthRunTime(benchmark::State& state)
         benchmark::DoNotOptimize(BezierLength::get(bezier));
     }
 }
-
-BENCHMARK(BM_BezierLengthCompileTime);
 BENCHMARK(BM_BezierLengthRunTime);
