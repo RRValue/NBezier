@@ -105,10 +105,10 @@ We apply $\binom{n}{a}\binom{a}{b} = \binom{n}{b}\binom{n-b}{a-b}$ on the sum ab
 \begin{gather*}
     \begin{align*}
         P_L = & B_0(\binom{n}{0}\binom{n}{0}\alpha^{0}\beta^{0}(1-\alpha)^{0}(1-\beta)^{n} & + & \binom{n}{0}\binom{n}{1}\alpha^{0}\beta^{1}(1-\alpha)^{1}(1-\beta)^{n-1}   & + \hdots + & \binom{n}{0}\binom{n}{n-1}\alpha^{0}\beta^{n-1}(1-\alpha)^{n-1}(1-\beta)^{1} & + & \binom{n}{0}\binom{n}{n}\alpha^{0}\beta^{n}(1-\alpha)^{n}(1-\beta)^{0})       \\
-        +     & B_1(                                                                       &   & \binom{n}{1}\binom{n-1}{0}\alpha^{1}\beta^{1}(1-\alpha)^{0}(1-\beta)^{n-1} & + \hdots + & \binom{n}{1}\binom{n-1}{n-2}\alpha^{1}\beta^{n-1}(1-\alpha)^{n}(1-\beta)^{1}   & + & \binom{n}{1}\binom{n-1}{n-1}\alpha^{1}\beta^{n}(1-\alpha)^{n-1}(1-\beta)^{0}) \\
-        +     & \hdots                                                                     &   &                                                                            &            &                                                                                                                                                                    \\
-        +     & B_{n-1}(                                                                   &   &                                                                            &            & \binom{n}{n-1}\binom{1}{0}\alpha^{n-1}\beta^{n-1}(1-\alpha)^{0}(1-\beta)^{1}   & + & \binom{n}{n-1}\binom{1}{1}\alpha^{n-1}\beta^{n}(1-\alpha)^{1}(1-\beta)^{0})   \\
-        +     & B_n(                                                                       &   &                                                                            &            &                                                                                &   & \binom{n}{n}\binom{0}{0}\alpha^{n}\beta^{n}(1-\alpha)^{0}(1-\beta)^{0})
+        +     & B_1(                                                                       &   & \binom{n}{1}\binom{n-1}{0}\alpha^{1}\beta^{1}(1-\alpha)^{0}(1-\beta)^{n-1} & + \hdots + & \binom{n}{1}\binom{n-1}{n-2}\alpha^{1}\beta^{n-1}(1-\alpha)^{n}(1-\beta)^{1} & + & \binom{n}{1}\binom{n-1}{n-1}\alpha^{1}\beta^{n}(1-\alpha)^{n-1}(1-\beta)^{0}) \\
+        +     & \hdots                                                                     &   &                                                                            &            &                                                                                                                                                                  \\
+        +     & B_{n-1}(                                                                   &   &                                                                            &            & \binom{n}{n-1}\binom{1}{0}\alpha^{n-1}\beta^{n-1}(1-\alpha)^{0}(1-\beta)^{1} & + & \binom{n}{n-1}\binom{1}{1}\alpha^{n-1}\beta^{n}(1-\alpha)^{1}(1-\beta)^{0})   \\
+        +     & B_n(                                                                       &   &                                                                            &            &                                                                              &   & \binom{n}{n}\binom{0}{0}\alpha^{n}\beta^{n}(1-\alpha)^{0}(1-\beta)^{0})
     \end{align*}
 \end{gather*}
 \\
@@ -117,10 +117,10 @@ We factor out the first binomial coeffciant of each row  and get:
 \begin{gather*}
     \begin{align*}
         P_L = & B_0\binom{n}{0}       & ( & \binom{n}{0}\alpha^{0}\beta^{0}(1-\alpha)^{0}(1-\beta)^{n} & + & \binom{n}{1}\alpha^{0}\beta^{1}(1-\alpha)^{1}(1-\beta)^{n-1}   & + \hdots + & \binom{n}{n-1}\alpha^{0}\beta^{n-1}(1-\alpha)^{n-1}(1-\beta)^{1} & + & \binom{n}{n}\alpha^{0}\beta^{n}(1-\alpha)^{n}(1-\beta)^{0})       \\
-        +     & B_1\binom{n}{1}       & ( &                                                            &   & \binom{n-1}{0}\alpha^{1}\beta^{1}(1-\alpha)^{0}(1-\beta)^{n-1} & + \hdots + & \binom{n-1}{n-2}\alpha^{1}\beta^{n-1}(1-\alpha)^{n}(1-\beta)^{1}   & + & \binom{n-1}{n-1}\alpha^{1}\beta^{n}(1-\alpha)^{n-1}(1-\beta)^{0}) \\
-        +     & \hdots                &   &                                                            &   &                                                                                                                                                                                                                          \\
-        +     & B_{n-1}\binom{n}{n-1} & ( &                                                            &   &                                                                &            & \binom{1}{0}\alpha^{n-1}\beta^{n-1}(1-\alpha)^{0}(1-\beta)^{1}     & + & \binom{1}{1}\alpha^{n-1}\beta^{n}(1-\alpha)^{1}(1-\beta)^{0})     \\
-        +     & B_n\binom{n}{n}       & ( &                                                            &   &                                                                &            &                                                                    &   & \binom{0}{0}\alpha^{n}\beta^{n}(1-\alpha)^{0}(1-\beta)^{0})
+        +     & B_1\binom{n}{1}       & ( &                                                            &   & \binom{n-1}{0}\alpha^{1}\beta^{1}(1-\alpha)^{0}(1-\beta)^{n-1} & + \hdots + & \binom{n-1}{n-2}\alpha^{1}\beta^{n-1}(1-\alpha)^{n}(1-\beta)^{1} & + & \binom{n-1}{n-1}\alpha^{1}\beta^{n}(1-\alpha)^{n-1}(1-\beta)^{0}) \\
+        +     & \hdots                &   &                                                            &   &                                                                                                                                                                                                                        \\
+        +     & B_{n-1}\binom{n}{n-1} & ( &                                                            &   &                                                                &            & \binom{1}{0}\alpha^{n-1}\beta^{n-1}(1-\alpha)^{0}(1-\beta)^{1}   & + & \binom{1}{1}\alpha^{n-1}\beta^{n}(1-\alpha)^{1}(1-\beta)^{0})     \\
+        +     & B_n\binom{n}{n}       & ( &                                                            &   &                                                                &            &                                                                  &   & \binom{0}{0}\alpha^{n}\beta^{n}(1-\alpha)^{0}(1-\beta)^{0})
     \end{align*}
 \end{gather*}
 \\
@@ -143,32 +143,18 @@ Now we inspect each row and can derive a sum formula for the terms in the bracet
 Since $i$ is indipendent of the sum we can factor out $\alpha^{i}$ and $\beta^{i}$ get:
 
 \begin{equation*}
-    (\alpha\beta)^{i}\sum _{j=0}^{n-i} \binom{n-i}{j}\beta^{j}(1-\alpha)^{j}(1-\beta)^{n-i-j}
+    (\alpha\beta)^{i}\sum _{j=0}^{n-i} \binom{n-i}{j}\beta^{j}(1-\alpha)^{j}(1-\beta)^{n-i-j} = (\alpha\beta)^{i}(1-\alpha\beta)^{n-i}
 \end{equation*}
 \\
-We now can further simplify the question to ask if
+We substitute $m=n-i$, simplify and get:
+
+\begin{align*}
+    (\alpha\beta)^{i}\sum _{j=0}^{m} \binom{m}{j}\beta^{j}(1-\alpha)^{j}(1-\beta)^{m-j} & = (\alpha\beta)^{i}(1-\alpha\beta)^{m} \\
+    = \sum_{j=0}^{m} \binom{m}{j}\beta^{j}(1-\alpha)^{j}(1-\beta)^{m-j}                 & = (1-\alpha\beta)^{m}                  \\
+\end{align*}
+\\
+We expand the right side and get:
 
 \begin{equation*}
-    \sum _{j=0}^{n-i} \binom{n-i}{j}\beta^{j}(1-\alpha)^{j}(1-\beta)^{n-i-j} = (1-\alpha\beta)^{n-i}
-\end{equation*}
-
-\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
-
-We use this identity to further expand
-\begin{equation*}
-    (1-x)^n =
-    \sum_{i = 0}^{n} {n \choose i} (-1)^{i}(x)^{i}
-\end{equation*}
-
-And get this
-\begin{equation*}
-    =(xy)^j\sum _{i=0}^{n-j} \binom{n-j}{i}x^i
-    (\sum_{k = 0}^{n-j-i} {n-j-i \choose k} (-1)^{k}(x)^{k})
-    (\sum_{k = 0}^{i} {i \choose k} (-1)^{k}(y)^{k})
-\end{equation*}
-
-\begin{equation*}
-    =(xy)^j\sum _{i=0}^{n-j}x^i
-    (\sum_{k = 0}^{n-j-i} \binom{n-j}{i}{n-j-i \choose k} (-1)^{k}(x)^{k})
-    (\sum_{k = 0}^{i} \binom{n-j}{i}{i \choose k} (-1)^{k}(y)^{k})
+    \sum_{j=0}^{m} \binom{m}{j}\beta^{j}(1-\alpha)^{j}(1-\beta)^{m-j} = \sum _{j=0}^{m}\binom{m}{j}(-1)^j+\alpha\beta^{j}
 \end{equation*}
