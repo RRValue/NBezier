@@ -9,6 +9,7 @@
 
 #include <boost/math/ccmath/ccmath.hpp>
 
+#include <array>
 #include <concepts>
 #include <memory>
 #include <optional>
@@ -21,28 +22,58 @@ struct BezierLength
     StaticClass(BezierLength);
 
 public:
-    template<typename BezierPointsType>
-    static constexpr auto get(const BezierPointsType& p)
+    template<typename BezierPointsType, size_t CacheDepth = 5>
+    static constexpr auto get(const BezierPointsType& points)
     {
-        return process(p, 0);
+        typedef typename BezierPointsType::PointsScalar PointScalar;
+        constexpr auto NumPoints = BezierPointsType::PointsDegree + 1;
+
+        auto result = std::array<PointScalar, (CacheDepth * CacheDepth) - 1>{};
+
+        process<CacheDepth>(points, result, size_t(0), size_t(0));
+
+        return result;
     }
 
 private:
-    template<typename BezierPointsType>
-    static constexpr auto process(const BezierPointsType& points, const size_t& depth)
+    template<size_t CacheDepth, typename BezierPointsType>
+    static constexpr auto process(const BezierPointsType& points, auto& cache, const size_t& cachePos, const size_t& depth)
     {
         typedef typename BezierPointsType::PointsScalar PointScalar;
 
         const auto& points_length = pointsLength(points);
 
         if(points_length)
+        {
+            const auto length = *points_length;
+
+            writeChache(length, cache, cachePos);
+            
             return *points_length;
+        }
 
         const auto split = BezierSplit::at(points, PointScalar(0.5));
-        const auto length_left = process(split.m_left, depth + 1);
-        const auto length_right = process(split.m_right, depth + 1);
 
-        return length_left + length_right;
+        const auto cache_pos_left = [&]()->size_t {
+            if(depth < CacheDepth)
+                return cachePos + size_t(1);
+            else
+                return cache.size();
+        }();
+        const auto cache_pos_right = [&]() -> size_t {
+            if(depth < CacheDepth)
+                return cachePos + std::pow(2, CacheDepth - depth);
+            else
+                return cache.size();
+        }();
+        
+        const auto length_left = process<CacheDepth>(split.m_left, cache, cache_pos_left, depth + 1);
+        const auto length_right = process<CacheDepth>(split.m_right, cache, cache_pos_right, depth + 1);
+        const auto length = length_left + length_right;
+
+        writeChache(length, cache, cachePos);
+
+        return length;
     }
 
     template<typename BezierPointsType>
@@ -95,6 +126,14 @@ private:
     static constexpr void addPointsDiff(const auto& points, auto& length)
     {
         length += getPointsDiffNorm<I, J>(points);
+    }
+
+    static constexpr void writeChache(const auto& value, auto& cache, const auto& cachePos)
+    {
+        if(cachePos >= cache.size())
+            return;
+
+        cache[cachePos] = value;
     }
 };
 

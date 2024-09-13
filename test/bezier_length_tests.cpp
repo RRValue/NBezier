@@ -33,7 +33,8 @@ TEST(Bezier, LengthRunTime)
 
     constexpr auto bezier = BezierPoints<float, 2, 2>{p0, p1, p2};
     constexpr auto exp_length = float(2.957885715);
-    const auto length_run_time = BezierLength::get(bezier);
+    const auto length_cache = BezierLength::get(bezier);
+    const auto length_run_time = length_cache[0];
 
     EXPECT_TRUE(std::abs(exp_length - length_run_time) < float(1e-05));
 }
