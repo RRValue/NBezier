@@ -22,22 +22,21 @@ struct BezierLength
     StaticClass(BezierLength);
 
 public:
-    template<typename BezierPointsType, size_t CacheDepth = 5>
+    template<typename BezierPointsType, size_t CacheDepth = 3>
     static constexpr auto get(const BezierPointsType& points)
     {
         typedef typename BezierPointsType::PointsScalar PointScalar;
-        constexpr auto NumPoints = BezierPointsType::PointsDegree + 1;
 
         auto result = std::array<PointScalar, (CacheDepth * CacheDepth) - 1>{};
 
-        process<CacheDepth>(points, result, size_t(0), size_t(0));
+        process<CacheDepth, 0>(points, result, size_t(0));
 
         return result;
     }
 
 private:
-    template<size_t CacheDepth, typename BezierPointsType>
-    static constexpr auto process(const BezierPointsType& points, auto& cache, const size_t& cachePos, const size_t& depth)
+    template<size_t CacheDepth, size_t Depth, typename BezierPointsType>
+    static constexpr auto process(const BezierPointsType& points, auto& cache, const size_t& cachePos)
     {
         typedef typename BezierPointsType::PointsScalar PointScalar;
 
@@ -48,27 +47,36 @@ private:
             const auto length = *points_length;
 
             writeChache(length, cache, cachePos);
-            
+
             return *points_length;
         }
 
         const auto split = BezierSplit::at(points, PointScalar(0.5));
 
-        const auto cache_pos_left = [&]()->size_t {
-            if(depth < CacheDepth)
+        constexpr auto DepthInc = []() -> size_t {
+            if constexpr(Depth < CacheDepth)
+                return Depth + size_t(1);
+            else
+                return Depth;
+        }();
+
+        const auto cache_pos_left = [&]() -> size_t {
+            if constexpr (Depth < CacheDepth)
                 return cachePos + size_t(1);
             else
                 return cache.size();
         }();
         const auto cache_pos_right = [&]() -> size_t {
-            if(depth < CacheDepth)
-                return cachePos + std::pow(2, CacheDepth - depth);
+            if constexpr(Depth < CacheDepth)
+                // return cachePos + boost::math::pow<2>(CacheDepth - depth);
+                //return cachePos + std::pow(2, CacheDepth - depth);
+                return cachePos + potentiate<PointScalar>(std::make_index_sequence<CacheDepth - Depth>{});
             else
                 return cache.size();
         }();
-        
-        const auto length_left = process<CacheDepth>(split.m_left, cache, cache_pos_left, depth + 1);
-        const auto length_right = process<CacheDepth>(split.m_right, cache, cache_pos_right, depth + 1);
+
+        const auto length_left = process<CacheDepth, DepthInc>(split.m_left, cache, cache_pos_left);
+        const auto length_right = process<CacheDepth, DepthInc>(split.m_right, cache, cache_pos_right);
         const auto length = length_left + length_right;
 
         writeChache(length, cache, cachePos);
@@ -134,6 +142,22 @@ private:
             return;
 
         cache[cachePos] = value;
+    }
+
+    template<size_t Index>
+    NBInline static constexpr auto mult(auto& value, const auto& variable)
+    {
+        value *= variable;
+    }
+
+    template<typename Scalar, size_t... Count>
+    NBInline static constexpr auto potentiate(std::index_sequence<Count...>)
+    {
+        auto value = Scalar(1);
+
+        (mult<Count>(value, Scalar(2)), ...);
+
+        return value;
     }
 };
 
