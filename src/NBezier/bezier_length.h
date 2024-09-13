@@ -68,8 +68,6 @@ private:
         }();
         const auto cache_pos_right = [&]() -> size_t {
             if constexpr(Depth < CacheDepth)
-                // return cachePos + boost::math::pow<2>(CacheDepth - depth);
-                //return cachePos + std::pow(2, CacheDepth - depth);
                 return cachePos + potentiate<PointScalar>(std::make_index_sequence<CacheDepth - Depth>{});
             else
                 return cache.size();
