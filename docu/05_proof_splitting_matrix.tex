@@ -143,7 +143,7 @@ Now we inspect each row and can derive a sum formula for the terms in the bracet
 Since $i$ is indipendent of the sum we can factor out $\alpha^{i}$ and $\beta^{i}$ get:
 
 \begin{equation*}
-    (\alpha\beta)^{i}\sum _{j=0}^{n-i} \binom{n-i}{j}\beta^{j}(1-\alpha)^{j}(1-\beta)^{n-i-j} = (\alpha\beta)^{i}(1-\alpha\beta)^{n-i}
+    (\alpha\beta)^{i}\sum _{j=0}^{n-i} \binom{n-i}{j}\beta^{j}(1-\alpha)^{j}(1-\beta)^{n-i-j} =
 \end{equation*}
 \\
 We substitute $m=n-i$, simplify and get:
@@ -153,8 +153,12 @@ We substitute $m=n-i$, simplify and get:
     = \sum_{j=0}^{m} \binom{m}{j}\beta^{j}(1-\alpha)^{j}(1-\beta)^{m-j}                 & = (1-\alpha\beta)^{m}                  \\
 \end{align*}
 \\
-We expand the right side and get:
+When we inspect the left side, we see, that
 
-\begin{equation*}
-    \sum_{j=0}^{m} \binom{m}{j}\beta^{j}(1-\alpha)^{j}(1-\beta)^{m-j} = \sum _{j=0}^{m}\binom{m}{j}(-1)^j+\alpha\beta^{j}
-\end{equation*}
+\begin{align*}
+      & \sum _{j=0}^{m} \binom{m}{j}\beta^{j}(1-\alpha)^{j}(1-\beta)^{m-j} \\
+    = & \sum _{j=0}^{m} \binom{m}{j}(\beta(1-\alpha))^{j}(1-\beta)^{m-j}   \\
+    = & (\beta(1-\alpha) + (1-\beta))^m                                    \\
+    = & (\beta - \alpha\beta + 1 - \beta)^m                                \\
+    = & (1 - \alpha\beta)^m
+\end{align*}
