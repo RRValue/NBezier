@@ -126,9 +126,9 @@ We factor out the first binomial coeffciant of each row  and get:
 \\
 Now we inspect each row and can derive a sum formula for the terms in the bracets based on the row $i$ and column $j$.
 
-\begin{equation*}
+\begin{equation}\label{WholeSum}
     P_L = \sum_{i=0}^{n}B_i \binom{n}{i} \sum_{j=0}^{n-i} \binom{n-i}{j}\alpha^{i}\beta^{i+j}(1-\alpha)^{j}(1-\beta)^{n-i-j}
-\end{equation*}
+\end{equation}
 \\ We now focus on
 
 \begin{equation*}
@@ -142,16 +142,16 @@ Now we inspect each row and can derive a sum formula for the terms in the bracet
 \\
 Since $i$ is indipendent of the sum we can factor out $\alpha^{i}$ and $\beta^{i}$ get:
 
-\begin{equation*}
-    (\alpha\beta)^{i}\sum _{j=0}^{n-i} \binom{n-i}{j}\beta^{j}(1-\alpha)^{j}(1-\beta)^{n-i-j} =
-\end{equation*}
+\begin{equation}\label{BeforSubstitution}
+    (\alpha\beta)^{i}\sum _{j=0}^{n-i} \binom{n-i}{j}\beta^{j}(1-\alpha)^{j}(1-\beta)^{n-i-j}
+\end{equation}
 \\
 We substitute $m=n-i$, simplify and get:
 
-\begin{align*}
+\begin{align}\label{AfterSubstitution}
     (\alpha\beta)^{i}\sum _{j=0}^{m} \binom{m}{j}\beta^{j}(1-\alpha)^{j}(1-\beta)^{m-j} & = (\alpha\beta)^{i}(1-\alpha\beta)^{m} \\
-    = \sum_{j=0}^{m} \binom{m}{j}\beta^{j}(1-\alpha)^{j}(1-\beta)^{m-j}                 & = (1-\alpha\beta)^{m}                  \\
-\end{align*}
+    = \sum_{j=0}^{m} \binom{m}{j}\beta^{j}(1-\alpha)^{j}(1-\beta)^{m-j}                 & = (1-\alpha\beta)^{m}
+\end{align}
 \\
 When we inspect the left side, we see, that
 
@@ -162,3 +162,23 @@ When we inspect the left side, we see, that
     = & (\beta - \alpha\beta + 1 - \beta)^m                                \\
     = & (1 - \alpha\beta)^m
 \end{align*}
+\\
+Now we can replace this in (\ref{AfterSubstitution}) and get:
+
+\begin{equation}
+    (\alpha\beta)^{i}(1 - \alpha\beta)^m
+\end{equation}
+\\
+Now we can undo the substitution $m=n-i$ in (\ref{AfterSubstitution}) and get:
+
+\begin{equation*}
+    (\alpha\beta)^{i}(1 - \alpha\beta)^{n-i}
+\end{equation*}
+\\
+Now we can insert this into (\ref{WholeSum}) and get:
+
+\begin{equation*}
+    P_L = \sum_{i=0}^{n}(\alpha\beta)^{i}(1 - \alpha\beta)^{n-i}B_i
+\end{equation*}
+\\
+which is we want to show. $\blacksquare$
