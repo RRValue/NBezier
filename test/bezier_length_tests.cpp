@@ -16,19 +16,35 @@ TEST(Bezier, LengthConstexpr)
 
     constexpr auto bezier = BezierPoints<float, 2, 2>{p0, p1, p2};
     constexpr auto exp_length = float(2.957885715);
-    constexpr auto cache_length_compile_time = BezierLength::get(bezier);
-    const auto cache_length_run_time = BezierLength::get(bezier);
-    constexpr auto length_compile_time = cache_length_compile_time[0];
-    const auto length_run_time = cache_length_run_time[0];
+    constexpr auto result_compile_time = BezierLength::get(bezier);
+    const auto result_run_time = BezierLength::get(bezier);
+    
+    constexpr auto length_compile_time = result_compile_time.m_length;
+    const auto& length_run_time = result_run_time.m_length;
 
-    EXPECT_TRUE(std::equal(std::cbegin(cache_length_compile_time), std::cend(cache_length_compile_time),  //
-                           std::cbegin(cache_length_run_time), std::cend(cache_length_run_time),          //
+    constexpr auto cache_compile_time = result_compile_time.m_cache;
+    const auto& cache_run_time = result_run_time.m_cache;
+
+    EXPECT_TRUE(std::equal(std::cbegin(cache_compile_time), std::cend(cache_compile_time),  //
+                           std::cbegin(cache_run_time), std::cend(cache_run_time),          //
                            [](const auto& lhs, const auto& rhs) { return std::abs(lhs - rhs) < 1e-05f; }));
     EXPECT_EQ(length_compile_time, length_run_time);
     EXPECT_TRUE(std::abs(exp_length - length_compile_time) < float(1e-05));
     EXPECT_TRUE(std::abs(exp_length - length_run_time) < float(1e-05));
 }
 #endif  //! defined(MSVC)
+
+TEST(Bezier, CacheSize)
+{
+    [[maybe_unused]] constexpr auto r = Pow2::get<size_t, 2>();
+    [[maybe_unused]] constexpr auto r1 = Pow2::get<size_t, 3>();
+    [[maybe_unused]] constexpr auto r2 = Pow2::get<size_t, 4>();
+
+    [[maybe_unused]] constexpr auto c0 = LengthResult<float, 1>();
+    [[maybe_unused]] constexpr auto c1 = LengthResult<float, 2>();
+    [[maybe_unused]] constexpr auto c2 = LengthResult<float, 3>();
+    [[maybe_unused]] constexpr auto c3 = LengthResult<float, 4>();
+}
 
 TEST(Bezier, LengthRunTime)
 {
@@ -38,8 +54,8 @@ TEST(Bezier, LengthRunTime)
 
     constexpr auto bezier = BezierPoints<float, 2, 2>{p0, p1, p2};
     constexpr auto exp_length = float(2.957885715);
-    const auto length_cache = BezierLength::get(bezier);
-    const auto length_run_time = length_cache[0];
+    const auto length_cache = BezierLength::get<3>(bezier);
+    const auto length_run_time = length_cache.m_length;
 
     EXPECT_TRUE(std::abs(exp_length - length_run_time) < float(1e-05));
 }

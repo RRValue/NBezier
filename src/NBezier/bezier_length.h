@@ -1,5 +1,6 @@
 #pragma once
 
+#include "NBezier/bezier_requirements.h"
 #include "NBezier/bezier_split.h"
 #include "NBezier/defines.h"
 
@@ -17,19 +18,58 @@
 
 OpenNameSpace(NBezier);
 
+template<typename Scalar, size_t CacheDepth>
+concept LengthResultRequirement = BezierType<Scalar> &&  //
+                                  CacheDepth >= 1 && CacheDepth < 16;
+
+struct Pow2
+{
+private:
+    template<size_t Index>
+    NBInline static constexpr auto mult(auto& value, const auto& variable)
+    {
+        value *= variable;
+    }
+
+    template<typename Scalar, size_t... Count>
+    NBInline static constexpr auto potentiate(const Scalar& base, std::index_sequence<Count...>)
+    {
+        auto value = Scalar(1);
+
+        (mult<Count>(value, base), ...);
+
+        return value;
+    }
+
+public:
+    template<typename Scalar, size_t Power>
+    NBInline static constexpr auto get()
+    {
+        return potentiate<Scalar>(Scalar(2), std::make_index_sequence<Power>{});
+    }
+};
+
+template<typename Scalar, size_t CacheDepth>
+    requires LengthResultRequirement<Scalar, CacheDepth>
+struct LengthResult
+{
+    Scalar m_length = Scalar(0);
+    std::array<Scalar, Pow2::get<size_t, CacheDepth + 1>() - 2> m_cache = {};
+};
+
 struct BezierLength
 {
     StaticClass(BezierLength);
 
 public:
-    template<typename BezierPointsType, size_t CacheDepth = 3>
+    template<size_t CacheDepth = 3, typename BezierPointsType>
     static constexpr auto get(const BezierPointsType& points)
     {
         typedef typename BezierPointsType::PointsScalar PointScalar;
 
-        auto result = std::array<PointScalar, (CacheDepth * CacheDepth) - 1>{};
+        auto result = LengthResult<PointScalar, CacheDepth>{};
 
-        process<CacheDepth, 0>(points, result, size_t(0));
+        result.m_length = process<CacheDepth, 0>(points, result.m_cache, size_t(0));
 
         return result;
     }
@@ -61,23 +101,24 @@ private:
         }();
 
         const auto cache_pos_left = [&]() -> size_t {
-            if constexpr (Depth < CacheDepth)
+            if constexpr(Depth < CacheDepth)
                 return cachePos + size_t(1);
             else
-                return cache.size();
+                return cache.size() + 1;
         }();
         const auto cache_pos_right = [&]() -> size_t {
             if constexpr(Depth < CacheDepth)
-                return cachePos + potentiate<PointScalar>(std::make_index_sequence<CacheDepth - Depth>{});
+                return cachePos + Pow2::get<size_t, CacheDepth - Depth>();
             else
-                return cache.size();
+                return cache.size() + 1;
         }();
 
         const auto length_left = process<CacheDepth, DepthInc>(split.m_left, cache, cache_pos_left);
         const auto length_right = process<CacheDepth, DepthInc>(split.m_right, cache, cache_pos_right);
         const auto length = length_left + length_right;
 
-        writeChache(length, cache, cachePos);
+        if(cachePos != 0)
+            writeChache(length, cache, cachePos - 1);
 
         return length;
     }
@@ -140,22 +181,6 @@ private:
             return;
 
         cache[cachePos] = value;
-    }
-
-    template<size_t Index>
-    NBInline static constexpr auto mult(auto& value, const auto& variable)
-    {
-        value *= variable;
-    }
-
-    template<typename Scalar, size_t... Count>
-    NBInline static constexpr auto potentiate(std::index_sequence<Count...>)
-    {
-        auto value = Scalar(1);
-
-        (mult<Count>(value, Scalar(2)), ...);
-
-        return value;
     }
 };
 
