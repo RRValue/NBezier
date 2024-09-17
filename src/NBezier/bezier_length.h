@@ -117,8 +117,7 @@ private:
         const auto length_right = process<CacheDepth, DepthInc>(split.m_right, cache, cache_pos_right);
         const auto length = length_left + length_right;
 
-        if(cachePos != 0)
-            writeChache(length, cache, cachePos - 1);
+        writeChache(length, cache, cachePos);
 
         return length;
     }
@@ -177,10 +176,10 @@ private:
 
     static constexpr void writeChache(const auto& value, auto& cache, const auto& cachePos)
     {
-        if(cachePos >= cache.size())
+        if(cachePos == 0 || cachePos >= cache.size())
             return;
 
-        cache[cachePos] = value;
+        cache[cachePos - 1] = value;
     }
 };
 
