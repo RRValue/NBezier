@@ -54,8 +54,31 @@ TEST(Bezier, LengthRunTime)
 
     constexpr auto bezier = BezierPoints<float, 2, 2>{p0, p1, p2};
     constexpr auto exp_length = float(2.957885715);
-    const auto length_cache = BezierLength::get<3>(bezier);
-    const auto length_run_time = length_cache.m_length;
+    const auto result = BezierLength::get<3>(bezier);
+    const auto length = result.m_length;
+    
+    EXPECT_TRUE(std::abs(exp_length - length) < float(1e-05));
+}
 
-    EXPECT_TRUE(std::abs(exp_length - length_run_time) < float(1e-05));
+TEST(Bezier, LengthCacheTime)
+{
+    constexpr auto p0 = Point<float, 2>{-1, 1};
+    constexpr auto p1 = Point<float, 2>{0, -1};
+    constexpr auto p2 = Point<float, 2>{1, 1};
+
+    constexpr auto bezier = BezierPoints<float, 2, 2>{p0, p1, p2};
+    constexpr auto exp_length = float(2.957885715);
+    const auto result = BezierLength::get<3>(bezier);
+    const auto length = result.m_length;
+    const auto cache = result.m_cache;
+
+    EXPECT_TRUE(std::abs(cache[1] - (cache[2] + cache[3])) < float(1e-05));
+    EXPECT_TRUE(std::abs(cache[4] - (cache[5] + cache[6])) < float(1e-05));
+    EXPECT_TRUE(std::abs(cache[8] - (cache[9] + cache[10])) < float(1e-05));
+    EXPECT_TRUE(std::abs(cache[11] - (cache[12] + cache[13])) < float(1e-05));
+
+    EXPECT_TRUE(std::abs(cache[0] - (cache[1] + cache[4])) < float(1e-05));
+    EXPECT_TRUE(std::abs(cache[7] - (cache[8] + cache[11])) < float(1e-05));
+
+    EXPECT_TRUE(std::abs(length - (cache[0] + cache[7])) < float(1e-05));
 }

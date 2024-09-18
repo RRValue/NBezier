@@ -83,13 +83,7 @@ private:
         const auto& points_length = pointsLength(points);
 
         if(points_length)
-        {
-            const auto length = *points_length;
-
-            writeChache(length, cache, cachePos);
-
             return *points_length;
-        }
 
         const auto split = BezierSplit::at(points, PointScalar(0.5));
 
@@ -176,7 +170,7 @@ private:
 
     static constexpr void writeChache(const auto& value, auto& cache, const auto& cachePos)
     {
-        if(cachePos == 0 || cachePos >= cache.size())
+        if(cachePos == 0 || cachePos > cache.size())
             return;
 
         cache[cachePos - 1] = value;
