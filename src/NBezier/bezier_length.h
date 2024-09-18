@@ -3,6 +3,7 @@
 #include "NBezier/bezier_requirements.h"
 #include "NBezier/bezier_split.h"
 #include "NBezier/defines.h"
+#include "NBezier/math/pow.h"
 
 #include <boost/qvm/map_mat_vec.hpp>
 #include <boost/qvm/mat.hpp>
@@ -22,39 +23,12 @@ template<typename Scalar, size_t CacheDepth>
 concept LengthResultRequirement = BezierType<Scalar> &&  //
                                   CacheDepth >= 1 && CacheDepth < 16;
 
-struct Pow2
-{
-private:
-    template<size_t Index>
-    NBInline static constexpr auto mult(auto& value, const auto& variable)
-    {
-        value *= variable;
-    }
-
-    template<typename Scalar, size_t... Count>
-    NBInline static constexpr auto potentiate(const Scalar& base, std::index_sequence<Count...>)
-    {
-        auto value = Scalar(1);
-
-        (mult<Count>(value, base), ...);
-
-        return value;
-    }
-
-public:
-    template<typename Scalar, size_t Power>
-    NBInline static constexpr auto get()
-    {
-        return potentiate<Scalar>(Scalar(2), std::make_index_sequence<Power>{});
-    }
-};
-
 template<typename Scalar, size_t CacheDepth>
     requires LengthResultRequirement<Scalar, CacheDepth>
 struct LengthResult
 {
     Scalar m_length = Scalar(0);
-    std::array<Scalar, Pow2::get<size_t, CacheDepth + 1>() - 2> m_cache = {};
+    std::array<Scalar, Math::Pow::get2<size_t, CacheDepth + 1>() - 2> m_cache = {};
 };
 
 struct BezierLength
@@ -102,7 +76,7 @@ private:
         }();
         const auto cache_pos_right = [&]() -> size_t {
             if constexpr(Depth < CacheDepth)
-                return cachePos + Pow2::get<size_t, CacheDepth - Depth>();
+                return cachePos + Math::Pow::get2<size_t, CacheDepth - Depth>();
             else
                 return cache.size() + 1;
         }();

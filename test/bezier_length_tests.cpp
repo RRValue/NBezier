@@ -36,14 +36,15 @@ TEST(Bezier, LengthConstexpr)
 
 TEST(Bezier, CacheSize)
 {
-    [[maybe_unused]] constexpr auto r = Pow2::get<size_t, 2>();
-    [[maybe_unused]] constexpr auto r1 = Pow2::get<size_t, 3>();
-    [[maybe_unused]] constexpr auto r2 = Pow2::get<size_t, 4>();
+    constexpr auto c0 = LengthResult<float, 1>();
+    constexpr auto c1 = LengthResult<float, 2>();
+    constexpr auto c2 = LengthResult<float, 3>();
+    constexpr auto c3 = LengthResult<float, 4>();
 
-    [[maybe_unused]] constexpr auto c0 = LengthResult<float, 1>();
-    [[maybe_unused]] constexpr auto c1 = LengthResult<float, 2>();
-    [[maybe_unused]] constexpr auto c2 = LengthResult<float, 3>();
-    [[maybe_unused]] constexpr auto c3 = LengthResult<float, 4>();
+    EXPECT_EQ(c0.m_cache.size(), 2);
+    EXPECT_EQ(c1.m_cache.size(), 6);
+    EXPECT_EQ(c2.m_cache.size(), 14);
+    EXPECT_EQ(c3.m_cache.size(), 30);
 }
 
 TEST(Bezier, LengthRunTime)
@@ -60,14 +61,13 @@ TEST(Bezier, LengthRunTime)
     EXPECT_TRUE(std::abs(exp_length - length) < float(1e-05));
 }
 
-TEST(Bezier, LengthCacheTime)
+TEST(Bezier, LengthCache)
 {
     constexpr auto p0 = Point<float, 2>{-1, 1};
     constexpr auto p1 = Point<float, 2>{0, -1};
     constexpr auto p2 = Point<float, 2>{1, 1};
 
     constexpr auto bezier = BezierPoints<float, 2, 2>{p0, p1, p2};
-    constexpr auto exp_length = float(2.957885715);
     const auto result = BezierLength::get<3>(bezier);
     const auto length = result.m_length;
     const auto cache = result.m_cache;
