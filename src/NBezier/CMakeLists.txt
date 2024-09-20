@@ -3,7 +3,7 @@ set(ComponentName NBezier)
 file(GLOB_RECURSE Header ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
 file(GLOB_RECURSE Sources ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 
-add_library(${ComponentName} STATIC)
+add_library(${ComponentName} INTERFACE)
 
 target_sources(${ComponentName}
     PRIVATE ${Sources}
@@ -13,7 +13,7 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX src FILES ${Header} ${Sourc
 
 # external libs (boost)
 target_link_libraries(${ComponentName}
-    PUBLIC Boost::qvm)
+    INTERFACE Boost::qvm)
 
 # properties
 if(MSVC)

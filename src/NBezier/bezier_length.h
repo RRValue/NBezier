@@ -5,7 +5,6 @@
 #include "NBezier/defines.h"
 #include "NBezier/math/pow.h"
 
-#include <boost/qvm/map_mat_vec.hpp>
 #include <boost/qvm/mat.hpp>
 #include <boost/qvm/vec_operations.hpp>
 

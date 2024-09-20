@@ -12,8 +12,8 @@
 OpenNameSpace(NBezier);
 
 template<typename Scalar>
-concept SplitWeightMatrixCellType = (std::signed_integral<Scalar> || std::floating_point<Scalar>) &&  //
-                                    !std::is_same<Scalar, bool>::value;
+concept SplitWeightMatrixCellType = (std::signed_integral<Scalar> || std::floating_point<Scalar>)&&  //
+    !std::is_same<Scalar, bool>::value;
 
 template<size_t Degree>
 concept SplitWeightMatrixDegreeRequirement = Degree > 0;

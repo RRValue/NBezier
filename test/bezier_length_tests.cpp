@@ -18,7 +18,7 @@ TEST(Bezier, LengthConstexpr)
     constexpr auto exp_length = float(2.957885715);
     constexpr auto result_compile_time = BezierLength::get(bezier);
     const auto result_run_time = BezierLength::get(bezier);
-    
+
     constexpr auto length_compile_time = result_compile_time.m_length;
     const auto& length_run_time = result_run_time.m_length;
 
@@ -57,7 +57,7 @@ TEST(Bezier, LengthRunTime)
     constexpr auto exp_length = float(2.957885715);
     const auto result = BezierLength::get<3>(bezier);
     const auto length = result.m_length;
-    
+
     EXPECT_TRUE(std::abs(exp_length - length) < float(1e-05));
 }
 
