@@ -7,7 +7,7 @@ set(ProjectName NBezier)
 project(${ProjectName})
 
 # find and assert external libs (boost)
-find_package(Boost 1.85 REQUIRED COMPONENTS qvm)
+find_package(Boost 1.86 REQUIRED COMPONENTS qvm)
 
 # Set C++ Standard
 set(CMAKE_CXX_STANDARD 20)
