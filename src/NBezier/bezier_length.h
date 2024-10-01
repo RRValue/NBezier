@@ -4,6 +4,7 @@
 #include "NBezier/bezier_split.h"
 #include "NBezier/defines.h"
 #include "NBezier/math/pow.h"
+#include "NBezier/bezier_length_result.h"
 
 #include <boost/qvm/mat.hpp>
 #include <boost/qvm/vec_operations.hpp>
@@ -17,18 +18,6 @@
 #include <type_traits>
 
 OpenNameSpace(NBezier);
-
-template<typename Scalar, size_t CacheDepth>
-concept LengthResultRequirement = BezierType<Scalar> &&  //
-                                  CacheDepth >= 1 && CacheDepth < 16;
-
-template<typename Scalar, size_t CacheDepth>
-    requires LengthResultRequirement<Scalar, CacheDepth>
-struct LengthResult
-{
-    Scalar m_length = Scalar(0);
-    std::array<Scalar, Math::Pow::get2<size_t, CacheDepth + 1>() - 2> m_cache = {};
-};
 
 struct BezierLength
 {
@@ -73,6 +62,7 @@ private:
             else
                 return cache.size() + 1;
         }();
+
         const auto cache_pos_right = [&]() -> size_t {
             if constexpr(Depth < CacheDepth)
                 return cachePos + Math::Pow::get2<size_t, CacheDepth - Depth>();
