@@ -12,7 +12,7 @@ OpenNameSpace(NBezier);
 
 template<typename Scalar, size_t CacheDepth>
 concept LengthResultRequirement = BezierType<Scalar> &&  //
-                                  CacheDepth >= 1 && CacheDepth < 16;
+                                  CacheDepth >= 0 && CacheDepth < 16;
 
 template<typename Scalar, size_t CacheDepth>
     requires LengthResultRequirement<Scalar, CacheDepth>
